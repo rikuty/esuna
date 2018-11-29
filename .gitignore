@@ -1,0 +1,46 @@
+# ---------------[ Unity generated ]------------------ #
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+UnityGenerated/
+mock/MiniGames/ProjectSettings/ProjectVersion.txt
+~$*.xlsx
+~$*.xlsx.meta
+Assets/Oculus/OVRInputSelection/Meshes/TouchControllers/Models/controller_NM.psd* 
+*.apk
+
+
+# ----[ Visual Studio / MonoDevelop generated ]------- #
+  
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+.vs/
+.vs/vr_shindo/xs/UserPrefs.xml
+
+# -------------[ OS generated ]------------------------ #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+ 
+# -------------[ Build ]------------------------ #
+#*.html
+AppDebugUserId.text
+gmcs.rsp*
+smcs.rsp*
+
+
+mock/anakanishi_sample/Sample/ProjectSettings/UnityAdsSettings.asset
+mock/anakanishi_sample/Sample/ProjectSettings/UnityAnalyticsManager.asset
