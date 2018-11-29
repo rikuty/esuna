@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ArchVizPRO Interior Vol.6/3D SCENE/AVP6_Desktop.unity
-    guid: b3ce4af7013eb1b40bef4c444aacb223
+    path: Assets/Scenes/Main.unity
+    guid: b3d8d2b45b509904cb387ad825054c42
   m_configObjects: {}

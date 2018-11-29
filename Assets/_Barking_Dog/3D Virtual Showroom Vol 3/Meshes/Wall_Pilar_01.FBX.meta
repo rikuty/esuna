@@ -1,0 +1,201 @@
+fileFormatVersion: 2
+guid: e8c898cc4946f47c2b5a375766dad965
+timeCreated: 1483372198
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Object008
+    100004: Object011
+    100006: Wall_Pilar_01
+    100008: Box004
+    100010: Box005
+    100012: Line002
+    100014: Object005
+    100016: Pipes_Insert_008
+    100018: Door_Bar_01
+    100020: Object006
+    100022: Pipes_Insert_012
+    100024: Pipes_Insert_013
+    100026: Door
+    100028: Fan
+    100030: Floor_Door_01
+    100032: Roof_Cache_06_B004
+    100034: Roof_Fan_01
+    100036: Wall_Fan_002
+    100038: Pipes_Insert_014
+    100040: Pipes_Insert_015
+    100042: Pilar_Roof_01
+    100044: Roof_Normal_01
+    100046: Wall_Normal_01
+    100048: Object016
+    400000: //RootNode
+    400002: Object008
+    400004: Object011
+    400006: Wall_Pilar_01
+    400008: Box004
+    400010: Box005
+    400012: Line002
+    400014: Object005
+    400016: Pipes_Insert_008
+    400018: Door_Bar_01
+    400020: Object006
+    400022: Pipes_Insert_012
+    400024: Pipes_Insert_013
+    400026: Door
+    400028: Fan
+    400030: Floor_Door_01
+    400032: Roof_Cache_06_B004
+    400034: Roof_Fan_01
+    400036: Wall_Fan_002
+    400038: Pipes_Insert_014
+    400040: Pipes_Insert_015
+    400042: Pilar_Roof_01
+    400044: Roof_Normal_01
+    400046: Wall_Normal_01
+    400048: Object016
+    2300000: //RootNode
+    2300002: Object008
+    2300004: Object011
+    2300006: Wall_Pilar_01
+    2300008: Box004
+    2300010: Box005
+    2300012: Line002
+    2300014: Object005
+    2300016: Pipes_Insert_008
+    2300018: Door_Bar_01
+    2300020: Object006
+    2300022: Pipes_Insert_012
+    2300024: Pipes_Insert_013
+    2300026: Door
+    2300028: Fan
+    2300030: Floor_Door_01
+    2300032: Roof_Cache_06_B004
+    2300034: Roof_Fan_01
+    2300036: Wall_Fan_002
+    2300038: Pipes_Insert_014
+    2300040: Pipes_Insert_015
+    2300042: Pilar_Roof_01
+    2300044: Roof_Normal_01
+    2300046: Wall_Normal_01
+    2300048: Object016
+    3300000: //RootNode
+    3300002: Object008
+    3300004: Object011
+    3300006: Wall_Pilar_01
+    3300008: Box004
+    3300010: Box005
+    3300012: Line002
+    3300014: Object005
+    3300016: Pipes_Insert_008
+    3300018: Door_Bar_01
+    3300020: Object006
+    3300022: Pipes_Insert_012
+    3300024: Pipes_Insert_013
+    3300026: Door
+    3300028: Fan
+    3300030: Floor_Door_01
+    3300032: Roof_Cache_06_B004
+    3300034: Roof_Fan_01
+    3300036: Wall_Fan_002
+    3300038: Pipes_Insert_014
+    3300040: Pipes_Insert_015
+    3300042: Pilar_Roof_01
+    3300044: Roof_Normal_01
+    3300046: Wall_Normal_01
+    3300048: Object016
+    4300000: Wall_Pilar_01
+    4300002: Object008
+    4300004: Object011
+    4300006: Object005
+    4300008: Line002
+    4300010: Pipes_Insert_008
+    4300012: Box004
+    4300014: Box005
+    4300016: Door_Bar_01
+    4300018: Object006
+    4300020: Pipes_Insert_012
+    4300022: Pipes_Insert_013
+    4300024: Roof_Fan_01
+    4300026: Fan
+    4300028: Wall_Fan_002
+    4300030: Floor_Door_01
+    4300032: Door
+    4300034: Roof_Cache_06_B004
+    4300036: Pipes_Insert_014
+    4300038: Pipes_Insert_015
+    4300040: Wall_Normal_01
+    4300042: Pilar_Roof_01
+    4300044: Roof_Normal_01
+    4300046: Object016
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 0
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
