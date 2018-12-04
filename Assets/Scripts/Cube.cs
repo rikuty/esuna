@@ -11,6 +11,11 @@ public class Cube : MonoBehaviour {
 
     [SerializeField] Transform cubeParent;
 
+    [SerializeField] GameObject objParticle;
+
+    [SerializeField] GameObject objCube;
+
+
     string[] plateNames = {"Plate1", "Plate2", "Plate3", "Plate4", "Plate5", "Plate6", "Plate7", "Plate8"};
 
 
@@ -46,11 +51,25 @@ public class Cube : MonoBehaviour {
             deltaTime = 0f;
             GameObject obj = Instantiate(this.gameObject, cubeParent);
             obj.transform.localPosition = Vector3.zero;
-            this.gameObject.active = false;
+
+            objParticle.active = true;
+            objCube.active = false;
+
+            StartCoroutine("Coroutine");
         
         }
 
 	}
+
+
+    IEnumerator Coroutine()
+    {
+        yield return new WaitForSeconds(1.0f);
+
+        this.gameObject.active = false;
+
+    }
+
 
     void OnTriggerEnter(Collider collider)
     {
