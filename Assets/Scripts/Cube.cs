@@ -20,11 +20,14 @@ public class Cube : MonoBehaviour {
 
     float deltaTime = 0f;
 
+    string correctName = "";
+
 
     private void Awake()
     {
         int num = Random.Range(0, materials.Length);
         cubeRenderer.material = materials[num];
+        correctName = plateNames[num];
 
     }
 
@@ -43,7 +46,7 @@ public class Cube : MonoBehaviour {
             deltaTime = 0f;
             GameObject obj = Instantiate(this.gameObject, cubeParent);
             obj.transform.localPosition = Vector3.zero;
-            Destroy(this.gameObject);
+            this.gameObject.active = false;
         
         }
 
@@ -51,15 +54,8 @@ public class Cube : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        bool plate = false;
-        foreach(string name in plateNames)
-        {
-            if (collider.gameObject.name == name)
-            {
-                plate = true;
-            }
-        }
-        if (plate)
+
+        if (collider.gameObject.name == correctName)
         {
             enter = true;
         }
