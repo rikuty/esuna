@@ -145,8 +145,9 @@ public class OVRGrabberBothHands :  MonoBehaviour
         GetComponent<Rigidbody>().MovePosition(destPos);
         GetComponent<Rigidbody>().MoveRotation(destRot);
 
-        if (!m_parentHeldObject)
-        {
+        Debug.Log(this.gameObject.name + " : " +(m_grabbedObj == null).ToString());
+        if (!m_parentHeldObject && anotherHands != null && anotherHands.m_grabbedObj != null)
+        {               
             MoveGrabbedObject(destPos, destRot);
         }
         m_lastPos = transform.position;
@@ -249,10 +250,10 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
         if (closestGrabbable != null)
         {
-            if (closestGrabbable.isGrabbed)
-            {
-                closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
-            }
+            //if (closestGrabbable.isGrabbed)
+            //{
+            //    closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
+            //}
 
             m_grabbedObj = closestGrabbable;
             m_grabbedObj.GrabBegin(this, closestGrabbableCollider);
