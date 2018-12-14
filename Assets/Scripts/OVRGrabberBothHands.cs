@@ -145,7 +145,6 @@ public class OVRGrabberBothHands :  MonoBehaviour
         GetComponent<Rigidbody>().MovePosition(destPos);
         GetComponent<Rigidbody>().MoveRotation(destRot);
 
-        Debug.Log(this.gameObject.name + " : " +(m_grabbedObj == null).ToString());
         if (!m_parentHeldObject && anotherHands != null && anotherHands.m_grabbedObj != null)
         {               
             MoveGrabbedObject(destPos, destRot);

@@ -1,22 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Cube : MonoBehaviour {
 
 
-    [SerializeField] Material[] materials;
-
     [SerializeField] MeshRenderer cubeRenderer;
-
-    [SerializeField] Transform cubeParent;
 
     [SerializeField] GameObject objParticle;
 
     [SerializeField] GameObject objCube;
 
 
-    string[] plateNames = {"Plate1", "Plate2", "Plate3", "Plate4", "Plate5", "Plate6", "Plate7", "Plate8"};
+    Action<Cube> callback;
+
+
+    [NonSerialized] public DEFINE_APP.ANSWER_TYPE_ENUM answerType;
+    [NonSerialized] public int answerIndex;
 
 
     float TIME_STAY = 1f;
@@ -25,35 +26,28 @@ public class Cube : MonoBehaviour {
 
     float deltaTime = 0f;
 
-    string correctName = "";
 
 
-    private void Awake()
+    public void Init(Action<Cube> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, Material material)
     {
-        int num = Random.Range(0, materials.Length);
-        cubeRenderer.material = materials[num];
-        correctName = plateNames[num];
+        this.callback = callback;
+        this.answerType = cubeType;
+        this.answerIndex = answerIndex;
+        cubeRenderer.material = material;
 
     }
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
         if (!enter) return;
         deltaTime += Time.deltaTime;
         if(deltaTime> TIME_STAY)
         {
             enter = false;
             deltaTime = 0f;
-            GameObject obj = Instantiate(this.gameObject, cubeParent);
-            obj.transform.localPosition = Vector3.zero;
 
-            objParticle.active = true;
-            objCube.active = false;
+            objParticle.SetActive(true);
+            objCube.SetActive(false);
 
             StartCoroutine("Coroutine");
         
@@ -66,15 +60,16 @@ public class Cube : MonoBehaviour {
     {
         yield return new WaitForSeconds(1.0f);
 
-        this.gameObject.active = false;
-
+        gameObject.SetActive(false);
+        callback(this);
     }
 
 
     void OnTriggerEnter(Collider collider)
     {
-
-        if (collider.gameObject.name == correctName)
+        Plate plate = collider.GetComponent<Plate>();
+        if (plate == null) return;
+        if (plate.cubeType == answerType && plate.answerIndex == answerIndex)
         {
             enter = true;
         }
