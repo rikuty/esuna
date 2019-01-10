@@ -11,9 +11,11 @@ using UnityEngine;
 
 public class Context
 {
-    public readonly float PLAY_TIME = 240.0f;
+    public readonly float PLAY_TIME = 40.0f;
 
     public float currentPlayTime { get; private set; }
+
+    public int gamePoint { get; private set; }
 
     public float leftPlayTime
     {
@@ -36,5 +38,12 @@ public class Context
     {
         this.currentPlayTime += deltaTime;
     }
+
+
+    public void AddGamePoint()
+    {
+        this.gamePoint += 10;
+    }
+
 
 }

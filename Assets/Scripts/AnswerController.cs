@@ -19,6 +19,12 @@ public class AnswerController : MonoBehaviour {
 
     [SerializeField] GameObject objOriginal;
 
+    [SerializeField]
+    Cube resultCube;
+
+    [SerializeField]
+    Plate resultPlate;
+
     int playCubeCount = 0;
 
 
@@ -29,24 +35,32 @@ public class AnswerController : MonoBehaviour {
     {
         this.callback = callback;
 
-        startCube.Init(CallbackFromStartCube, DEFINE_APP.ANSWER_TYPE_ENUM.START, -1, startMaterial);
+        startCube.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.START, -1, startMaterial);
         startPlate.Init(DEFINE_APP.ANSWER_TYPE_ENUM.START, -1, startMaterial);
         for (int i=0; i<plates.Length; i++)
         {
             plates[i].Init(DEFINE_APP.ANSWER_TYPE_ENUM.PLAY, i, materials[i]);
         }
-    }
 
-    void CallbackFromStartCube(Cube cube)
-    {
-        callback(cube.answerType);
+        resultCube.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1, startMaterial);
+        resultPlate.Init(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1, startMaterial);
     }
 
 
     void CallbackFromCube(Cube cube)
     {
         callback(cube.answerType);
-        InstantiateNewCube();
+
+        switch (cube.answerType) {
+            case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+                InstantiateNewCube();
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
+                break;
+        }
+        
     }
 
 

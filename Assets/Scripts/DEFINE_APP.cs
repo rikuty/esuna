@@ -37,7 +37,8 @@ public partial class DEFINE_APP {//ApplictionDefine
     public enum ANSWER_TYPE_ENUM
     {
         START,
-        PLAY
+        PLAY,
+        RESULT
     }
 }
 
