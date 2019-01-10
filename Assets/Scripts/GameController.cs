@@ -41,6 +41,7 @@ public class GameController : UtilComponent {
     [SerializeField] private GameObject objStart;
     [SerializeField] private GameObject objCountDown;
     [SerializeField] private GameObject objPlay;
+    [SerializeField] private GameObject objResult;
 
 
     [SerializeField] private AudioSource audioSource;
@@ -58,7 +59,7 @@ public class GameController : UtilComponent {
     //[SerializeField] private Text y;
     //[SerializeField] private Text z;
 
-    //[SerializeField] private ResultModalPresenter resultModalPresenter;
+    [SerializeField] private ResultModalPresenter resultModalPresenter;
 
 
     //[SerializeField] private StartObject startObject;
@@ -80,6 +81,7 @@ public class GameController : UtilComponent {
 
         SetActive(this.objCountDown, false);
         SetActive(this.objPlay, false);
+        SetActive(this.objResult, false);
 
         //resultModalPresenter = ResourceLoader.Instance.Create<ResultModalPresenter>("Prefabs/ResultModal", trResult, false);
 
@@ -92,13 +94,18 @@ public class GameController : UtilComponent {
     
     private void CallbackFromAnswerControllers(DEFINE_APP.ANSWER_TYPE_ENUM answerType)
     {
-        if(answerType == DEFINE_APP.ANSWER_TYPE_ENUM.START)
+        switch(answerType)
         {
-            this.currentStatus = STATUS_ENUM.COUNT;
-            StartCoroutine(this.SetCountDown());
-        }
-        else
-        {
+            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+                this.currentStatus = STATUS_ENUM.COUNT;
+                StartCoroutine(this.SetCountDown());
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+                this.context.AddGamePoint();
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
+                Reload();
+                break;
 
         }
     }
@@ -191,27 +198,23 @@ public class GameController : UtilComponent {
 
     private void UpdateFinish()
     {
-        //ResultModalModel model = 
-        //    new ResultModalModel(this.context.averageTime,
-        //                         this.context);
+        ResultModalModel model = 
+            new ResultModalModel(this.context);
 
-        //resultModalPresenter.Show(model);
+        resultModalPresenter.Show(model);
         this.currentStatus = STATUS_ENUM.SHOW_RESLUT;
-        //SetActive(this.objStart, true);
-        //SetActive(this.objPlay, false);
-        ClickedFinish();
+        SetActive(this.objResult, true);
+        SetActive(this.objPlay, false);
 
+        this.currentStatus = STATUS_ENUM.SHOW_RESLUT;
     }
 
     private void UpdateShowResult(){
         
     }
 
-
-    private void ClickedFinish()
+    public void Reload()
     {
-        //Gamestrap.GSAppExampleControl.Instance.LoadScene(Gamestrap.ESceneNames.scene_title);
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
