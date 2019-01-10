@@ -1,0 +1,372 @@
+fileFormatVersion: 2
+guid: 028cf7ee8781e1846b9b897ce2b6ea3d
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Lwing2
+    100002: Lwing
+    100004: //RootNode
+    100006: Lfoot
+    100008: Rgoot3
+    100010: Rfoot2
+    100012: Rfoot
+    100014: Feet
+    100016: Head2
+    100018: Rwing3
+    100020: Rwing2
+    100022: Rwing
+    100024: Pivot
+    100026: CrowMesh
+    100028: Tail2
+    100030: Tail
+    100032: Rwing4
+    100034: Head
+    100036: Lfoot3
+    100038: Lfoot2
+    100040: Lwing3
+    100042: Lwing4
+    100044: Head1
+    100046: Head3
+    100048: Head4
+    100050: Head5
+    100052: Head6
+    100054: Head7
+    100056: Head8
+    100058: Head9
+    100060: LeftLeg1
+    100062: LeftLeg2
+    100064: LeftLeg3
+    100066: LeftLeg4
+    100068: LeftLeg5
+    100070: LeftLeg6
+    100072: LeftWing1
+    100074: LeftWing2
+    100076: LeftWing3
+    100078: LeftWing4
+    100080: LeftWing5
+    100082: LeftWing6
+    100084: polySurface13
+    100086: RightLeg1
+    100088: RightLeg2
+    100090: RightLeg3
+    100092: RightLeg4
+    100094: RightLeg5
+    100096: RightWing1
+    100098: RightWing2
+    100100: RightWing3
+    100102: RightWing4
+    100104: RightWing5
+    100106: RightWing6
+    100108: Root
+    100110: Shoulder
+    100112: Tail1
+    100114: Tail3
+    100116: Tail4
+    100118: Tail5
+    100120: Tail6
+    100122: Head_1
+    100124: Head_2
+    100126: Head_3
+    100128: Leg_Left_1
+    100130: Leg_Left_2
+    100132: Leg_Left_3
+    100134: Leg_Left_4
+    100136: Leg_Left_5
+    100138: Leg_Right_1
+    100140: Leg_Right_2
+    100142: Leg_Right_3
+    100144: Leg_Right_4
+    100146: Leg_Right_5
+    100148: ParakeetMeshLOD0
+    100150: Tail_1
+    100152: Tail_2
+    100154: Tail_3
+    100156: Tail_4
+    100158: Wing_Left_1
+    100160: Wing_Left_2
+    100162: Wing_Left_3
+    100164: Wing_Left_4
+    100166: Wing_Left_5
+    100168: Wing_Left_6
+    100170: Wing_Right_1
+    100172: Wing_Right_2
+    100174: Wing_Right_3
+    100176: Wing_Right_4
+    100178: Wing_Right_5
+    100180: Wing_Right_6
+    100182: polySurface1
+    400000: Lwing2
+    400002: Lwing
+    400004: //RootNode
+    400006: Lfoot
+    400008: Rgoot3
+    400010: Rfoot2
+    400012: Rfoot
+    400014: Feet
+    400016: Head2
+    400018: Rwing3
+    400020: Rwing2
+    400022: Rwing
+    400024: Pivot
+    400026: CrowMesh
+    400028: Tail2
+    400030: Tail
+    400032: Rwing4
+    400034: Head
+    400036: Lfoot3
+    400038: Lfoot2
+    400040: Lwing3
+    400042: Lwing4
+    400044: Head1
+    400046: Head3
+    400048: Head4
+    400050: Head5
+    400052: Head6
+    400054: Head7
+    400056: Head8
+    400058: Head9
+    400060: LeftLeg1
+    400062: LeftLeg2
+    400064: LeftLeg3
+    400066: LeftLeg4
+    400068: LeftLeg5
+    400070: LeftLeg6
+    400072: LeftWing1
+    400074: LeftWing2
+    400076: LeftWing3
+    400078: LeftWing4
+    400080: LeftWing5
+    400082: LeftWing6
+    400084: polySurface13
+    400086: RightLeg1
+    400088: RightLeg2
+    400090: RightLeg3
+    400092: RightLeg4
+    400094: RightLeg5
+    400096: RightWing1
+    400098: RightWing2
+    400100: RightWing3
+    400102: RightWing4
+    400104: RightWing5
+    400106: RightWing6
+    400108: Root
+    400110: Shoulder
+    400112: Tail1
+    400114: Tail3
+    400116: Tail4
+    400118: Tail5
+    400120: Tail6
+    400122: Head_1
+    400124: Head_2
+    400126: Head_3
+    400128: Leg_Left_1
+    400130: Leg_Left_2
+    400132: Leg_Left_3
+    400134: Leg_Left_4
+    400136: Leg_Left_5
+    400138: Leg_Right_1
+    400140: Leg_Right_2
+    400142: Leg_Right_3
+    400144: Leg_Right_4
+    400146: Leg_Right_5
+    400148: ParakeetMeshLOD0
+    400150: Tail_1
+    400152: Tail_2
+    400154: Tail_3
+    400156: Tail_4
+    400158: Wing_Left_1
+    400160: Wing_Left_2
+    400162: Wing_Left_3
+    400164: Wing_Left_4
+    400166: Wing_Left_5
+    400168: Wing_Left_6
+    400170: Wing_Right_1
+    400172: Wing_Right_2
+    400174: Wing_Right_3
+    400176: Wing_Right_4
+    400178: Wing_Right_5
+    400180: Wing_Right_6
+    400182: polySurface1
+    4300000: CrowMesh
+    4300002: polySurface13
+    4300004: ParakeetMeshLOD0
+    4300006: polySurface1
+    7400004: ParakeetSoar
+    11100000: //RootNode
+    13700000: Pivot
+    13700002: CrowMesh
+    13700004: polySurface13
+    13700006: ParakeetMeshLOD0
+    13700008: polySurface1
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 2
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: ParakeetSoar
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 12
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: polySurface13
+        weight: 1
+      - path: Root
+        weight: 1
+      - path: Root/LeftLeg1
+        weight: 1
+      - path: Root/LeftLeg1/LeftLeg2
+        weight: 1
+      - path: Root/LeftLeg1/LeftLeg2/LeftLeg3
+        weight: 1
+      - path: Root/LeftLeg1/LeftLeg2/LeftLeg3/LeftLeg4
+        weight: 1
+      - path: Root/LeftLeg1/LeftLeg2/LeftLeg3/LeftLeg4/LeftLeg5
+        weight: 1
+      - path: Root/LeftLeg1/LeftLeg2/LeftLeg3/LeftLeg4/LeftLeg5/LeftLeg6
+        weight: 1
+      - path: Root/LeftLeg1/RightLeg1
+        weight: 1
+      - path: Root/LeftLeg1/RightLeg1/RightLeg2
+        weight: 1
+      - path: Root/LeftLeg1/RightLeg1/RightLeg2/RightLeg3
+        weight: 1
+      - path: Root/LeftLeg1/RightLeg1/RightLeg2/RightLeg3/RightLeg4
+        weight: 1
+      - path: Root/LeftLeg1/RightLeg1/RightLeg2/RightLeg3/RightLeg4/RightLeg5
+        weight: 1
+      - path: Root/Shoulder
+        weight: 1
+      - path: Root/Shoulder/Head1
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head3
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head3/Head4
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head5
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head5/Head6
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head5/Head6/Head7
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head5/Head8
+        weight: 1
+      - path: Root/Shoulder/Head1/Head2/Head5/Head8/Head9
+        weight: 1
+      - path: Root/Shoulder/LeftWing1
+        weight: 1
+      - path: Root/Shoulder/LeftWing1/LeftWing2
+        weight: 1
+      - path: Root/Shoulder/LeftWing1/LeftWing2/LeftWing3
+        weight: 1
+      - path: Root/Shoulder/LeftWing1/LeftWing2/LeftWing3/LeftWing4
+        weight: 1
+      - path: Root/Shoulder/LeftWing1/LeftWing2/LeftWing3/LeftWing4/LeftWing5
+        weight: 1
+      - path: Root/Shoulder/LeftWing1/LeftWing2/LeftWing3/LeftWing4/LeftWing5/LeftWing6
+        weight: 1
+      - path: Root/Shoulder/RightWing1
+        weight: 1
+      - path: Root/Shoulder/RightWing1/RightWing2
+        weight: 1
+      - path: Root/Shoulder/RightWing1/RightWing2/RightWing3
+        weight: 1
+      - path: Root/Shoulder/RightWing1/RightWing2/RightWing3/RightWing4
+        weight: 1
+      - path: Root/Shoulder/RightWing1/RightWing2/RightWing3/RightWing4/RightWing5
+        weight: 1
+      - path: Root/Shoulder/RightWing1/RightWing2/RightWing3/RightWing4/RightWing5/RightWing6
+        weight: 1
+      - path: Root/Tail1
+        weight: 1
+      - path: Root/Tail1/Tail2
+        weight: 1
+      - path: Root/Tail1/Tail2/Tail3
+        weight: 1
+      - path: Root/Tail1/Tail2/Tail3/Tail4
+        weight: 1
+      - path: Root/Tail1/Tail2/Tail3/Tail4/Tail5
+        weight: 1
+      - path: Root/Tail1/Tail2/Tail3/Tail4/Tail5/Tail6
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .0199999996
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 149
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  additionalBone: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
