@@ -9,11 +9,11 @@ public class AnswerController : MonoBehaviour {
 
     [SerializeField] Cube startCube;
 
-    [SerializeField] Plate startPlate;
+    [SerializeField] Nest startPlate;
 
     [SerializeField] Material[] materials;
 
-    [SerializeField] Plate[] plates;
+    [SerializeField] Nest[] plates;
 
     [SerializeField] Transform cubeParent;
 
@@ -23,7 +23,7 @@ public class AnswerController : MonoBehaviour {
     Cube resultCube;
 
     [SerializeField]
-    Plate resultPlate;
+    Nest resultPlate;
 
     int playCubeCount = 0;
 

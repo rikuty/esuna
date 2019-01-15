@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Plate : MonoBehaviour {
+public class Nest : MonoBehaviour {
 
 
     [SerializeField] MeshRenderer plateRenderer;
@@ -17,8 +17,10 @@ public class Plate : MonoBehaviour {
     {
         this.cubeType = cubeType;
         this.answerIndex = answerIndex;
-        plateRenderer.material = material;
+        //plateRenderer.material = material;
 
+        Quaternion r = this.gameObject.transform.rotation;
+        this.gameObject.transform.rotation = Quaternion.Euler(-30f, r.eulerAngles.y, r.eulerAngles.z);
     }
 
 

@@ -67,7 +67,7 @@ public class Cube : MonoBehaviour {
 
     void OnTriggerEnter(Collider collider)
     {
-        Plate plate = collider.GetComponent<Plate>();
+        Nest plate = collider.GetComponent<Nest>();
         if (plate == null) return;
         if (plate.cubeType == answerType && plate.answerIndex == answerIndex)
         {
