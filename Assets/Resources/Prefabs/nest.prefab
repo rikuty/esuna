@@ -88,6 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4046273399685494}
   - component: {fileID: 205566815675752166}
+  - component: {fileID: 114627785339833334}
   m_Layer: 0
   m_Name: nest
   m_TagString: Untagged
@@ -538,6 +539,18 @@ MeshCollider:
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300020, guid: 0f530b5026c3e2f48a4cdcde328a67b5, type: 3}
+--- !u!114 &114627785339833334
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1632074091645408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901a7acd3a2eccf438cbf3dc86c7cc04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plateRenderer: {fileID: 0}
 --- !u!205 &205566815675752166
 LODGroup:
   m_ObjectHideFlags: 1
