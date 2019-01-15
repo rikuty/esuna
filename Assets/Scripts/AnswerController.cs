@@ -7,7 +7,7 @@ public class AnswerController : MonoBehaviour {
 
     [SerializeField] Material startMaterial;
 
-    [SerializeField] Cube startCube;
+    [SerializeField] Egg startCube;
 
     [SerializeField] Nest startPlate;
 
@@ -20,7 +20,7 @@ public class AnswerController : MonoBehaviour {
     [SerializeField] GameObject objOriginal;
 
     [SerializeField]
-    Cube resultCube;
+    Egg resultCube;
 
     [SerializeField]
     Nest resultPlate;
@@ -47,7 +47,7 @@ public class AnswerController : MonoBehaviour {
     }
 
 
-    void CallbackFromCube(Cube cube)
+    void CallbackFromCube(Egg cube)
     {
         callback(cube.answerType);
 
@@ -69,7 +69,7 @@ public class AnswerController : MonoBehaviour {
         GameObject obj = Instantiate(objOriginal, cubeParent);
         obj.transform.localPosition = Vector3.zero;
         obj.SetActive(true);
-        Cube cube = obj.GetComponent<Cube>();
+        Egg cube = obj.GetComponent<Egg>();
         int num;
         Debug.Log(playCubeCount.ToString());
         if (playCubeCount < 8)

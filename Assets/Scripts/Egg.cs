@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Cube : MonoBehaviour {
+public class Egg : MonoBehaviour {
 
 
     [SerializeField] MeshRenderer cubeRenderer;
@@ -13,7 +13,7 @@ public class Cube : MonoBehaviour {
     [SerializeField] GameObject objCube;
 
 
-    Action<Cube> callback;
+    Action<Egg> callback;
 
 
     [NonSerialized] public DEFINE_APP.ANSWER_TYPE_ENUM answerType;
@@ -28,7 +28,7 @@ public class Cube : MonoBehaviour {
 
 
 
-    public void Init(Action<Cube> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, Material material)
+    public void Init(Action<Egg> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, Material material)
     {
         this.callback = callback;
         this.answerType = cubeType;
