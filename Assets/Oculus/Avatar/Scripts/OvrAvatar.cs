@@ -73,7 +73,7 @@ public class OvrAvatar : MonoBehaviour
 
     public IntPtr sdkAvatar = IntPtr.Zero;
     private HashSet<UInt64> assetLoadingIds = new HashSet<UInt64>();
-    private Dictionary<string, OvrAvatarComponent> trackedComponents =
+    public Dictionary<string, OvrAvatarComponent> trackedComponents =
         new Dictionary<string, OvrAvatarComponent>();
 
     public UnityEvent AssetsDoneLoading = new UnityEvent();
