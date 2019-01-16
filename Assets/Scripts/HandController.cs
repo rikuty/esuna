@@ -22,6 +22,24 @@ public class HandController: MonoBehaviour {
 
     }
 
+    private void Update()
+    {
+        bool canGrab = true;
+        canGrab &= rightHand.isGrabbableTriggerEnter;
+        canGrab &= leftHand.isGrabbableTriggerEnter;
+        canGrab &= rightHand.isGrabberTriggerEnter;
+        canGrab &= leftHand.isGrabberTriggerEnter;
+        if (canGrab)
+        {
+            rightHand.isWrapBegin = true;
+        }
+        else
+        {
+            rightHand.isWrapBegin = false;
+            leftHand.isWrapBegin = false;
+        }
+    }
+
     // Update is called once per frame
     void LateUpdate () {
         if (!isInit && ovrAvatar.trackedComponents.Count != 0)

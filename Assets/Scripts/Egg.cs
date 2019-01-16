@@ -26,7 +26,8 @@ public class Egg : MonoBehaviour {
 
     float deltaTime = 0f;
 
-
+    //bool collisionFromUpper = false;
+    //bool collisionFromLower = false;
 
     public void Init(Action<Egg> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, Material material)
     {
@@ -44,6 +45,7 @@ public class Egg : MonoBehaviour {
         if(deltaTime> TIME_STAY)
         {
             enter = false;
+            //collisionFromUpper = false;
             deltaTime = 0f;
 
             objParticle.SetActive(true);
@@ -65,13 +67,50 @@ public class Egg : MonoBehaviour {
     }
 
 
-    void OnTriggerEnter(Collider collider)
+    void OnCollisionEnter(Collision collision)
     {
-        Nest plate = collider.GetComponent<Nest>();
-        if (plate == null) return;
-        if (plate.cubeType == answerType && plate.answerIndex == answerIndex)
+        //Debug.Log("OnCollisionEnter" + collision.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
+
+        Nest nest = collision.collider.GetComponent<Nest>();
+        if (nest == null) return;
+        if (nest.answerType == answerType 
+            && nest.answerIndex == answerIndex
+            /*&& collisionFromUpper*/)
         {
             enter = true;
         }
+        //collisionFromUpper = false;
+        //collisionFromLower = true;
     }
+
+    //一旦上から入る判定は入れない
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    Nest nest = collision.collider.GetComponent<Nest>();
+    //    if (nest == null) return;
+    //}
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    Debug.Log("OnTriggerEnter" + other.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
+
+    //    if (other.gameObject.name == "nest" && !collisionFromLower)
+    //    {
+    //        collisionFromUpper = true;
+
+    //    }
+    //}
+
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    Debug.Log("OnCollisionExit" + other.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
+
+    //    if (other.gameObject.name == "nest")
+    //    {
+    //        collisionFromUpper = false;
+    //        collisionFromLower = false;
+
+
+    //    }
+    //}
 }

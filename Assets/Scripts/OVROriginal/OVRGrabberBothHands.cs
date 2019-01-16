@@ -69,6 +69,10 @@ public class OVRGrabberBothHands :  MonoBehaviour
     protected Quaternion m_grabbedObjectRotOff;
 	protected Dictionary<OVRGrabbableBothHands, int> m_grabCandidates = new Dictionary<OVRGrabbableBothHands, int>();
 	protected bool operatingWithoutOVRCameraRig = true;
+    protected bool wasWrapBegin = false;
+    public bool isWrapBegin = false;
+    public bool isGrabbableTriggerEnter = false;
+    public bool isGrabberTriggerEnter = false;
 
     /// <summary>
     /// The currently grabbed object.
@@ -145,7 +149,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
         GetComponent<Rigidbody>().MovePosition(destPos);
         GetComponent<Rigidbody>().MoveRotation(destRot);
 
-        if (!m_parentHeldObject && anotherHands != null && anotherHands.m_grabbedObj != null)
+        if (!m_parentHeldObject /*&& anotherHands != null && anotherHands.m_grabbedObj != null*/)
         {               
             MoveGrabbedObject(destPos, destRot);
         }
@@ -157,6 +161,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
 		m_prevFlex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
 
 		CheckForGrabOrRelease(prevFlex);
+        wasWrapBegin = isWrapBegin;
     }
 
     void OnDestroy()
@@ -171,12 +176,22 @@ public class OVRGrabberBothHands :  MonoBehaviour
     {
         // Get the grab trigger
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
-        if (grabbable == null) return;
+        if (grabbable != null)
+        {
+            // Add the grabbable
+            int refCount = 0;
+            m_grabCandidates.TryGetValue(grabbable, out refCount);
+            m_grabCandidates[grabbable] = refCount + 1;
+            isGrabbableTriggerEnter = true;
+            return;
+        }
+        OVRGrabberBothHands grabber = otherCollider.GetComponent<OVRGrabberBothHands>();
+        if(grabber != null)
+        {
+            isGrabberTriggerEnter = true;
+        }
 
-        // Add the grabbable
-        int refCount = 0;
-        m_grabCandidates.TryGetValue(grabbable, out refCount);
-        m_grabCandidates[grabbable] = refCount + 1;
+
     }
 
     void OnTriggerExit(Collider otherCollider)
@@ -185,6 +200,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
         if (grabbable == null) return;
 
         // Remove the grabbable
+        isGrabbableTriggerEnter = false;
         int refCount = 0;
         bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
         if (!found)
@@ -204,11 +220,12 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
     protected void CheckForGrabOrRelease(float prevFlex)
     {
-        if ((m_prevFlex >= grabBegin) && (prevFlex < grabBegin))
+        //if ((m_prevFlex >= grabBegin) && (prevFlex < grabBegin))
+        if (isWrapBegin && !wasWrapBegin)
         {
             GrabBegin();
         }
-        else if ((m_prevFlex <= grabEnd) && (prevFlex > grabEnd))
+        else if (!isWrapBegin && wasWrapBegin)
         {
             GrabEnd();
         }
@@ -249,10 +266,10 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
         if (closestGrabbable != null)
         {
-            //if (closestGrabbable.isGrabbed)
-            //{
-            //    closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
-            //}
+            if (closestGrabbable.isGrabbed)
+            {
+                closestGrabbable.grabbedBy.OffhandGrabbed(closestGrabbable);
+            }
 
             m_grabbedObj = closestGrabbable;
             m_grabbedObj.GrabBegin(this, closestGrabbableCollider);
