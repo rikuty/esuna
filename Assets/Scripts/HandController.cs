@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandController: MonoBehaviour {
+public class HandController: UtilComponent {
 
     [SerializeField] OVRGrabberBothHands rightHand;
     [SerializeField] OVRGrabberBothHands leftHand;
@@ -17,21 +17,35 @@ public class HandController: MonoBehaviour {
 
     private bool isInit = false;
 
-    // Use this for initialization
-    void Start () {
+    System.Action callbackCanGrab;
+    System.Action callbackGrabbing;
 
+    public void Init(System.Action callbackCanGrab, System.Action callbackGrabbing)
+    {
+        this.callbackCanGrab = callbackCanGrab;
+        this.callbackGrabbing = callbackGrabbing;
     }
 
     private void Update()
     {
-        bool canGrab = true;
-        canGrab &= rightHand.isGrabbableTriggerEnter;
-        canGrab &= leftHand.isGrabbableTriggerEnter;
-        canGrab &= rightHand.isGrabberTriggerEnter;
-        canGrab &= leftHand.isGrabberTriggerEnter;
-        if (canGrab)
+        bool canGrabbable = true;
+        canGrabbable &= rightHand.isGrabbableTriggerEnter;
+        canGrabbable &= leftHand.isGrabbableTriggerEnter;
+
+        bool canGrabber = true;
+
+        canGrabber &= rightHand.isGrabberTriggerEnter;
+        canGrabber &= leftHand.isGrabberTriggerEnter;
+
+        if (canGrabber)
+        {
+            callbackCanGrab();
+        }
+
+        if (canGrabber && canGrabbable)
         {
             rightHand.isWrapBegin = true;
+            callbackGrabbing();
         }
         else
         {

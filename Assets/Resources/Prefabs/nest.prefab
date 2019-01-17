@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 4046273399685494}
   - component: {fileID: 205566815675752166}
   - component: {fileID: 65189609544529756}
+  - component: {fileID: 114947396609641184}
   m_Layer: 0
   m_Name: nest
   m_TagString: Untagged
@@ -140,7 +141,7 @@ GameObject:
   - component: {fileID: 4178606000783762}
   - component: {fileID: 64247125751369712}
   - component: {fileID: 54510706275962700}
-  - component: {fileID: 114356998321023612}
+  - component: {fileID: 114950714359031142}
   m_Layer: 0
   m_Name: nest_child
   m_TagString: Untagged
@@ -552,7 +553,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 0.01, z: 1.2}
   m_Center: {x: 0, y: 0.77, z: 0}
---- !u!114 &114356998321023612
+--- !u!114 &114947396609641184
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1632074091645408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 901a7acd3a2eccf438cbf3dc86c7cc04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  childColliderComponent: {fileID: 114950714359031142}
+--- !u!114 &114950714359031142
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -560,7 +573,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1920757785691026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 901a7acd3a2eccf438cbf3dc86c7cc04, type: 3}
+  m_Script: {fileID: 11500000, guid: 10d0141b6c315a44885da23f350dc2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!205 &205566815675752166

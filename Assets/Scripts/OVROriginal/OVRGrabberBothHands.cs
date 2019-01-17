@@ -73,6 +73,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
     public bool isWrapBegin = false;
     public bool isGrabbableTriggerEnter = false;
     public bool isGrabberTriggerEnter = false;
+    public Nest nest;
 
     /// <summary>
     /// The currently grabbed object.
@@ -174,6 +175,12 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
     void OnTriggerEnter(Collider otherCollider)
     {
+        childColliderComponent childColliderComponent = otherCollider.GetComponent<childColliderComponent>();
+        if(childColliderComponent != null)
+        {
+            nest = childColliderComponent.nest;
+        }
+
         // Get the grab trigger
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
         if (grabbable != null)
