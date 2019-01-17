@@ -22,18 +22,14 @@ public class GameController : UtilComponent {
     }
 
 
-	public enum STATUS_ENUM : int{
-		START,
-		COUNT,
-		PLAY,
-        FINISH,
-        SHOW_RESLUT
-	}
-    private STATUS_ENUM currentStatus = STATUS_ENUM.START;
+
+    private DEFINE_APP.STATUS_ENUM currentStatus = DEFINE_APP.STATUS_ENUM.START;
 
     [SerializeField] AnswerController answerController;
 
     [SerializeField] private GameObject avatar;
+
+    [SerializeField] HandController handController;
 
 
     [SerializeField] private CountDownComponent cdComponent;
@@ -75,6 +71,7 @@ public class GameController : UtilComponent {
 
 
         answerController.Init(CallbackFromAnswerControllers);
+        handController.Init(CallbackFromHandCanGrab, CallbackFromHandGrabbing);
         //this.context.Init();
 
         //this.gazeButtonInput.Init(this.context);
@@ -91,13 +88,22 @@ public class GameController : UtilComponent {
         }
 	}
 
-    
+    private void CallbackFromHandCanGrab()
+    {
+        answerController.SetGravity(currentStatus);
+    }
+
+    private void CallbackFromHandGrabbing()
+    {
+        answerController.SetActiveNest(true);
+    }
+
     private void CallbackFromAnswerControllers(DEFINE_APP.ANSWER_TYPE_ENUM answerType)
     {
         switch(answerType)
         {
             case DEFINE_APP.ANSWER_TYPE_ENUM.START:
-                this.currentStatus = STATUS_ENUM.COUNT;
+                this.currentStatus = DEFINE_APP.STATUS_ENUM.COUNT;
                 StartCoroutine(this.SetCountDown());
                 break;
             case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
@@ -139,19 +145,19 @@ public class GameController : UtilComponent {
         //}
 
         switch(this.currentStatus){
-            case STATUS_ENUM.START:
+            case DEFINE_APP.STATUS_ENUM.START:
                 this.UpdateStart();
     			break;
-    		case STATUS_ENUM.COUNT:
+    		case DEFINE_APP.STATUS_ENUM.COUNT:
     			//this.UpdateCount();
     			break;
-    		case STATUS_ENUM.PLAY:
+    		case DEFINE_APP.STATUS_ENUM.PLAY:
     			this.UpdatePlay();
     			break;
-            case STATUS_ENUM.FINISH:
+            case DEFINE_APP.STATUS_ENUM.FINISH:
                 this.UpdateFinish();
                 break;
-            case STATUS_ENUM.SHOW_RESLUT:
+            case DEFINE_APP.STATUS_ENUM.SHOW_RESLUT:
                 this.UpdateShowResult();
                 break;
 		}
@@ -165,7 +171,7 @@ public class GameController : UtilComponent {
 	private void FinishCountDown(){
 		//this.cdCountDown.Init(3f, ()=>
         //{
-        this.currentStatus = STATUS_ENUM.PLAY;
+        this.currentStatus = DEFINE_APP.STATUS_ENUM.PLAY;
         //this.context.StartPlay();
         //this.answerController.Init(this.context);
         //this.answerController.SetAnswers();
@@ -189,7 +195,7 @@ public class GameController : UtilComponent {
         SetLabel(leftTime, context.leftPlayTime.ToString("F0"));
 
         if(!this.context.isPlay){
-            this.currentStatus = STATUS_ENUM.FINISH;
+            this.currentStatus = DEFINE_APP.STATUS_ENUM.FINISH;
             //this.context.Finish();
             return;
         }
@@ -202,11 +208,11 @@ public class GameController : UtilComponent {
             new ResultModalModel(this.context);
 
         resultModalPresenter.Show(model);
-        this.currentStatus = STATUS_ENUM.SHOW_RESLUT;
+        this.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
         SetActive(this.objResult, true);
         SetActive(this.objPlay, false);
 
-        this.currentStatus = STATUS_ENUM.SHOW_RESLUT;
+        this.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
     }
 
     private void UpdateShowResult(){

@@ -12,7 +12,6 @@ public class Egg : MonoBehaviour {
 
     [SerializeField] GameObject objCube;
 
-
     Action<Egg> callback;
 
 
@@ -29,13 +28,13 @@ public class Egg : MonoBehaviour {
     //bool collisionFromUpper = false;
     //bool collisionFromLower = false;
 
-    public void Init(Action<Egg> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, Material material)
+    public void Init(Action<Egg> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex)
     {
         this.callback = callback;
         this.answerType = cubeType;
         this.answerIndex = answerIndex;
-        cubeRenderer.material = material;
-
+        Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
+        rigidBody.useGravity = (cubeType == DEFINE_APP.ANSWER_TYPE_ENUM.PLAY);
     }
 
     // Update is called once per frame
@@ -71,7 +70,7 @@ public class Egg : MonoBehaviour {
     {
         //Debug.Log("OnCollisionEnter" + collision.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
 
-        Nest nest = collision.collider.GetComponent<Nest>();
+        Nest nest = collision.collider.GetComponent<childColliderComponent>().nest;
         if (nest == null) return;
         if (nest.answerType == answerType 
             && nest.answerIndex == answerIndex

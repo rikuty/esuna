@@ -4,7 +4,16 @@ using System.Collections.Generic;
 
 public partial class DEFINE_APP {//ApplictionDefine
 
-	public static class UGUI {
+    public enum STATUS_ENUM : int
+    {
+        START,
+        COUNT,
+        PLAY,
+        FINISH,
+        SHOW_RESLUT
+    }
+
+    public static class UGUI {
 		public enum ANCHOR{ 
 			UpperLeft	= 0,
 			UpperCenter = 1,
