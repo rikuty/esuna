@@ -471,4 +471,24 @@ public class UtilComponent : MonoBehaviour {
 		return null;
 	}
 	#endregion
+
+
+	#region Network
+
+	protected static IEnumerator ConnectAPI(string url, System.Action<string> callback = null){
+		var www = new WWW (url);
+
+		yield return www;
+
+		if(!string.IsNullOrEmpty(www.error)){
+			Debug.LogError("www Error:" + www.error);
+			yield break;
+		}
+
+		if(callback != null){
+			callback (www.text);
+		}
+	}
+
+	#endregion
 }
