@@ -39,18 +39,6 @@ public class Egg : MonoBehaviour {
 
     }
 
-    private void Start()
-    {
-        //StartCoroutine("rigidCoroutine");
-    }
-
-    IEnumerator rigidCoroutine()
-    {
-        yield return new WaitForSeconds(0.01f);
-
-        rigidbody = this.gameObject.GetComponent<Rigidbody>();
-        rigidbody.useGravity = (this.answerType == DEFINE_APP.ANSWER_TYPE_ENUM.PLAY);
-    }
 
     // Update is called once per frame
     void Update () {
@@ -103,8 +91,15 @@ public class Egg : MonoBehaviour {
         if(terrain != null)
         {
             enter = true;
+            deltaTime = 0f;
         }
         
+    }
+
+
+    private void OnCollisionExit(Collision collision)
+    {
+        enter = false;
     }
 
     //一旦上から入る判定は入れない
