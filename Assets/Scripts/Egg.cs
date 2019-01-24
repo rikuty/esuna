@@ -12,11 +12,12 @@ public class Egg : MonoBehaviour {
 
     [SerializeField] GameObject objCube;
 
-    Action<Egg> callback;
+    Action<Egg> callbackAnswer;
 
 
     [NonSerialized] public DEFINE_APP.ANSWER_TYPE_ENUM answerType;
     [NonSerialized] public int answerIndex;
+    [NonSerialized] public Nest touchNest;
 
 
     float TIME_STAY = 1f;
@@ -25,20 +26,35 @@ public class Egg : MonoBehaviour {
 
     float deltaTime = 0f;
 
+    Rigidbody rigidbody;
+
     //bool collisionFromUpper = false;
     //bool collisionFromLower = false;
 
-    public void Init(Action<Egg> callback, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex)
+    public void Init(Action<Egg> callbackAnswer,DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex)
     {
-        this.callback = callback;
+        this.callbackAnswer = callbackAnswer;
         this.answerType = cubeType;
         this.answerIndex = answerIndex;
-        Rigidbody rigidBody = gameObject.GetComponent<Rigidbody>();
-        rigidBody.useGravity = (cubeType == DEFINE_APP.ANSWER_TYPE_ENUM.PLAY);
+
+    }
+
+    private void Start()
+    {
+        //StartCoroutine("rigidCoroutine");
+    }
+
+    IEnumerator rigidCoroutine()
+    {
+        yield return new WaitForSeconds(0.01f);
+
+        rigidbody = this.gameObject.GetComponent<Rigidbody>();
+        rigidbody.useGravity = (this.answerType == DEFINE_APP.ANSWER_TYPE_ENUM.PLAY);
     }
 
     // Update is called once per frame
     void Update () {
+
         if (!enter) return;
         deltaTime += Time.deltaTime;
         if(deltaTime> TIME_STAY)
@@ -62,24 +78,33 @@ public class Egg : MonoBehaviour {
         yield return new WaitForSeconds(1.0f);
 
         gameObject.SetActive(false);
-        callback(this);
+        callbackAnswer(this);
+        Destroy(this.gameObject);
     }
 
 
     void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("OnCollisionEnter" + collision.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
+        //Debug.Log("OnCollisionEnter" + collision.gameObject.name);
+        childColliderComponent childColliderComponent = collision.collider.GetComponent<childColliderComponent>();
+        
+        if (childColliderComponent != null && childColliderComponent.nest != null)
+        {
+            //if (nest.answerType == answerType
+            //    && nest.answerIndex == answerIndex
+            //    /*&& collisionFromUpper*/)
+            //{
+            touchNest = childColliderComponent.nest;
+            enter = true;
+            //}
+        }
 
-        Nest nest = collision.collider.GetComponent<childColliderComponent>().nest;
-        if (nest == null) return;
-        if (nest.answerType == answerType 
-            && nest.answerIndex == answerIndex
-            /*&& collisionFromUpper*/)
+        Terrain terrain = collision.collider.GetComponent<Terrain>();
+        if(terrain != null)
         {
             enter = true;
         }
-        //collisionFromUpper = false;
-        //collisionFromLower = true;
+        
     }
 
     //一旦上から入る判定は入れない

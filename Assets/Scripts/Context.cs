@@ -33,6 +33,13 @@ public class Context
         }
     }
 
+    /// <summary>
+    /// 手を合わせて回答を始めたらtrueになる
+    /// </summary>
+    public bool isAnswering = false;
+
+    public DEFINE_APP.STATUS_ENUM currentStatus;
+
 
     public void AddPlayTime(float deltaTime)
     {

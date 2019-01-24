@@ -7,39 +7,35 @@ using UnityEngine.Serialization;
 public class AnswerController : UtilComponent
 {
 
-    [FormerlySerializedAs("startCube")]
-    [SerializeField] Egg startEgg;
-
-    [FormerlySerializedAs("startPlate")]
     [SerializeField] Nest startNest;
 
     [SerializeField] Material[] materials;
-    [FormerlySerializedAs("plates")]
     [SerializeField] Nest[] nests;
 
-    [SerializeField] Transform cubeParent;
+    [SerializeField] Transform startEggParent;
+    [SerializeField] Transform playEggParent;
+    [SerializeField] Transform resultEggParent;
 
-    [SerializeField] GameObject objOriginal;
-    [FormerlySerializedAs("resultCube")]
     [SerializeField]
-    Egg resultEgg;
-    [FormerlySerializedAs("resultPlate")]
+    Egg currentEgg;
     [SerializeField]
     Nest resultNest;
 
-    int playCubeCount = 0;
+    int playEggCount = 0;
 
     int preNum = 0;
+
+    Context context;
 
 
     Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback;
 
 
-    public void Init(Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback)
+    public void Init(Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback, Context context)
     {
         this.callback = callback;
+        this.context = context;
 
-        startEgg.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.START, -1);
         startNest.Init(DEFINE_APP.ANSWER_TYPE_ENUM.START, -1);
         for (int i = 0; i < nests.Length; i++)
         {
@@ -47,50 +43,82 @@ public class AnswerController : UtilComponent
             SetActive(nests[i].gameObject, false);
         }
 
-        resultEgg.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1);
         resultNest.Init(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1);
     }
 
 
-    void CallbackFromCube(Egg cube)
+    void CallbackFromEggAnswer(Egg egg)
     {
-        callback(cube.answerType);
-
-        switch (cube.answerType)
+        if (egg.touchNest != null
+            && egg.touchNest.answerType == egg.answerType
+            && egg.touchNest.answerIndex == egg.answerIndex)
         {
-            case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
-                InstantiateNewCube();
-                break;
-            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
-                break;
-            case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
-                break;
+            callback(egg.answerType);
+            switch (egg.answerType)
+            {
+                case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+                    InstantiateNewEgg(egg.answerType);
+                    break;
+            }
+            return;
         }
+
+
+        InstantiateNewEgg(egg.answerType);
 
     }
 
 
-    public void InstantiateNewCube()
+    public void InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM answerType)
     {
-        GameObject obj = Instantiate(objOriginal, cubeParent);
+        Transform tr;
+        switch (answerType)
+        {
+            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+                tr = startEggParent;
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
+                tr = resultEggParent;
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+            default:
+                tr = playEggParent;
+                break;
+        }
+
+        GameObject obj = Instantiate(Resources.Load<GameObject>(DEFINE_PREFAB.EGG), tr);
+
         //obj.transform.localPosition = Vector3.zero;
         obj.SetActive(true);
-        Egg cube = obj.GetComponent<Egg>();
+        currentEgg = obj.GetComponent<Egg>();
         int num;
-        //Debug.Log(playCubeCount.ToString());
-        if (playCubeCount < 8)
+        switch (answerType)
         {
-            num = playCubeCount;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+            case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
+                num = -1;
+                break;
+            case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+            default:
+                if (playEggCount < 8)
+                {
+                    num = playEggCount;
+                }
+                else
+                {
+                    num = UnityEngine.Random.Range(0, materials.Length);
+                }
+                SetActive(nests[preNum].gameObject, false);
+                playEggCount++;
+                preNum = num;
+                currentEgg.GetComponent<Rigidbody>().useGravity = true;
+                break;
+
         }
-        else
-        {
-            num = UnityEngine.Random.Range(0, materials.Length);
-        }
-        cube.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.PLAY, num);
-        SetActive(nests[preNum].gameObject, false);
-        //SetActive(nests[num].gameObject, true);
-        playCubeCount++;
-        preNum = num;
+
+        currentEgg.Init(CallbackFromEggAnswer, answerType, num);
+
+        context.isAnswering = false;
     }
 
     public void SetGravity(DEFINE_APP.STATUS_ENUM status)
@@ -98,10 +126,10 @@ public class AnswerController : UtilComponent
         switch (status)
         {
             case DEFINE_APP.STATUS_ENUM.START:
-                startEgg.GetComponent<Rigidbody>().useGravity = true;
+                currentEgg.GetComponent<Rigidbody>().useGravity = true;
                 break;
             case DEFINE_APP.STATUS_ENUM.SHOW_RESLUT:
-                resultEgg.GetComponent<Rigidbody>().useGravity = true;
+                currentEgg.GetComponent<Rigidbody>().useGravity = true;
                 break;
         }
 

@@ -203,6 +203,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
     void OnTriggerExit(Collider otherCollider)
     {
+
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
         if (grabbable == null) return;
 

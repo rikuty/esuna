@@ -6,6 +6,7 @@ public partial class DEFINE_APP {//ApplictionDefine
 
     public enum STATUS_ENUM : int
     {
+        PREPARE,
         START,
         COUNT,
         PLAY,

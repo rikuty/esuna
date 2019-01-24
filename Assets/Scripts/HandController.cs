@@ -17,17 +17,32 @@ public class HandController: UtilComponent {
 
     private bool isInit = false;
 
+    bool isCallbacked = false;
+
     System.Action callbackCanGrab;
     System.Action callbackGrabbing;
 
-    public void Init(System.Action callbackCanGrab, System.Action callbackGrabbing)
+    Context context;
+
+    private bool wasAnswering = false;
+
+    public void Init(System.Action callbackCanGrab, System.Action callbackGrabbing, Context context)
     {
         this.callbackCanGrab = callbackCanGrab;
         this.callbackGrabbing = callbackGrabbing;
+        this.context = context;
     }
 
     private void Update()
     {
+        if (context.currentStatus == DEFINE_APP.STATUS_ENUM.PREPARE) return;
+
+        if (wasAnswering && !context.isAnswering)
+        {
+            rightHand.isGrabberTriggerEnter = false;
+            leftHand.isGrabberTriggerEnter = false;
+        }
+
         bool canGrabbable = true;
         canGrabbable &= rightHand.isGrabbableTriggerEnter;
         canGrabbable &= leftHand.isGrabbableTriggerEnter;
@@ -37,14 +52,21 @@ public class HandController: UtilComponent {
         canGrabber &= rightHand.isGrabberTriggerEnter;
         canGrabber &= leftHand.isGrabberTriggerEnter;
 
-        if (canGrabber)
+
+
+        if (canGrabber && !context.isAnswering)
         {
+            context.isAnswering = true;
+            //rightHand.isGrabberTriggerEnter = false;
+            //leftHand.isGrabberTriggerEnter = false;
             callbackCanGrab();
         }
 
         if (canGrabber && canGrabbable)
         {
             rightHand.isWrapBegin = true;
+            //rightHand.isGrabbableTriggerEnter = false;
+            //leftHand.isGrabbableTriggerEnter = false;
             callbackGrabbing();
         }
         else
@@ -52,6 +74,8 @@ public class HandController: UtilComponent {
             rightHand.isWrapBegin = false;
             leftHand.isWrapBegin = false;
         }
+
+        wasAnswering = context.isAnswering;
     }
 
     // Update is called once per frame
