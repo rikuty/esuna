@@ -182,7 +182,7 @@ public class OVRGazePointer : MonoBehaviour {
 		
         // Move the gaze cursor to keep it in the middle of the view
         transform.position = rayTransform.position + rayTransform.forward * depth;
-
+        //Debug.Log(visibilityStrength);
         // Should we show or hide the gaze cursor?
         if (visibilityStrength == 0 && !hidden)
         {
