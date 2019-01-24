@@ -6,7 +6,7 @@ using System;
 
 namespace Gamestrap
 {
-    public class MainMenuControl : MonoBehaviour
+    public class MainMenuControl : UtilComponent
     {
         private static int visibleVariable = Animator.StringToHash("Visible");
         private static int notifyVariable = Animator.StringToHash("Notify");
@@ -15,9 +15,11 @@ namespace Gamestrap
 
         public Toggle soundToggle, musicToggle;
 
-        public string id;
+        private string userID;
+        private string userName;
         public DateTime dateTime;
-        public Text displayID;
+        public Text txtID;
+        public Text txtName;
 
         public GazeButtonInput gazeButtonInput;
 
@@ -38,9 +40,9 @@ namespace Gamestrap
 
             this.dateTime = DateTime.Now;
             //ID = System.DateTime.Now.ToString("yyMMddHHmm");
-            this.id = this.dateTime.ToString("yyMMddHHmm");
-            this.displayID.text = this.id;
-
+            this.userID = this.dateTime.ToString("yyMMddHHmm");
+            SetLabel(this.txtID, this.userID);
+            SetLabel(this.txtName, this.userName);
             //this.gazeButtonInput.Init(this.context);
 
 
