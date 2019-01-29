@@ -111,7 +111,6 @@ public class AnswerController : UtilComponent
                 SetActive(nests[preNum].gameObject, false);
                 playEggCount++;
                 preNum = num;
-                currentEgg.GetComponent<Rigidbody>().useGravity = true;
                 break;
 
         }
@@ -123,15 +122,8 @@ public class AnswerController : UtilComponent
 
     public void SetGravity(DEFINE_APP.STATUS_ENUM status)
     {
-        switch (status)
-        {
-            case DEFINE_APP.STATUS_ENUM.START:
-                currentEgg.GetComponent<Rigidbody>().useGravity = true;
-                break;
-            case DEFINE_APP.STATUS_ENUM.SHOW_RESLUT:
-                currentEgg.GetComponent<Rigidbody>().useGravity = true;
-                break;
-        }
+        currentEgg.GetComponent<Rigidbody>().useGravity = true;
+
 
     }
 
