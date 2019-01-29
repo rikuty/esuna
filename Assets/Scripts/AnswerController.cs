@@ -108,7 +108,7 @@ public class AnswerController : UtilComponent
                 {
                     num = UnityEngine.Random.Range(0, materials.Length);
                 }
-                SetActive(nests[preNum].gameObject, false);
+                //SetActive(nests[preNum].gameObject, false);
                 playEggCount++;
                 preNum = num;
                 break;

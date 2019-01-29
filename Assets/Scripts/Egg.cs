@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class Egg : MonoBehaviour {
+public class Egg : UtilComponent {
 
 
     [SerializeField] MeshRenderer cubeRenderer;
@@ -53,7 +53,7 @@ public class Egg : MonoBehaviour {
 
             objParticle.SetActive(true);
             objCube.SetActive(false);
-
+            SetActive(touchNest, false);
             StartCoroutine("Coroutine");
         
         }
