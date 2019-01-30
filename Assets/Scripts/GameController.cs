@@ -125,6 +125,7 @@ public class GameController : UtilComponent {
         yield return new WaitForSeconds(2);
 
         this.cdComponent.Init(3.0f, this.FinishCountDown, false);
+        
         SetActive(this.objStart, false);
         SetActive(this.objCountDown, true);
         SetActive(this.objPlay, false);
@@ -214,6 +215,8 @@ public class GameController : UtilComponent {
         SetActive(this.objResult, true);
         SetActive(this.objPlay, false);
         this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT);
+
+        this.context.isAnswering = false;
 
 
         this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;

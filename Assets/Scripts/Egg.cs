@@ -53,7 +53,10 @@ public class Egg : UtilComponent {
 
             objParticle.SetActive(true);
             objCube.SetActive(false);
-            SetActive(touchNest, false);
+            if(touchNest != null)
+            {
+                touchNest.SetActiveNest(false);
+            }
             StartCoroutine("Coroutine");
         
         }

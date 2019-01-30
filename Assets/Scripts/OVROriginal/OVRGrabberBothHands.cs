@@ -351,6 +351,11 @@ public class OVRGrabberBothHands :  MonoBehaviour
         Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
         Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
+        
+        if(grabbedRigidbody == null)
+        {
+            return;
+        }
 
         if (forceTeleport)
         {

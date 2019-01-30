@@ -11,6 +11,7 @@ public class AnswerController : UtilComponent
 
     [SerializeField] Material[] materials;
     [SerializeField] Nest[] nests;
+    [SerializeField] GameObject[] guides;
 
     [SerializeField] Transform startEggParent;
     [SerializeField] Transform playEggParent;
@@ -39,8 +40,8 @@ public class AnswerController : UtilComponent
         startNest.Init(DEFINE_APP.ANSWER_TYPE_ENUM.START, -1);
         for (int i = 0; i < nests.Length; i++)
         {
-            nests[i].Init(DEFINE_APP.ANSWER_TYPE_ENUM.PLAY, i);
-            SetActive(nests[i].gameObject, false);
+            nests[i].Init(DEFINE_APP.ANSWER_TYPE_ENUM.PLAY, i, guides[i]);
+            nests[i].SetActiveNest(false);
         }
 
         resultNest.Init(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1);
@@ -130,6 +131,6 @@ public class AnswerController : UtilComponent
 
     public void SetActiveNest(bool active)
     {
-        SetActive(nests[preNum], active);
+        nests[preNum].SetActiveNest(active);
     }
 }
