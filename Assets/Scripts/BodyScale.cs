@@ -3,6 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using UnityEditor;
+
+[CustomEditor(typeof(BodyScale))]//拡張するクラスを指定
+public class ExampleScriptEditor : Editor
+{
+
+    /// <summary>
+    /// InspectorのGUIを更新
+    /// </summary>
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+
+        //targetを変換して対象を取得
+        BodyScale bodyScale = target as BodyScale;
+
+        //ボタンを表示
+        if (GUILayout.Button("Button"))
+        {
+            bodyScale.CallbackFromButton();
+        }
+    }
+
+}
+
+
 public class BodyScale : UtilComponent {
 
     public Transform back;
@@ -14,37 +40,64 @@ public class BodyScale : UtilComponent {
     /// <summary>
     /// 現在番号
     /// </summary>
-    private Text index;
+    public Text index;
     /// <summary>
     /// 屈曲角度（伸展では使用しない）
     /// </summary>
-    private InputField backRotationX;
+    public InputField backRotationX;
     /// <summary>
     /// ユーザ肩位置
     /// </summary>
-    private InputField shoulderPositionY;
+    public InputField shoulderPositionY;
     /// <summary>
     /// 回旋角度
     /// </summary>
-    private InputField shoulderRotationY;
+    public InputField shoulderRotationY;
     /// <summary>
     /// 伸展角度（肩代償含む）
     /// </summary>
-    private InputField shoulderRotationX;
+    public InputField shoulderRotationX;
     /// <summary>
     /// ユーザ腕リーチ
     /// </summary>
-    private InputField handPositionZ;
+    public InputField handPositionZ;
+
+    /// <summary>
+    /// 屈曲角度（伸展では使用しない）
+    /// </summary>
+    public float strBackRotationX;
+    /// <summary>
+    /// ユーザ肩位置
+    /// </summary>
+    public float strShoulderPositionY;
+    /// <summary>
+    /// 回旋角度
+    /// </summary>
+    public float strShoulderRotationY;
+    /// <summary>
+    /// 伸展角度（肩代償含む）
+    /// </summary>
+    public float strShoulderRotationX;
+    /// <summary>
+    /// ユーザ腕リーチ
+    /// </summary>
+    public float strHandPositionZ;
 
 
     public void SetDisplay(int index)
     {
         SetLabel(this.index, index);
-        backRotationX.text = goalBodyTransformDictionary[index]["back"]["rotation"].x.ToString();
-        shoulderPositionY.text = goalBodyTransformDictionary[index]["shoulder"]["position"].y.ToString();
-        shoulderRotationX.text = goalBodyTransformDictionary[index]["shoulder"]["rotation"].x.ToString();
-        shoulderRotationY.text = goalBodyTransformDictionary[index]["shoulder"]["rotation"].y.ToString();
-        handPositionZ.text = goalBodyTransformDictionary[index]["hand"]["position"].z.ToString();
+        strBackRotationX = goalBodyTransformDictionary[index]["back"]["rotation"].x;
+        strShoulderPositionY = goalBodyTransformDictionary[index]["shoulder"]["position"].y;
+        strShoulderRotationX = goalBodyTransformDictionary[index]["shoulder"]["rotation"].x;
+        strShoulderRotationY = goalBodyTransformDictionary[index]["shoulder"]["rotation"].y;
+        strHandPositionZ = goalBodyTransformDictionary[index]["hand"]["position"].z;
+
+        backRotationX.text = strBackRotationX.ToString();
+        shoulderPositionY.text = strShoulderPositionY.ToString();
+        shoulderRotationX.text = strShoulderRotationX.ToString();
+        shoulderRotationY.text = strShoulderRotationY.ToString();
+        handPositionZ.text = strHandPositionZ.ToString();
     }
 
     public void CallbackFromButton()
@@ -52,17 +105,17 @@ public class BodyScale : UtilComponent {
         Dictionary<string, Vector3> backTransform = new Dictionary<string, Vector3>()
         {
             {"position", new Vector3(0f, 0f, 0f)},
-            {"rotation", new Vector3(float.Parse(backRotationX.text), 0f, 0f)}
+            {"rotation", new Vector3(strBackRotationX, 0f, 0f)}
         };
         Dictionary<string, Vector3> shoulderTransform = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, float.Parse(shoulderPositionY.text), 0f)},
-            {"rotation", new Vector3(float.Parse(shoulderRotationX.text), float.Parse(shoulderRotationY.text), 0f)}
+            {"position", new Vector3(0f, strShoulderPositionY, 0f)},
+            {"rotation", new Vector3(strShoulderRotationX, strShoulderRotationY, 0f)}
         };
 
         Dictionary<string, Vector3> handTransform = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, 0f, float.Parse(handPositionZ.text))},
+            {"position", new Vector3(0f, 0f, strHandPositionZ)},
             {"rotation", new Vector3(0f, 0f, 0f)}
         };
 
@@ -74,6 +127,7 @@ public class BodyScale : UtilComponent {
         };
 
         SetTransform(int.Parse(this.index.text));
+        SetDisplay(int.Parse(this.index.text));
     }
 
 

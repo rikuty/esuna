@@ -125,6 +125,7 @@ public class AnswerController : UtilComponent
 
         
         bodyScale.SetTransform(preNum);
+        bodyScale.SetDisplay(preNum);
         nest.Init(answerType, preNum, guides[preNum-1]);
 
 
