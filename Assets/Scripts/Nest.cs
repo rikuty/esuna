@@ -18,8 +18,8 @@ public class Nest : UtilComponent {
         this.answerIndex = answerIndex;
         this.guide = guide;
 
-        Quaternion r = this.gameObject.transform.rotation;
-        this.gameObject.transform.rotation = Quaternion.Euler(-30f, r.eulerAngles.y, r.eulerAngles.z);
+        //Quaternion r = this.gameObject.transform.rotation;
+        //this.gameObject.transform.rotation = Quaternion.Euler(-30f, r.eulerAngles.y, r.eulerAngles.z);
 
         childColliderComponent.Init(this);
     }

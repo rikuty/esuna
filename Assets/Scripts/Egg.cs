@@ -12,6 +12,8 @@ public class Egg : UtilComponent {
 
     [SerializeField] GameObject objCube;
 
+    [SerializeField] AudioSource audioSource;
+
     Action<Egg> callbackAnswer;
 
 
@@ -53,9 +55,11 @@ public class Egg : UtilComponent {
 
             objParticle.SetActive(true);
             objCube.SetActive(false);
-            if(touchNest != null)
+            if (touchNest != null)
             {
                 touchNest.SetActiveNest(false);
+                audioSource.Play();
+
             }
             StartCoroutine("Coroutine");
         

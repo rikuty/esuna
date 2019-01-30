@@ -215,17 +215,27 @@ public class GameController : UtilComponent {
         this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
         SetActive(this.objResult, true);
         SetActive(this.objPlay, false);
-        this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT);
+        //this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT);
 
         this.context.isAnswering = false;
 
 
         this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
+
+        ResultCoroutine();
     }
 
     private void UpdateShowResult(){
         
     }
+
+    IEnumerator ResultCoroutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+
+        Reload();
+    }
+
 
     public void Reload()
     {
