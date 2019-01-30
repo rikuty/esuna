@@ -65,6 +65,7 @@ public class GameController : UtilComponent {
     {
         yield return new WaitForSeconds(3.0f);
         context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
+        answerController.SetGravity(false);
     }
 
     // Use this for initialization
@@ -92,7 +93,7 @@ public class GameController : UtilComponent {
 
     private void CallbackFromHandCanGrab()
     {
-        answerController.SetGravity(context.currentStatus);
+        answerController.SetGravity(true);
     }
 
     private void CallbackFromHandGrabbing()

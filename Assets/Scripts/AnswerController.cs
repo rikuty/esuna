@@ -121,9 +121,9 @@ public class AnswerController : UtilComponent
         context.isAnswering = false;
     }
 
-    public void SetGravity(DEFINE_APP.STATUS_ENUM status)
+    public void SetGravity(bool active)
     {
-        currentEgg.GetComponent<Rigidbody>().useGravity = true;
+        currentEgg.GetComponent<Rigidbody>().useGravity = active;
 
 
     }
