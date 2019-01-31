@@ -31,6 +31,9 @@ public class OVRGrabberBothHands :  MonoBehaviour
     // Grip trigger thresholds for picking up objects, with some hysteresis.
     public float grabBegin = 0.55f;
     public float grabEnd = 0.35f;
+    public AudioClip audioClip;
+
+    private OVRHapticsClip hapticsClip;
 
     // Demonstrates parenting the held object to the hand's transform when grabbed.
     // When false, the grabbed object is moved every FixedUpdate using MovePosition. 
@@ -130,6 +133,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
                 m_parentTransform.rotation = Quaternion.identity;
             }
         }
+
+        hapticsClip = new OVRHapticsClip(audioClip);
     }
 
 	void FixedUpdate()
@@ -175,6 +180,9 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
     void OnTriggerEnter(Collider otherCollider)
     {
+
+
+
         childColliderComponent childColliderComponent = otherCollider.GetComponent<childColliderComponent>();
         if(childColliderComponent != null)
         {
@@ -185,6 +193,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
         if (grabbable != null)
         {
+
+
             // Add the grabbable
             int refCount = 0;
             m_grabCandidates.TryGetValue(grabbable, out refCount);
@@ -203,6 +213,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
     void OnTriggerExit(Collider otherCollider)
     {
+
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
         if (grabbable == null) return;
 
@@ -244,8 +255,11 @@ public class OVRGrabberBothHands :  MonoBehaviour
         OVRGrabbableBothHands closestGrabbable = null;
         Collider closestGrabbableCollider = null;
 
+        OVRHaptics.RightChannel.Mix(hapticsClip);
+        OVRHaptics.LeftChannel.Mix(hapticsClip);
+
         // Iterate grab candidates and find the closest grabbable candidate
-		foreach (OVRGrabbableBothHands grabbable in m_grabCandidates.Keys)
+        foreach (OVRGrabbableBothHands grabbable in m_grabCandidates.Keys)
         {
             bool canGrab = !(grabbable.isGrabbed && !grabbable.allowOffhandGrab);
             if (!canGrab)
@@ -337,6 +351,11 @@ public class OVRGrabberBothHands :  MonoBehaviour
         Rigidbody grabbedRigidbody = m_grabbedObj.grabbedRigidbody;
         Vector3 grabbablePosition = pos + rot * m_grabbedObjectPosOff;
         Quaternion grabbableRotation = rot * m_grabbedObjectRotOff;
+        
+        if(grabbedRigidbody == null)
+        {
+            return;
+        }
 
         if (forceTeleport)
         {

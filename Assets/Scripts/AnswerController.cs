@@ -7,109 +7,144 @@ using UnityEngine.Serialization;
 public class AnswerController : UtilComponent
 {
 
-    [FormerlySerializedAs("startCube")]
-    [SerializeField] Egg startEgg;
-
-    [FormerlySerializedAs("startPlate")]
     [SerializeField] Nest startNest;
 
     [SerializeField] Material[] materials;
-    [FormerlySerializedAs("plates")]
-    [SerializeField] Nest[] nests;
+    [SerializeField] Nest nest;
+    [SerializeField] GameObject[] guides;
 
-    [SerializeField] Transform cubeParent;
+    [SerializeField] Transform startEggParent;
+    [SerializeField] Transform playEggParent;
+    [SerializeField] Transform resultEggParent;
 
-    [SerializeField] GameObject objOriginal;
-    [FormerlySerializedAs("resultCube")]
-    [SerializeField]
-    Egg resultEgg;
-    [FormerlySerializedAs("resultPlate")]
-    [SerializeField]
-    Nest resultNest;
+    [SerializeField] Egg currentEgg;
+    [SerializeField] Nest resultNest;
 
-    int playCubeCount = 0;
+    [SerializeField] BodyScale bodyScale;
+
+
+
+    int playEggCount = 1;
 
     int preNum = 0;
+
+    Context context;
 
 
     Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback;
 
 
-    public void Init(Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback)
+    public void Init(Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback, Context context)
     {
         this.callback = callback;
-
-        startEgg.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.START, -1);
-        startNest.Init(DEFINE_APP.ANSWER_TYPE_ENUM.START, -1);
-        for (int i = 0; i < nests.Length; i++)
-        {
-            nests[i].Init(DEFINE_APP.ANSWER_TYPE_ENUM.PLAY, i);
-            SetActive(nests[i].gameObject, false);
-        }
-
-        resultEgg.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1);
-        resultNest.Init(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT, -1);
-    }
-
-
-    void CallbackFromCube(Egg cube)
-    {
-        callback(cube.answerType);
-
-        switch (cube.answerType)
-        {
-            case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
-                InstantiateNewCube();
-                break;
-            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
-                break;
-            case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
-                break;
-        }
+        this.context = context;
 
     }
 
 
-    public void InstantiateNewCube()
+    void CallbackFromEggAnswer(Egg egg)
     {
-        GameObject obj = Instantiate(objOriginal, cubeParent);
-        //obj.transform.localPosition = Vector3.zero;
+        if (egg.touchNest != null)
+        {
+            switch (egg.answerType)
+            {
+                case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+                    if(egg.answerIndex == 8)
+                    {
+                        callback(egg.answerType);
+                    }
+                    else
+                    {
+                        InstantiateNewEgg(egg.answerType);
+                    }
+                    break;
+                case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+                    callback(egg.answerType);
+                    InstantiateNewEgg(egg.answerType);
+                    break;
+            }
+            return;
+        }
+
+
+        InstantiateNewEgg(egg.answerType,true);
+
+    }
+
+
+    public void InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM answerType, bool replay = false)
+    {
+        //Transform tr;
+        //switch (answerType)
+        //{
+        //    case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+        //        tr = startEggParent;
+        //        break;
+        //    case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
+        //        tr = resultEggParent;
+        //        break;
+        //    case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+        //    default:
+        //        tr = playEggParent;
+        //        break;
+        //}
+
+        GameObject obj = Instantiate(Resources.Load<GameObject>(DEFINE_PREFAB.EGG), playEggParent);
         obj.SetActive(true);
-        Egg cube = obj.GetComponent<Egg>();
-        int num;
-        //Debug.Log(playCubeCount.ToString());
-        if (playCubeCount < 8)
+        currentEgg = obj.GetComponent<Egg>();
+        //if(preNum > 0)
+        //{
+        //    SetActive(guides[preNum-1], false);
+        //}
+
+        if (!replay)
         {
-            num = playCubeCount;
+
+            int num;
+            switch (answerType)
+            {
+                case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+                case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
+                case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
+                default:
+                    if (playEggCount <= 8)
+                    {
+                        num = playEggCount;
+                    }
+                    else
+                    {
+                        num = UnityEngine.Random.Range(1, 9);
+                    }
+
+                    playEggCount++;
+                    preNum = num;
+                    break;
+
+            }
         }
-        else
-        {
-            num = UnityEngine.Random.Range(0, materials.Length);
-        }
-        cube.Init(CallbackFromCube, DEFINE_APP.ANSWER_TYPE_ENUM.PLAY, num);
-        SetActive(nests[preNum].gameObject, false);
-        //SetActive(nests[num].gameObject, true);
-        playCubeCount++;
-        preNum = num;
+
+        
+        bodyScale.SetTransform(preNum);
+        bodyScale.SetDisplay(preNum);
+        nest.Init(answerType, preNum, guides[preNum-1]);
+
+
+        currentEgg.Init(CallbackFromEggAnswer, answerType, preNum);
+
+
+        context.isAnswering = false;
     }
 
-    public void SetGravity(DEFINE_APP.STATUS_ENUM status)
+    public void SetGravity(bool active)
     {
-        switch (status)
-        {
-            case DEFINE_APP.STATUS_ENUM.START:
-                startEgg.GetComponent<Rigidbody>().useGravity = true;
-                break;
-            case DEFINE_APP.STATUS_ENUM.SHOW_RESLUT:
-                resultEgg.GetComponent<Rigidbody>().useGravity = true;
-                break;
-        }
+        currentEgg.GetComponent<Rigidbody>().useGravity = active;
+
 
     }
 
 
     public void SetActiveNest(bool active)
     {
-        SetActive(nests[preNum], active);
+        nest.SetActiveNest(active);
     }
 }

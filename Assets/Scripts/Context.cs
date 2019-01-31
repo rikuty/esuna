@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class Context
 {
-    public readonly float PLAY_TIME = 40.0f;
+    public readonly float PLAY_TIME = 10.0f;
 
     public float currentPlayTime { get; private set; }
 
@@ -32,6 +32,13 @@ public class Context
             return currentPlayTime < PLAY_TIME;
         }
     }
+
+    /// <summary>
+    /// 手を合わせて回答を始めたらtrueになる
+    /// </summary>
+    public bool isAnswering = false;
+
+    public DEFINE_APP.STATUS_ENUM currentStatus;
 
 
     public void AddPlayTime(float deltaTime)

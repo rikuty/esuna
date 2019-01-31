@@ -22,9 +22,6 @@ public class GameController : UtilComponent {
     }
 
 
-
-    private DEFINE_APP.STATUS_ENUM currentStatus = DEFINE_APP.STATUS_ENUM.START;
-
     [SerializeField] AnswerController answerController;
 
     [SerializeField] private GameObject avatar;
@@ -58,21 +55,27 @@ public class GameController : UtilComponent {
     [SerializeField] private ResultModalPresenter resultModalPresenter;
 
 
-    //[SerializeField] private StartObject startObject;
+    private void Awake()
+    {
+        context.currentStatus = DEFINE_APP.STATUS_ENUM.PREPARE;
+        StartCoroutine("PrepareCoroutine");
+    }
 
-	// Use this for initialization
-	private void Start () {
-        //this.answerController.Init(this.context, CallbackCut);
-        //this.sordCotroller.Init(this.context);
+    IEnumerator PrepareCoroutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+        context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
+        answerController.SetGravity(false);
+    }
 
-        //startObject = ResourceLoader.Instance.Create<StartObject>("Prefabs/CubeStart", trStart);
-        //this.startObject.Init(this.context, CallBackStartCut);
-        //startObject.cutEvent += CallBackStartCut;
+    // Use this for initialization
+    private void Start () {
 
 
-        answerController.Init(CallbackFromAnswerControllers);
-        handController.Init(CallbackFromHandCanGrab, CallbackFromHandGrabbing);
+        answerController.Init(CallbackFromAnswerControllers, context);
+        handController.Init(CallbackFromHandCanGrab, CallbackFromHandGrabbing, context);
         //this.context.Init();
+        this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.START);
 
         //this.gazeButtonInput.Init(this.context);
 
@@ -90,7 +93,7 @@ public class GameController : UtilComponent {
 
     private void CallbackFromHandCanGrab()
     {
-        answerController.SetGravity(currentStatus);
+        answerController.SetGravity(true);
     }
 
     private void CallbackFromHandGrabbing()
@@ -103,7 +106,7 @@ public class GameController : UtilComponent {
         switch(answerType)
         {
             case DEFINE_APP.ANSWER_TYPE_ENUM.START:
-                this.currentStatus = DEFINE_APP.STATUS_ENUM.COUNT;
+                this.context.currentStatus = DEFINE_APP.STATUS_ENUM.COUNT;
                 StartCoroutine(this.SetCountDown());
                 break;
             case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
@@ -123,6 +126,7 @@ public class GameController : UtilComponent {
         yield return new WaitForSeconds(2);
 
         this.cdComponent.Init(3.0f, this.FinishCountDown, false);
+        
         SetActive(this.objStart, false);
         SetActive(this.objCountDown, true);
         SetActive(this.objPlay, false);
@@ -144,7 +148,7 @@ public class GameController : UtilComponent {
         //    //this.context.SetLongSord(false);
         //}
 
-        switch(this.currentStatus){
+        switch(this.context.currentStatus){
             case DEFINE_APP.STATUS_ENUM.START:
                 this.UpdateStart();
     			break;
@@ -171,7 +175,7 @@ public class GameController : UtilComponent {
 	private void FinishCountDown(){
 		//this.cdCountDown.Init(3f, ()=>
         //{
-        this.currentStatus = DEFINE_APP.STATUS_ENUM.PLAY;
+        this.context.currentStatus = DEFINE_APP.STATUS_ENUM.PLAY;
         //this.context.StartPlay();
         //this.answerController.Init(this.context);
         //this.answerController.SetAnswers();
@@ -179,7 +183,7 @@ public class GameController : UtilComponent {
         //CallSwitchInvoke();
         //Invoke("CallSwitchInvoke", 0.5f);
 
-        this.answerController.InstantiateNewCube();
+        this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.PLAY);
 
         SetActive(this.objStart, false);
         SetActive(this.objCountDown, false);
@@ -195,7 +199,7 @@ public class GameController : UtilComponent {
         SetLabel(leftTime, context.leftPlayTime.ToString("F0"));
 
         if(!this.context.isPlay){
-            this.currentStatus = DEFINE_APP.STATUS_ENUM.FINISH;
+            this.context.currentStatus = DEFINE_APP.STATUS_ENUM.FINISH;
             //this.context.Finish();
             return;
         }
@@ -208,16 +212,30 @@ public class GameController : UtilComponent {
             new ResultModalModel(this.context);
 
         resultModalPresenter.Show(model);
-        this.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
+        this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
         SetActive(this.objResult, true);
         SetActive(this.objPlay, false);
+        //this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT);
 
-        this.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
+        this.context.isAnswering = false;
+
+
+        this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
+
+        ResultCoroutine();
     }
 
     private void UpdateShowResult(){
         
     }
+
+    IEnumerator ResultCoroutine()
+    {
+        yield return new WaitForSeconds(10.0f);
+
+        Reload();
+    }
+
 
     public void Reload()
     {
