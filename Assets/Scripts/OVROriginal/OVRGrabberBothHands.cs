@@ -133,8 +133,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
                 m_parentTransform.rotation = Quaternion.identity;
             }
         }
-        
-        //hapticsClip = new OVRHapticsClip(audioClip);
+
+        hapticsClip = new OVRHapticsClip(audioClip);
     }
 
 	void FixedUpdate()
@@ -255,8 +255,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
         OVRGrabbableBothHands closestGrabbable = null;
         Collider closestGrabbableCollider = null;
 
-        //OVRHaptics.RightChannel.Mix(hapticsClip);
-        //OVRHaptics.LeftChannel.Mix(hapticsClip);
+        OVRHaptics.RightChannel.Mix(hapticsClip);
+        OVRHaptics.LeftChannel.Mix(hapticsClip);
 
         // Iterate grab candidates and find the closest grabbable candidate
         foreach (OVRGrabbableBothHands grabbable in m_grabCandidates.Keys)
