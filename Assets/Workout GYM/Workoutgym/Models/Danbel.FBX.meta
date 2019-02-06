@@ -1,0 +1,134 @@
+fileFormatVersion: 2
+guid: ade22426eb898d44abe7455c6c3530a6
+timeCreated: 1433345620
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Cylinder059
+    100002: //RootNode
+    100004: Dnabel
+    100006: 2eden
+    100008: 3wamed
+    100010: 9ffat
+    100012: Black
+    100014: dnabel001
+    100016: Msamer
+    100018: Danbels
+    100020: Hands
+    100022: Holders
+    100024: PackBlack
+    100026: PackWhite
+    400000: Cylinder059
+    400002: //RootNode
+    400004: Dnabel
+    400006: 2eden
+    400008: 3wamed
+    400010: 9ffat
+    400012: Black
+    400014: dnabel001
+    400016: Msamer
+    400018: Danbels
+    400020: Hands
+    400022: Holders
+    400024: PackBlack
+    400026: PackWhite
+    2300000: Cylinder059
+    2300002: Dnabel
+    2300004: 2eden
+    2300006: 3wamed
+    2300008: 9ffat
+    2300010: Black
+    2300012: dnabel001
+    2300014: Msamer
+    2300016: Danbels
+    2300018: Hands
+    2300020: Holders
+    2300022: PackBlack
+    2300024: PackWhite
+    3300000: Cylinder059
+    3300002: Dnabel
+    3300004: 2eden
+    3300006: 3wamed
+    3300008: 9ffat
+    3300010: Black
+    3300012: dnabel001
+    3300014: Msamer
+    3300016: Danbels
+    3300018: Hands
+    3300020: Holders
+    3300022: PackBlack
+    3300024: PackWhite
+    4300000: Cylinder059
+    4300002: Dnabel
+    4300004: 3wamed
+    4300006: 9ffat
+    4300008: Black
+    4300010: Msamer
+    4300012: 2eden
+    4300014: dnabel001
+    4300016: PackWhite
+    4300018: Holders
+    4300020: PackBlack
+    4300022: Hands
+    4300024: Danbels
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,128 @@
+fileFormatVersion: 2
+guid: 8dd5aef0d5d580740b38eda2b06a0dab
+timeCreated: 1433570811
+licenseType: Store
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: 7daed
+    100002: 7wamel
+    100004: Kbse
+    100006: Krse
+    100008: //RootNode
+    100010: Msamer
+    100012: Mskat
+    100014: Mskat2
+    100016: Mskat3
+    100018: Rjlen
+    100020: Rjlen2
+    100022: Wznat
+    100024: Wznat2
+    400000: 7daed
+    400002: 7wamel
+    400004: Kbse
+    400006: Krse
+    400008: //RootNode
+    400010: Msamer
+    400012: Mskat
+    400014: Mskat2
+    400016: Mskat3
+    400018: Rjlen
+    400020: Rjlen2
+    400022: Wznat
+    400024: Wznat2
+    2300000: 7daed
+    2300002: 7wamel
+    2300004: Kbse
+    2300006: Krse
+    2300008: Msamer
+    2300010: Mskat
+    2300012: Mskat2
+    2300014: Mskat3
+    2300016: Rjlen
+    2300018: Rjlen2
+    2300020: Wznat
+    2300022: Wznat2
+    3300000: 7daed
+    3300002: 7wamel
+    3300004: Kbse
+    3300006: Krse
+    3300008: Msamer
+    3300010: Mskat
+    3300012: Mskat2
+    3300014: Mskat3
+    3300016: Rjlen
+    3300018: Rjlen2
+    3300020: Wznat
+    3300022: Wznat2
+    4300000: Krse
+    4300002: 7daed
+    4300004: Rjlen
+    4300006: Rjlen2
+    4300008: Mskat3
+    4300010: Mskat
+    4300012: Mskat2
+    4300014: Kbse
+    4300016: Msamer
+    4300018: 7wamel
+    4300020: Wznat2
+    4300022: Wznat
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
