@@ -14,7 +14,8 @@ public class MainMenuController : UtilComponent
     public Text txtID;
     public Text txtName;
 
-    public HandController handController;
+    //public HandController handController;
+    public PanelButtonComponent panelButtonComponent;
 
     private GameData gameData;
 
@@ -28,8 +29,8 @@ public class MainMenuController : UtilComponent
         SetLabel(this.txtID, this.userID);
         SetLabel(this.txtName, this.userName);
 
-        handController.Init(LoadMain);
-
+        //handController.Init(LoadMain);
+        panelButtonComponent.Init(LoadMain);
     }
 
     public void LoadMain()

@@ -5,139 +5,59 @@ using System;
 
 public class PanelButtonComponent : UtilComponent
 {
+    [SerializeField] Animator animator;
+    [SerializeField] GameObject objRightHand;
+    [SerializeField] GameObject objLeftHand;
 
+    [SerializeField] Material defaultMaterial;
+    [SerializeField] Material changeMaterial;
+    [SerializeField] Material changeMaterial2;
 
-    [SerializeField] MeshRenderer cubeRenderer;
+    Action callback;
 
-    [SerializeField] GameObject objParticle;
-
-    [SerializeField] GameObject objCube;
-
-    [SerializeField] AudioSource audioSource;
-
-    Action<PanelButtonComponent> callbackAnswer;
-
-
-    [NonSerialized] public DEFINE_APP.ANSWER_TYPE_ENUM answerType;
-    [NonSerialized] public int answerIndex;
-    [NonSerialized] public Nest touchNest;
-
-
-    float TIME_STAY = 1f;
-
-    bool enter = false;
-
-    float deltaTime = 0f;
-
-    //Rigidbody rigidbody;
-    //bool collisionFromUpper = false;
-    //bool collisionFromLower = false;
-
-    public void Init(Action<PanelButtonComponent> callbackAnswer, DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex)
+    bool isTouch = false;
+    float posZbase = 0;
+    float posZcheck = 0;
+    
+    public void Init(Action callback)
     {
-        this.callbackAnswer = callbackAnswer;
-        this.answerType = cubeType;
-        this.answerIndex = answerIndex;
-
+        this.callback = callback;
     }
-
+    
 
     // Update is called once per frame
     void Update()
     {
-
-        if (!enter) return;
-        deltaTime += Time.deltaTime;
-        if (deltaTime > TIME_STAY)
+        if (isTouch)
         {
-            enter = false;
-            //collisionFromUpper = false;
-            deltaTime = 0f;
-
-            objParticle.SetActive(true);
-            objCube.SetActive(false);
-            if (touchNest != null)
+            posZcheck = objRightHand.transform.position.z - posZbase;
+            if (posZcheck > 0.1f)
             {
-                touchNest.SetActiveNest(false);
-                audioSource.Play();
-
+                //cubeRenderer.material = changeMaterial2;
+                animator.SetTrigger("PushTrigger");
             }
-            StartCoroutine("Coroutine");
-
         }
-
     }
-
-
-    IEnumerator Coroutine()
-    {
-        yield return new WaitForSeconds(1.0f);
-
-        gameObject.SetActive(false);
-        callbackAnswer(this);
-        Destroy(this.gameObject);
-    }
-
-
+    
     void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log("OnCollisionEnter" + collision.gameObject.name);
-        childColliderComponent childColliderComponent = collision.collider.GetComponent<childColliderComponent>();
+        animator.SetTrigger("TouchTrigger");
+        isTouch = true;
 
-        if (childColliderComponent != null && childColliderComponent.nest != null)
-        {
-            //if (nest.answerType == answerType
-            //    && nest.answerIndex == answerIndex
-            //    /*&& collisionFromUpper*/)
-            //{
-            touchNest = childColliderComponent.nest;
-            enter = true;
-            //}
-        }
-
-        Terrain terrain = collision.collider.GetComponent<Terrain>();
-        if (terrain != null)
-        {
-            enter = true;
-            deltaTime = 0f;
-        }
-
+        //とりあえず右手で判定
+        posZbase = objRightHand.transform.position.z;
     }
 
-
-    private void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
-        enter = false;
+        animator.SetTrigger("BackStateTrigger");
+        isTouch = false;
+        posZbase = 0;
+        posZcheck = 0;
     }
 
-    //一旦上から入る判定は入れない
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    Nest nest = collision.collider.GetComponent<Nest>();
-    //    if (nest == null) return;
-    //}
-
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log("OnTriggerEnter" + other.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
-
-    //    if (other.gameObject.name == "nest" && !collisionFromLower)
-    //    {
-    //        collisionFromUpper = true;
-
-    //    }
-    //}
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    Debug.Log("OnCollisionExit" + other.gameObject.name + collisionFromUpper.ToString() + collisionFromLower.ToString());
-
-    //    if (other.gameObject.name == "nest")
-    //    {
-    //        collisionFromUpper = false;
-    //        collisionFromLower = false;
-
-
-    //    }
-    //}
+    void ButtonPushedCallback() {
+        //Debug.Log("ButtonPushedCallback");
+        this.callback();
+    }
 }

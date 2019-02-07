@@ -71,8 +71,9 @@ public class HandController: UtilComponent {
         //  タイトルシーンでの処理
         if (isCollisionStartCube && !finishTitleScene)
         {
+            //Debug.Log("Collision Start");
             finishTitleScene = true;
-            callbackCollision();
+            //callbackCollision();
         }
 
         if (context == null) return;
