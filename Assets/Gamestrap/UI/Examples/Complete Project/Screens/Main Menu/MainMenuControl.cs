@@ -85,9 +85,9 @@ namespace Gamestrap
 
         private void Update()
         {
-            bool result = OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger) || OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger);
-            if (result)
-                PlayClick();
+            //bool result = OVRInput.GetDown(OVRInput.Button.PrimaryHandTrigger) || OVRInput.GetDown(OVRInput.Button.SecondaryHandTrigger);
+            //if (result)
+            //    PlayClick();
         }
 
         public void AchievementsClick()

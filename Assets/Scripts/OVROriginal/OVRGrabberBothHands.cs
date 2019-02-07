@@ -78,6 +78,9 @@ public class OVRGrabberBothHands :  MonoBehaviour
     public bool isGrabberTriggerEnter = false;
     public Nest nest;
 
+    public bool isCollisionEnter = false;
+    public string collisionObjName;
+
     /// <summary>
     /// The currently grabbed object.
     /// </summary>
@@ -178,6 +181,19 @@ public class OVRGrabberBothHands :  MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        isCollisionEnter = true;
+        collisionObjName = collision.collider.gameObject.name;
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        isCollisionEnter = false;
+    }
+
+
     void OnTriggerEnter(Collider otherCollider)
     {
 
@@ -188,6 +204,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
         {
             nest = childColliderComponent.nest;
         }
+
+        
 
         // Get the grab trigger
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();

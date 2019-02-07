@@ -24,7 +24,11 @@ public class HandController: UtilComponent {
 
     Context context;
 
+    System.Action callbackCollision;
+
     private bool wasAnswering = false;
+
+    bool finishTitleScene = false;
 
     public void Init(System.Action callbackCanGrab, System.Action callbackGrabbing, Context context)
     {
@@ -33,9 +37,15 @@ public class HandController: UtilComponent {
         this.context = context;
     }
 
+    public void Init(System.Action callbackCollision)
+    {
+        this.callbackCollision = callbackCollision;
+    }
+
     private void Update()
     {
-        if (context.currentStatus == DEFINE_APP.STATUS_ENUM.PREPARE) return;
+
+
 
         if (wasAnswering && !context.isAnswering)
         {
@@ -53,7 +63,19 @@ public class HandController: UtilComponent {
         canGrabber &= leftHand.isGrabberTriggerEnter;
 
 
+        bool isCollisionStartCube = false;
 
+        isCollisionStartCube |= rightHand.isCollisionEnter && rightHand.collisionObjName == "Cube";
+        isCollisionStartCube |= leftHand.isCollisionEnter && leftHand.collisionObjName == "Cube";
+
+        //  タイトルシーンでの処理
+        if (isCollisionStartCube && !finishTitleScene)
+        {
+            finishTitleScene = true;
+            callbackCollision();
+        }
+
+        if (context == null) return;
         if (canGrabber && !context.isAnswering)
         {
             context.isAnswering = true;
@@ -90,4 +112,7 @@ public class HandController: UtilComponent {
             leftHandCollider.sharedMesh = leftSkinnedMeshRenderer.sharedMesh;
         }
 	}
+
+
+    
 }
