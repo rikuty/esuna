@@ -145,6 +145,10 @@ public class AnswerController : UtilComponent
 
     public void SetActiveNest(bool active)
     {
+        foreach(GameObject obj in guides)
+        {
+            SetActive(obj, false);
+        }
         nest.SetActiveNest(active);
     }
 }

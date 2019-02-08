@@ -641,14 +641,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 299570108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.5, y: 0, z: 0, w: 0.8660254}
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 190098861}
   m_Father: {fileID: 1514448693}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!1 &317059350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,11 +1374,11 @@ MeshCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 428384072}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: -2
+  m_Convex: 1
+  m_CookingOptions: -1
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 0}
 --- !u!64 &428384078
@@ -3286,6 +3286,22 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1027081838721524, guid: b53644a7444131f4491ece0e830a8471, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804246110419024, guid: b53644a7444131f4491ece0e830a8471, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804246110419024, guid: b53644a7444131f4491ece0e830a8471, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4804246110419024, guid: b53644a7444131f4491ece0e830a8471, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b53644a7444131f4491ece0e830a8471, type: 2}
   m_IsPrefabAsset: 0
@@ -3331,10 +3347,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4046273399685494, guid: 97073dddfaba85849b5e6d65259b2fb7, type: 2}
       propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1632074091645408, guid: 97073dddfaba85849b5e6d65259b2fb7, type: 2}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

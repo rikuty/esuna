@@ -205,7 +205,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
             nest = childColliderComponent.nest;
         }
 
-        
+        isGrabberTriggerEnter = true;
+
 
         // Get the grab trigger
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
@@ -220,11 +221,10 @@ public class OVRGrabberBothHands :  MonoBehaviour
             isGrabbableTriggerEnter = true;
             return;
         }
-        OVRGrabberBothHands grabber = otherCollider.GetComponent<OVRGrabberBothHands>();
-        if(grabber != null)
-        {
-            isGrabberTriggerEnter = true;
-        }
+        //OVRGrabberBothHands grabber = otherCollider.GetComponent<OVRGrabberBothHands>();
+        //if(grabber != null)
+        //{
+        //}
 
 
     }
@@ -289,13 +289,16 @@ public class OVRGrabberBothHands :  MonoBehaviour
             {
                 Collider grabbableCollider = grabbable.grabPoints[j];
                 // Store the closest grabbable
-                Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
-                float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
-                if (grabbableMagSq < closestMagSq)
+                if (grabbableCollider != null)
                 {
-                    closestMagSq = grabbableMagSq;
-                    closestGrabbable = grabbable;
-                    closestGrabbableCollider = grabbableCollider;
+                    Vector3 closestPointOnBounds = grabbableCollider.ClosestPointOnBounds(m_gripTransform.position);
+                    float grabbableMagSq = (m_gripTransform.position - closestPointOnBounds).sqrMagnitude;
+                    if (grabbableMagSq < closestMagSq)
+                    {
+                        closestMagSq = grabbableMagSq;
+                        closestGrabbable = grabbable;
+                        closestGrabbableCollider = grabbableCollider;
+                    }
                 }
             }
         }

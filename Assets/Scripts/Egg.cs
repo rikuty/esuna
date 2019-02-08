@@ -99,8 +99,36 @@ public class Egg : UtilComponent {
         {
             enter = true;
             deltaTime = 0f;
+            touchNest = null;
         }
         
+    }
+
+
+    void OnTriggerEnter(Collider otherCollider)
+    {
+        //Debug.Log("OnCollisionEnter" + collision.gameObject.name);
+        childColliderComponent childColliderComponent = otherCollider.GetComponent<childColliderComponent>();
+
+        if (childColliderComponent != null && childColliderComponent.nest != null)
+        {
+            //if (nest.answerType == answerType
+            //    && nest.answerIndex == answerIndex
+            //    /*&& collisionFromUpper*/)
+            //{
+            touchNest = childColliderComponent.nest;
+            enter = true;
+            //}
+        }
+
+        Terrain terrain = otherCollider.GetComponent<Terrain>();
+        if (terrain != null)
+        {
+            enter = true;
+            deltaTime = 0f;
+            touchNest = null;
+        }
+
     }
 
 

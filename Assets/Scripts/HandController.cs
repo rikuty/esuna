@@ -53,14 +53,14 @@ public class HandController: UtilComponent {
             leftHand.isGrabberTriggerEnter = false;
         }
 
-        bool canGrabbable = true;
-        canGrabbable &= rightHand.isGrabbableTriggerEnter;
-        canGrabbable &= leftHand.isGrabbableTriggerEnter;
+        bool canGrabbable = false;
+        canGrabbable |= rightHand.isGrabbableTriggerEnter;
+        canGrabbable |= leftHand.isGrabbableTriggerEnter;
 
-        bool canGrabber = true;
+        bool canGrabber = false;
 
-        canGrabber &= rightHand.isGrabberTriggerEnter;
-        canGrabber &= leftHand.isGrabberTriggerEnter;
+        canGrabber |= rightHand.isGrabberTriggerEnter;
+        canGrabber |= leftHand.isGrabberTriggerEnter;
 
 
         bool isCollisionStartCube = false;
@@ -86,7 +86,14 @@ public class HandController: UtilComponent {
 
         if (canGrabber && canGrabbable)
         {
-            rightHand.isWrapBegin = true;
+            if (rightHand.isGrabberTriggerEnter)
+            {
+                rightHand.isWrapBegin = true;
+            }
+            else if (leftHand.isGrabbableTriggerEnter)
+            {
+                leftHand.isWrapBegin = true;
+            }
             //rightHand.isGrabbableTriggerEnter = false;
             //leftHand.isGrabbableTriggerEnter = false;
             callbackGrabbing();
