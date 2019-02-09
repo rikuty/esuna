@@ -98,7 +98,7 @@ public class GameController : UtilComponent {
 
     private void CallbackFromHandGrabbing()
     {
-        answerController.SetActiveNest(true);
+        //answerController.SetActiveNest(true);
     }
 
     private void CallbackFromAnswerControllers(DEFINE_APP.ANSWER_TYPE_ENUM answerType)

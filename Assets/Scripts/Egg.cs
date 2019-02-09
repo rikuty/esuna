@@ -22,7 +22,7 @@ public class Egg : UtilComponent {
     [NonSerialized] public Nest touchNest;
 
 
-    float TIME_STAY = 1f;
+    float TIME_STAY = 0f;
 
     bool enter = false;
 

@@ -128,6 +128,8 @@ public class AnswerController : UtilComponent
         bodyScale.SetDisplay(preNum);
         nest.Init(answerType, preNum, guides[preNum-1]);
 
+        SetActiveNest(true);
+
 
         currentEgg.Init(CallbackFromEggAnswer, answerType, preNum);
 
