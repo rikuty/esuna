@@ -159,7 +159,7 @@ public class BodyScale : UtilComponent {
 
         Dictionary<string, Vector3> handTransform1 = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, 0f, 0.7f)},
+            {"position", new Vector3(0f, 0f, 0.8f)},
             {"rotation", new Vector3(0f, 0f, -90f)}
         };
 
@@ -183,7 +183,7 @@ public class BodyScale : UtilComponent {
 
         Dictionary<string, Vector3> handTransform2 = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, 0f, 0.7f)},
+            {"position", new Vector3(0f, 0f, 0.8f)},
             {"rotation", new Vector3(0f, 0f, 90f)}
         };
 
@@ -207,7 +207,7 @@ public class BodyScale : UtilComponent {
 
         Dictionary<string, Vector3> handTransform3 = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, 0f, 0.6f)},
+            {"position", new Vector3(0f, 0f, 0.8f)},
             {"rotation", new Vector3(0f, 0f, -135f)}
         };
 
@@ -231,7 +231,7 @@ public class BodyScale : UtilComponent {
 
         Dictionary<string, Vector3> handTransform4 = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, 0f, 0.6f)},
+            {"position", new Vector3(0f, 0f, 0.8f)},
             {"rotation", new Vector3(-180f, 0f, 0f)}
         };
 
@@ -255,7 +255,7 @@ public class BodyScale : UtilComponent {
 
         Dictionary<string, Vector3> handTransform5 = new Dictionary<string, Vector3>()
         {
-            {"position", new Vector3(0f, 0f, 0.6f)},
+            {"position", new Vector3(0f, 0f, 0.8f)},
             {"rotation", new Vector3(0f, 0f, 135f)}
         };
 

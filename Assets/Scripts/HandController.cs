@@ -30,6 +30,27 @@ public class HandController: UtilComponent {
 
     bool finishTitleScene = false;
 
+
+    OVRInput.Controller controller = OVRInput.Controller.RTouch;
+
+
+    public void SetCanTouchController(OVRInput.Controller controller)
+    {
+        this.controller = controller;
+    }
+
+    public void PlayHaptics(OVRInput.Controller controller)
+    {
+        if(controller == OVRInput.Controller.RTouch)
+        {
+            rightHand.HapticsHands();
+        }else if(controller == OVRInput.Controller.LTouch)
+        {
+            leftHand.HapticsHands();
+        }
+    }
+
+
     public void Init(System.Action callbackCanGrab, System.Action callbackGrabbing, Context context)
     {
         this.callbackCanGrab = callbackCanGrab;
@@ -86,11 +107,11 @@ public class HandController: UtilComponent {
 
         if (canGrabber && canGrabbable)
         {
-            if (rightHand.isGrabberTriggerEnter)
+            if (rightHand.isGrabberTriggerEnter && controller == OVRInput.Controller.RTouch)
             {
                 rightHand.isWrapBegin = true;
             }
-            else if (leftHand.isGrabbableTriggerEnter)
+            else if (leftHand.isGrabbableTriggerEnter & controller == OVRInput.Controller.LTouch)
             {
                 leftHand.isWrapBegin = true;
             }

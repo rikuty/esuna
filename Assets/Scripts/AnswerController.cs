@@ -22,6 +22,10 @@ public class AnswerController : UtilComponent
 
     [SerializeField] BodyScale bodyScale;
 
+    HandController handController;
+
+    int[] rightArray = new int[] { 1, 3, 4, 6, 7 };
+    int[] leftArray = new int[] { 2, 4, 5, 7, 8 };
 
 
     int playEggCount = 1;
@@ -34,11 +38,11 @@ public class AnswerController : UtilComponent
     Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback;
 
 
-    public void Init(Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback, Context context)
+    public void Init(Action<DEFINE_APP.ANSWER_TYPE_ENUM> callback, Context context, HandController handController)
     {
         this.callback = callback;
         this.context = context;
-
+        this.handController = handController;
     }
 
 
@@ -129,6 +133,20 @@ public class AnswerController : UtilComponent
         nest.Init(answerType, preNum, guides[preNum-1]);
 
         SetActiveNest(true);
+
+        bool resultRight = Array.IndexOf(rightArray, preNum) >= 0;
+        bool resultLeft = Array.IndexOf(leftArray, preNum) >= 0;
+        if (resultRight)
+        {
+            handController.SetCanTouchController(OVRInput.Controller.RTouch);
+            handController.PlayHaptics(OVRInput.Controller.RTouch);
+
+        }
+        else if (resultLeft)
+        {
+            handController.SetCanTouchController(OVRInput.Controller.LTouch);
+            handController.PlayHaptics(OVRInput.Controller.LTouch);
+        }
 
 
         currentEgg.Init(CallbackFromEggAnswer, answerType, preNum);

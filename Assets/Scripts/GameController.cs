@@ -72,7 +72,7 @@ public class GameController : UtilComponent {
     private void Start () {
 
 
-        answerController.Init(CallbackFromAnswerControllers, context);
+        answerController.Init(CallbackFromAnswerControllers, context, handController);
         handController.Init(CallbackFromHandCanGrab, CallbackFromHandGrabbing, context);
         //this.context.Init();
         this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.START);

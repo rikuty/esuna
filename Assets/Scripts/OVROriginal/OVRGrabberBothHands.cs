@@ -77,6 +77,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
     public bool isGrabbableTriggerEnter = false;
     public bool isGrabberTriggerEnter = false;
     public Nest nest;
+    public Egg egg;
 
     public bool isCollisionEnter = false;
     public string collisionObjName;
@@ -210,7 +211,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
         // Get the grab trigger
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
-        if (grabbable != null)
+        Egg egg = otherCollider.GetComponent<Egg>() ?? otherCollider.GetComponentInParent<Egg>();
+        if (grabbable != null && egg != null)
         {
 
 
@@ -219,6 +221,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
             m_grabCandidates.TryGetValue(grabbable, out refCount);
             m_grabCandidates[grabbable] = refCount + 1;
             isGrabbableTriggerEnter = true;
+            this.egg = egg;
             return;
         }
         //OVRGrabberBothHands grabber = otherCollider.GetComponent<OVRGrabberBothHands>();
@@ -233,10 +236,12 @@ public class OVRGrabberBothHands :  MonoBehaviour
     {
 
         OVRGrabbableBothHands grabbable = otherCollider.GetComponent<OVRGrabbableBothHands>() ?? otherCollider.GetComponentInParent<OVRGrabbableBothHands>();
-        if (grabbable == null) return;
+        //Egg egg = otherCollider.GetComponent<Egg>() ?? otherCollider.GetComponentInParent<Egg>();
+        if (grabbable == null || egg == null) return;
 
         // Remove the grabbable
         isGrabbableTriggerEnter = false;
+        this.egg = null;
         int refCount = 0;
         bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
         if (!found)
@@ -267,14 +272,27 @@ public class OVRGrabberBothHands :  MonoBehaviour
         }
     }
 
+
+    public void HapticsHands()
+    {
+        if(this.m_controller == OVRInput.Controller.RTouch)
+        {
+            OVRHaptics.RightChannel.Mix(hapticsClip);
+        }
+        else if(this.m_controller == OVRInput.Controller.LTouch)
+        {
+            OVRHaptics.LeftChannel.Mix(hapticsClip);
+        }
+
+    }
+
     protected virtual void GrabBegin()
     {
         float closestMagSq = float.MaxValue;
         OVRGrabbableBothHands closestGrabbable = null;
         Collider closestGrabbableCollider = null;
 
-        OVRHaptics.RightChannel.Mix(hapticsClip);
-        OVRHaptics.LeftChannel.Mix(hapticsClip);
+        HapticsHands();
 
         // Iterate grab candidates and find the closest grabbable candidate
         foreach (OVRGrabbableBothHands grabbable in m_grabCandidates.Keys)

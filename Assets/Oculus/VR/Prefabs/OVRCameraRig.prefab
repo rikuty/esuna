@@ -519,6 +519,7 @@ MonoBehaviour:
   isGrabbableTriggerEnter: 0
   isGrabberTriggerEnter: 0
   nest: {fileID: 0}
+  egg: {fileID: 0}
   isCollisionEnter: 0
   collisionObjName: 
 --- !u!114 &114319796944617982
@@ -547,6 +548,7 @@ MonoBehaviour:
   isGrabbableTriggerEnter: 0
   isGrabberTriggerEnter: 0
   nest: {fileID: 0}
+  egg: {fileID: 0}
   isCollisionEnter: 0
   collisionObjName: 
 --- !u!114 &114405546991234702
@@ -575,6 +577,7 @@ MonoBehaviour:
   isGrabbableTriggerEnter: 0
   isGrabberTriggerEnter: 0
   nest: {fileID: 0}
+  egg: {fileID: 0}
   isCollisionEnter: 0
   collisionObjName: 
 --- !u!114 &114924550818053554
@@ -603,6 +606,7 @@ MonoBehaviour:
   isGrabbableTriggerEnter: 0
   isGrabberTriggerEnter: 0
   nest: {fileID: 0}
+  egg: {fileID: 0}
   isCollisionEnter: 0
   collisionObjName: 
 --- !u!135 &135206707007463220

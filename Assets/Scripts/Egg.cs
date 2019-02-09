@@ -129,6 +129,7 @@ public class Egg : UtilComponent {
             touchNest = null;
         }
 
+
     }
 
 
