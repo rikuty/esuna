@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 
 
@@ -40,14 +41,24 @@ namespace Gamestrap
 
             this.dateTime = DateTime.Now;
             //ID = System.DateTime.Now.ToString("yyMMddHHmm");
-            this.userID = this.dateTime.ToString("yyMMddHHmm");
-            SetLabel(this.txtID, this.userID);
-            SetLabel(this.txtName, this.userName);
+            //this.userID = this.dateTime.ToString("yyMMddHHmm");
+
+            // Get user data
+            string targetAPIURL = "http://rikuty.main.jp/test/GetUserData.php";
+			StartCoroutine (ConnectAPI(targetAPIURL, this.SuccessCallbackAPI));
+
             //this.gazeButtonInput.Init(this.context);
 
 
             this.PlayMain();
         }
+
+		private void SuccessCallbackAPI(string wwwText){
+			UserData userData = JsonUtility.FromJson<UserData>(wwwText);
+
+            SetLabel(this.txtID, userData.user_id);
+            SetLabel(this.txtName, userData.user_name);
+		}
 
         #region Event Methods Called from the UI
 
