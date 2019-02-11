@@ -8,14 +8,11 @@ public class PanelButtonComponent : UtilComponent
     [SerializeField] Animator animator;
     [SerializeField] GameObject objRightHand;
     [SerializeField] GameObject objLeftHand;
-
-    [SerializeField] Material defaultMaterial;
-    [SerializeField] Material changeMaterial;
-    [SerializeField] Material changeMaterial2;
-
+    
     Action callback;
 
     bool isTouch = false;
+    GameObject targetHand = null;
     float posZbase = 0;
     float posZcheck = 0;
     
@@ -33,7 +30,7 @@ public class PanelButtonComponent : UtilComponent
             posZcheck = objRightHand.transform.position.z - posZbase;
             if (posZcheck > 0.1f)
             {
-                //cubeRenderer.material = changeMaterial2;
+                ResetStatus();
                 animator.SetTrigger("PushTrigger");
             }
         }
@@ -43,21 +40,29 @@ public class PanelButtonComponent : UtilComponent
     {
         animator.SetTrigger("TouchTrigger");
         isTouch = true;
+        //targetHand = collision.collider.gameObject;
 
         //とりあえず右手で判定
-        posZbase = objRightHand.transform.position.z;
+        targetHand = objRightHand;
+        posZbase = targetHand.transform.position.z;
     }
 
     void OnCollisionExit(Collision collision)
     {
+        ResetStatus();
         animator.SetTrigger("BackStateTrigger");
-        isTouch = false;
-        posZbase = 0;
-        posZcheck = 0;
     }
 
     void ButtonPushedCallback() {
         //Debug.Log("ButtonPushedCallback");
-        this.callback();
+        //this.callback();
+    }
+
+    void ResetStatus()
+    {
+        isTouch = false;
+        targetHand = null;
+        posZbase = 0;
+        posZcheck = 0;
     }
 }
