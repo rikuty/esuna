@@ -8,48 +8,30 @@ public class PanelButtonComponent : UtilComponent
     [SerializeField] Animator animator;
     [SerializeField] GameObject objRightHand;
     [SerializeField] GameObject objLeftHand;
-
-    [SerializeField] Material defaultMaterial;
-    [SerializeField] Material changeMaterial;
-    [SerializeField] Material changeMaterial2;
-
-    Action callback;
     
+    Action callback;
+
     bool isTouch = false;
+    GameObject targetHand = null;
     float posZbase = 0;
     float posZcheck = 0;
-
-    OVRGrabberBothHands grabbeHandsRight;
-    OVRGrabberBothHands grabberHandsLeft;
-
-
-    private void Start()
-    {
-        if(objRightHand != null && objLeftHand != null)
-        {
-            grabbeHandsRight = objRightHand.GetComponent<OVRGrabberBothHands>();
-            grabberHandsLeft = objLeftHand.GetComponent<OVRGrabberBothHands>();
-        }
-    }
-
+    
     public void Init(Action callback)
     {
         this.callback = callback;
     }
-
+    
 
     // Update is called once per frame
     void Update()
     {
         if (isTouch)
         {
-
             posZcheck = objRightHand.transform.position.z - posZbase;
             if (posZcheck > 0.1f)
             {
-                //cubeRenderer.material = changeMaterial2;
+                ResetStatus();
                 animator.SetTrigger("PushTrigger");
-                isTouch = false;
             }
         }
     }
@@ -58,23 +40,29 @@ public class PanelButtonComponent : UtilComponent
     {
         animator.SetTrigger("TouchTrigger");
         isTouch = true;
+        //targetHand = collision.collider.gameObject;
 
         //とりあえず右手で判定
-        posZbase = objRightHand.transform.position.z;
-        grabbeHandsRight.HapticsHands();
-
+        targetHand = objRightHand;
+        posZbase = targetHand.transform.position.z;
     }
 
     void OnCollisionExit(Collision collision)
     {
+        ResetStatus();
         animator.SetTrigger("BackStateTrigger");
-        isTouch = false;
-        posZbase = 0;
-        posZcheck = 0;
     }
 
     void ButtonPushedCallback() {
         //Debug.Log("ButtonPushedCallback");
-        this.callback();
+        //this.callback();
+    }
+
+    void ResetStatus()
+    {
+        isTouch = false;
+        targetHand = null;
+        posZbase = 0;
+        posZcheck = 0;
     }
 }
