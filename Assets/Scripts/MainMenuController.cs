@@ -33,9 +33,14 @@ public class MainMenuController : UtilComponent
         panelButtonComponent.Init(LoadMain);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) { Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main"); }
+    }
+
     public void LoadMain()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
-        FadeManager.Instance.LoadScene("Main", 2.0f);
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main");
     }
 }
