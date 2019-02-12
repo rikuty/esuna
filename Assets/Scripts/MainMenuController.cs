@@ -35,6 +35,7 @@ public class MainMenuController : UtilComponent
 
     public void LoadMain()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        FadeManager.Instance.LoadScene("Main", 2.0f);
     }
 }
