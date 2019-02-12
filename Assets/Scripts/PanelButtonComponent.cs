@@ -15,7 +15,19 @@ public class PanelButtonComponent : UtilComponent
     GameObject targetHand = null;
     float posZbase = 0;
     float posZcheck = 0;
-    
+    OVRGrabberBothHands grabbeHandsRight;
+    OVRGrabberBothHands grabberHandsLeft;
+
+
+    private void Start()
+    {
+        if (objRightHand != null && objLeftHand != null)
+        {
+            grabbeHandsRight = objRightHand.GetComponent<OVRGrabberBothHands>();
+            grabberHandsLeft = objLeftHand.GetComponent<OVRGrabberBothHands>();
+        }
+    }
+
     public void Init(Action callback)
     {
         this.callback = callback;
@@ -38,6 +50,8 @@ public class PanelButtonComponent : UtilComponent
     
     void OnCollisionEnter(Collision collision)
     {
+        grabbeHandsRight.HapticsHands();
+
         animator.SetTrigger("TouchTrigger");
         isTouch = true;
         //targetHand = collision.collider.gameObject;
@@ -55,7 +69,7 @@ public class PanelButtonComponent : UtilComponent
 
     void ButtonPushedCallback() {
         //Debug.Log("ButtonPushedCallback");
-        //this.callback();
+        this.callback();
     }
 
     void ResetStatus()

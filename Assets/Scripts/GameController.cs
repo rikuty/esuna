@@ -21,7 +21,7 @@ public class GameController : UtilComponent {
         }
     }
 
-
+    [SerializeField] PanelButtonComponent panelButtonComponent;
     [SerializeField] AnswerController answerController;
 
     [SerializeField] private GameObject avatar;
@@ -71,6 +71,7 @@ public class GameController : UtilComponent {
     // Use this for initialization
     private void Start () {
 
+        panelButtonComponent.Init(()　=> { Debug.Log("OKOK");/*ここにキューブを押した後の処理を記述*/});
 
         answerController.Init(CallbackFromAnswerControllers, context, handController);
         handController.Init(CallbackFromHandCanGrab, CallbackFromHandGrabbing, context);
