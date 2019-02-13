@@ -15,9 +15,13 @@ public class MeasureController : UtilComponent {
     /// </summary>
     public Transform shoulderTr;
     /// <summary>
-    /// 測定用円柱の角度調整用Transform
+    /// 手の長さ調整用Transform
     /// </summary>
     public Transform handTr;
+    /// <summary>
+    /// 測定用円柱の角度調整用Transform
+    /// </summary>
+    public Transform armBaseTr;
     /// <summary>
     /// 眼の位置のTransform
     /// </summary>
@@ -37,6 +41,10 @@ public class MeasureController : UtilComponent {
     public Text txtDetail;
     public Text txtRotateTitle;
     public Text txtRotateDetail;
+
+    public MeasureComponent measureComponent;
+
+    public Collider measureCollider;
 
 
     enum DIAGNOSIS_STATUS_ENUM
@@ -104,6 +112,11 @@ public class MeasureController : UtilComponent {
 
     bool isWaiting = false;
 
+    int currentDiagnosisRotAnchorIndex;
+
+    float maxAngle;
+    Vector3 maxAngleVector;
+
 
 	// Use this for initialization
 	void Start () {
@@ -114,10 +127,15 @@ public class MeasureController : UtilComponent {
     public void Init(Action callbackFinish)
     {
         this.callbackFinish = callbackFinish;
-        currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
-        StartCoroutine(CoroutineWaitNextStep());
+        currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
         isWaiting = true;
+        currentDiagnosisRotAnchorIndex = 0;
+        maxAngle = 0f;
+        measureComponent.Init(CallbackFromComponent);
 
+        measureCollider.enabled = true;
+
+        StartCoroutine(CoroutineWaitNextStep());
     }
 
 
@@ -135,6 +153,9 @@ public class MeasureController : UtilComponent {
                 break;
             case DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM:
                 UpdateShoulderArm();
+                break;
+            case DIAGNOSIS_STATUS_ENUM.DIRECT:
+                UpdateDirction();
                 break;
         }
 	}
@@ -175,8 +196,62 @@ public class MeasureController : UtilComponent {
             ShowUI(false);
 
             StartCoroutine(CoroutineWaitNextStep());
+
+            measureCollider.enabled = true;
         }
     }
+
+
+    void UpdateDirction()
+    {
+        if (OVRInput.GetDown(OVRInput.RawButton.Any))
+        {
+
+            isWaiting = true;
+            currentRotateNumber++;
+
+            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add((int)maxAngle, maxAngleVector);
+
+            StartCoroutine(CoroutineWaitNextStep());
+        }
+    }
+
+
+    void CallbackFromComponent(Collider collider)
+    {
+        if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
+
+        Vector3 diff = collider.transform.position - shoulderTr.position;
+
+        Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
+
+        float angle = Vector3.Angle(shoulderTr.forward, diff) * (axis.x < 0 ? 1 : -1);
+        SetLabel(txtRotateTitle, angle.ToString());
+        
+        if(angle > DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[currentDiagnosisRotAnchorIndex])
+        {
+            if (!DEFINE_APP.BODY_SCALE.GOAL_DIC.ContainsKey(currentRotateNumber))
+            {
+                DEFINE_APP.BODY_SCALE.GOAL_DIC.Add(currentRotateNumber, new Dictionary<int, Vector3>());
+            }
+            Vector3 vector = new Vector3(diff.x, diff.y, diff.z);
+            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(currentDiagnosisRotAnchorIndex, vector);
+            SetLabel(txtRotateDetail, "("
+                + angle.ToString() + ":  "
+                + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].x.ToString() + ","
+                + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].y.ToString() + ","
+                + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].z.ToString()
+                + ")");
+
+            currentDiagnosisRotAnchorIndex++;
+        }
+        if(angle > maxAngle)
+        {
+            maxAngle = angle;
+            maxAngleVector = diff;
+        }
+    }
+
 
 
     IEnumerator CoroutineWaitNextStep()

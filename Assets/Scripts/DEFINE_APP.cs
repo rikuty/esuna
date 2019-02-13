@@ -56,7 +56,13 @@ public partial class DEFINE_APP {//ApplictionDefine
         public static Vector3 PLAYER_BASE_POS;
         public static Vector3 PLAYER_BASE_ROT;
         public static Vector3 SHOULDER_POS;
-        public static Vector3 ARM_POS;
+
+        public static Dictionary<int, Dictionary<int, Vector3>> GOAL_DIC = new Dictionary<int, Dictionary<int, Vector3>>();
+
+        public static int[] DIAGNOSIS_ROT_ANCHOR = new int[]
+        {
+            0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180
+        };
     }
 }
 
