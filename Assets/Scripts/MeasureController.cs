@@ -17,7 +17,7 @@ public class MeasureController : UtilComponent {
     /// <summary>
     /// 測定用円柱の角度調整用Transform
     /// </summary>
-    public Transform armBaseTr;
+    public Transform handTr;
     /// <summary>
     /// 眼の位置のTransform
     /// </summary>
@@ -127,15 +127,14 @@ public class MeasureController : UtilComponent {
     void Update () {
         if (isWaiting) return;
 
-        if (OVRInput.GetDown(OVRInput.Button.Any))
-        {
-            ShowUI(false);
-        }
 
         switch (currentStatus)
         {
             case DIAGNOSIS_STATUS_ENUM.BASE:
                 UpdateBase();
+                break;
+            case DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM:
+                UpdateShoulderArm();
                 break;
         }
 	}
@@ -147,10 +146,34 @@ public class MeasureController : UtilComponent {
         {
             isWaiting = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
+
             DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
             playerBaseTr.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
             DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
             playerBaseTr.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
+
+            ShowUI(false);
+
+            StartCoroutine(CoroutineWaitNextStep());
+        }
+    }
+
+
+    void UpdateShoulderArm()
+    {
+        if (OVRInput.GetDown(OVRInput.RawButton.Any))
+        {
+            isWaiting = true;
+            currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
+
+            Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
+            DEFINE_APP.BODY_SCALE.SHOULDER_POS = new Vector3(shoulderTr.position.x, averagePos.y, shoulderTr.position.z);
+            shoulderTr.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS;
+            //DEFINE_APP.BODY_SCALE.ARM_POS = new Vector3(handTr.position.x, handTr.position.y, averagePos.z);
+            //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
+
+            ShowUI(false);
+
             StartCoroutine(CoroutineWaitNextStep());
         }
     }

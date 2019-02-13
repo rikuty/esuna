@@ -1690,7 +1690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBaseTr: {fileID: 1983451886}
   shoulderTr: {fileID: 557376483}
-  armBaseTr: {fileID: 385981489}
+  handTr: {fileID: 416566389}
   centerEyeTr: {fileID: 1511535619}
   rightHandTr: {fileID: 428384082}
   leftHandTr: {fileID: 428384081}
