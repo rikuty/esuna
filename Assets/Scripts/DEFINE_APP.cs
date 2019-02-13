@@ -50,6 +50,14 @@ public partial class DEFINE_APP {//ApplictionDefine
         PLAY,
         RESULT
     }
+
+    public static class BODY_SCALE
+    {
+        public static Vector3 PLAYER_BASE_POS;
+        public static Vector3 PLAYER_BASE_ROT;
+        public static Vector3 SHOULDER_POS;
+        public static Vector3 ARM_POS;
+    }
 }
 
 	

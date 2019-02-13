@@ -18,6 +18,19 @@ public class MeasureController : UtilComponent {
     /// 測定用円柱の角度調整用Transform
     /// </summary>
     public Transform armBaseTr;
+    /// <summary>
+    /// 眼の位置のTransform
+    /// </summary>
+    public Transform centerEyeTr;
+    /// <summary>
+    ///　右腕の位置のTransform
+    /// </summary>
+    public Transform rightHandTr;
+    /// <summary>
+    /// 左腕の位置のTransform
+    /// </summary>
+    public Transform leftHandTr;
+
 
     public GameObject objUI;
     public Text txtTitle;
@@ -134,6 +147,10 @@ public class MeasureController : UtilComponent {
         {
             isWaiting = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
+            DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
+            playerBaseTr.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+            DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
+            playerBaseTr.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
             StartCoroutine(CoroutineWaitNextStep());
         }
     }
