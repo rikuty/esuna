@@ -1027,7 +1027,7 @@ Prefab:
       objectReference: {fileID: 428384074}
     - target: {fileID: 1297920740849276, guid: 36441217a33d8474d8594d0aeb2d83fe, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 23948327980556674, guid: 36441217a33d8474d8594d0aeb2d83fe,
         type: 2}
@@ -1505,7 +1505,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NAME
+  m_Text: 
 --- !u!1 &1263933021
 GameObject:
   m_ObjectHideFlags: 0
@@ -1580,7 +1580,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: NAME
+  m_Text: 
 --- !u!1 &1271920527
 GameObject:
   m_ObjectHideFlags: 0
@@ -1702,6 +1702,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   txtID: {fileID: 840483561}
   txtName: {fileID: 1972171494}
+  txtTitle: {fileID: 1263933024}
+  txtDetail: {fileID: 1661394070}
   panelButtonComponent: {fileID: 647367898}
   measureController: {fileID: 1332106585}
 --- !u!114 &1332106585
@@ -2066,7 +2068,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.5
-  m_Text: NAMENAMENAMENAMENAMENAMENAMENAMENAMNAMENAMENAMENAMENAMEENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAME
+  m_Text: 
 --- !u!1 &1717961716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2407,7 +2409,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.5
-  m_Text: NAMENAMENAMENAMENAMENAMENAMENAMENAMNAMENAMENAMENAMENAMEENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAMENAME
+  m_Text: 
 --- !u!222 &1919210911
 CanvasRenderer:
   m_ObjectHideFlags: 0

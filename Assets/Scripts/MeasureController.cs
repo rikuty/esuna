@@ -54,6 +54,7 @@ public class MeasureController : UtilComponent {
         SHOULDER_ARM, //肩の高さ&腕の長さ設定
         DIRECT, //８方向
         FINISH, //測定終了
+        END //  測定終了待ち
     }
 
     DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
@@ -78,7 +79,7 @@ public class MeasureController : UtilComponent {
         { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態で背筋を伸ばし、前を真っすぐ見て、ボタンをどれか押してください。" },
         { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背筋を伸ばした状態のまま、両腕を前方に真っすぐ伸ばし、ボタンをどれか押してください。" },
         { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
-        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。ゲームに進んでください。" }
+        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。ボタンをどれか押してメニュー画面に戻ってください。" }
     };
 
 
@@ -130,16 +131,26 @@ public class MeasureController : UtilComponent {
     public void Init(Action callbackFinish)
     {
         this.callbackFinish = callbackFinish;
-        currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
+        currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
         isWaiting = true;
         currentDiagnosisRotAnchorIndex = 0;
         maxAngle = 0f;
         measureComponent.Init(CallbackFromComponent);
 
         measureCollider.enabled = false;
-        SetActive(shoulderTr, true);
+        SetActive(shoulderTr, false);
 
+    }
+
+
+    public void StartDiagnosis()
+    {
+        ShowUI(true);
+        isWaiting = true;
         StartCoroutine(CoroutineWaitNextStep());
+        currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
+
+
     }
 
 
@@ -160,6 +171,9 @@ public class MeasureController : UtilComponent {
                 break;
             case DIAGNOSIS_STATUS_ENUM.DIRECT:
                 UpdateDirction();
+                break;
+            case DIAGNOSIS_STATUS_ENUM.FINISH:
+                UpdateFinish();
                 break;
         }
 	}
@@ -219,10 +233,10 @@ public class MeasureController : UtilComponent {
 
             if(currentRotateNumber == 8)
             {
-                isWaiting = true;
+                //isWaiting = true;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
                 ShowUI(false);
-                StartCoroutine(CoroutineWaitNextStep());
+                SetActive(shoulderTr, false);
                 return;
             }
 
@@ -252,7 +266,7 @@ public class MeasureController : UtilComponent {
 
 
         float angle = GetAngle(diff);
-        SetLabel(txtRotateTitle, angle.ToString());
+        //SetLabel(txtRotateTitle, angle.ToString());
         
         if(angle > DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[currentDiagnosisRotAnchorIndex])
         {
@@ -262,12 +276,12 @@ public class MeasureController : UtilComponent {
             }
             Vector3 vector = new Vector3(diff.x, diff.y, diff.z);
             DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(currentDiagnosisRotAnchorIndex, vector);
-            SetLabel(txtRotateDetail, "("
-                + angle.ToString() + ":  "
-                + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].x.ToString() + ","
-                + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].y.ToString() + ","
-                + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].z.ToString()
-                + ")");
+            //SetLabel(txtRotateDetail, "("
+            //    + angle.ToString() + ":  "
+            //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].x.ToString() + ","
+            //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].y.ToString() + ","
+            //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].z.ToString()
+            //    + ")");
 
             currentDiagnosisRotAnchorIndex++;
         }
@@ -298,6 +312,14 @@ public class MeasureController : UtilComponent {
         float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
 
         return angle;
+    }
+
+
+    void UpdateFinish()
+    {
+        this.currentStatus = DIAGNOSIS_STATUS_ENUM.END;
+        StartCoroutine(CoroutineWaitNextStep());
+        callbackFinish();
     }
 
 

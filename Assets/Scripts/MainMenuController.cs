@@ -23,6 +23,8 @@ public class MainMenuController : UtilComponent
     private DateTime dateTime;
     public Text txtID;
     public Text txtName;
+    public Text txtTitle;
+    public Text txtDetail;
 
     //public HandController handController;
     public PanelButtonComponent panelButtonComponent;
@@ -40,11 +42,13 @@ public class MainMenuController : UtilComponent
         this.userID = this.dateTime.ToString("yyMMddHHmm");
         SetLabel(this.txtID, this.userID);
         SetLabel(this.txtName, this.userName);
+        SetLabel(this.txtTitle, "");
+        SetLabel(this.txtDetail, "目の前にある青い箱を押してください");
 
         //handController.Init(LoadMain);
-        panelButtonComponent.Init(LoadMain);
+        panelButtonComponent.Init(FinishPushButton);
 
-        measureController.Init(FinishDiagnosis);
+        measureController.Init(LoadMain);
 
         currentStatus = MENU_STATUS_ENUM.WAIT;
     }
@@ -52,6 +56,12 @@ public class MainMenuController : UtilComponent
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) { Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main"); }
+    }
+
+
+    private void FinishPushButton()
+    {
+        measureController.StartDiagnosis();
     }
 
     public void LoadMain()
