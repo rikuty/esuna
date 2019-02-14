@@ -63,6 +63,31 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
             0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180
         };
+
+        public static Dictionary<int, float> SHOULDER_ROT_Z = new Dictionary<int, float>()
+        {
+            {1,90f},
+            {2,-90f},
+            {3,45f},
+            {4,0f},
+            {5,-45f},
+            {6,135f},
+            {7,180f},
+            {8,-135f}
+        };
+
+
+        public static Dictionary<int, int> ARM_ROT_SIGN = new Dictionary<int, int>()
+        {
+            {1,-1},
+            {2,1},
+            {3,-1},
+            {4,-1},
+            {5,-1},
+            {6,1},
+            {7,1},
+            {8,1}
+        };
     }
 }
 

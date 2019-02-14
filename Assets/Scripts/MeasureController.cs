@@ -117,6 +117,9 @@ public class MeasureController : UtilComponent {
     float maxAngle;
     Vector3 maxAngleVector;
 
+    // 測定中。colliderが当たってからボタンが押されるまで。
+    bool isDiagnosising = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -133,7 +136,8 @@ public class MeasureController : UtilComponent {
         maxAngle = 0f;
         measureComponent.Init(CallbackFromComponent);
 
-        measureCollider.enabled = true;
+        measureCollider.enabled = false;
+        SetActive(shoulderTr, true);
 
         StartCoroutine(CoroutineWaitNextStep());
     }
@@ -198,21 +202,44 @@ public class MeasureController : UtilComponent {
             StartCoroutine(CoroutineWaitNextStep());
 
             measureCollider.enabled = true;
+            SetActive(shoulderTr, true);
+            shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
         }
     }
 
 
     void UpdateDirction()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.Any))
+
+        if (measureCollider.enabled & OVRInput.GetDown(OVRInput.RawButton.Any))
         {
 
-            isWaiting = true;
-            currentRotateNumber++;
 
             DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add((int)maxAngle, maxAngleVector);
 
-            StartCoroutine(CoroutineWaitNextStep());
+            if(currentRotateNumber == 8)
+            {
+                isWaiting = true;
+                currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
+                ShowUI(false);
+                StartCoroutine(CoroutineWaitNextStep());
+                return;
+            }
+
+            currentRotateNumber++;
+            shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+            armBaseTr.localRotation = Quaternion.identity;
+            currentDiagnosisRotAnchorIndex = 0;
+            measureCollider.enabled = false;
+
+        }
+        if (!measureCollider.enabled)
+        {
+            Vector3 diffRight = rightHandTr.position - shoulderTr.position;
+            float angleRight = GetAngle(diffRight);
+            Vector3 diffLeft = leftHandTr.position - shoulderTr.position;
+            float angleLeft = GetAngle(diffLeft);
+            measureCollider.enabled = (angleRight < 0) && (angleLeft < 0);
         }
     }
 
@@ -223,9 +250,8 @@ public class MeasureController : UtilComponent {
 
         Vector3 diff = collider.transform.position - shoulderTr.position;
 
-        Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
 
-        float angle = Vector3.Angle(shoulderTr.forward, diff) * (axis.x < 0 ? 1 : -1);
+        float angle = GetAngle(diff);
         SetLabel(txtRotateTitle, angle.ToString());
         
         if(angle > DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[currentDiagnosisRotAnchorIndex])
@@ -250,6 +276,28 @@ public class MeasureController : UtilComponent {
             maxAngle = angle;
             maxAngleVector = diff;
         }
+    }
+
+
+    float GetAngle(Vector3 diff)
+    {
+        Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
+
+        float selectedAxis;
+        switch (currentRotateNumber)
+        {
+            case 1:
+            case 2:
+                selectedAxis = axis.y;
+                break;
+            default:
+                selectedAxis = axis.x;
+                break;
+        }
+
+        float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
+
+        return angle;
     }
 
 
