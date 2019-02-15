@@ -94,7 +94,7 @@ public class GameController : UtilComponent {
 
     private void CallbackFromHandCanGrab()
     {
-        answerController.SetGravity(true);
+        //answerController.SetGravity(true);
     }
 
     private void CallbackFromHandGrabbing()

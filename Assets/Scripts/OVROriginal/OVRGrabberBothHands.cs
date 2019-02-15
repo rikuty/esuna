@@ -199,7 +199,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
     {
 
 
-
+        // ‘ƒ‚É“–‚½‚Á‚½Žž
         childColliderComponent childColliderComponent = otherCollider.GetComponent<childColliderComponent>();
         if(childColliderComponent != null)
         {
