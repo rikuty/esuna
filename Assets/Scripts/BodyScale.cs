@@ -31,9 +31,11 @@ public class ExampleScriptEditor : Editor
 
 public class BodyScale : UtilComponent {
 
+    public Transform playerBase;
     public Transform back;
     public Transform shoulder;
     public Transform hand;
+    public Transform bullet;
 
     public Dictionary<int, Dictionary<string, Dictionary<string, Vector3>>> goalBodyTransformDictionary;
 
@@ -126,20 +128,32 @@ public class BodyScale : UtilComponent {
             {"hand", handTransform }
         };
 
-        SetTransform(int.Parse(this.index.text));
+        SetTransformTarget(int.Parse(this.index.text));
         SetDisplay(int.Parse(this.index.text));
     }
 
 
-    public void SetTransform(int index)
+    public void SetTransformBodyAndBullet()
     {
-        back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
-        back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);
-        shoulder.localPosition = goalBodyTransformDictionary[index]["shoulder"]["position"];
-        shoulder.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["shoulder"]["rotation"]);
-        hand.localPosition = goalBodyTransformDictionary[index]["hand"]["position"];
-        // local でない
-        hand.rotation = Quaternion.Euler(goalBodyTransformDictionary[index]["hand"]["rotation"]);
+
+        playerBase.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+        playerBase.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
+        shoulder.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS;
+        bullet.position = DEFINE_APP.BODY_SCALE.HAND_POS;
+    }
+
+
+    public void SetTransformTarget(int index)
+    {
+        hand.localPosition = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.GOAL_DIC[index].Count - 1];
+
+        //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
+        //back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);
+        //shoulder.localPosition = goalBodyTransformDictionary[index]["shoulder"]["position"];
+        //shoulder.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["shoulder"]["rotation"]);
+        //hand.localPosition = goalBodyTransformDictionary[index]["hand"]["position"];
+        //// local でない
+        //hand.rotation = Quaternion.Euler(goalBodyTransformDictionary[index]["hand"]["rotation"]);
     }
 
 

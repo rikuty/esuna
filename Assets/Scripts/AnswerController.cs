@@ -43,6 +43,7 @@ public class AnswerController : UtilComponent
         this.callback = callback;
         this.context = context;
         this.handController = handController;
+        bodyScale.SetTransformBodyAndBullet();
     }
 
 
@@ -128,7 +129,7 @@ public class AnswerController : UtilComponent
         }
 
         
-        bodyScale.SetTransform(preNum);
+        bodyScale.SetTransformTarget(preNum);
         bodyScale.SetDisplay(preNum);
         nest.Init(answerType, preNum, guides[preNum-1]);
 

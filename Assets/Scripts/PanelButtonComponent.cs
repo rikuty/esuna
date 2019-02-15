@@ -47,6 +47,7 @@ public class PanelButtonComponent : UtilComponent
             }
         }
     }
+
     
     void OnCollisionEnter(Collision collision)
     {
@@ -66,6 +67,26 @@ public class PanelButtonComponent : UtilComponent
         ResetStatus();
         animator.SetTrigger("BackStateTrigger");
     }
+
+    void OnTriggerEnter(Collider collider)
+    {
+        grabbeHandsRight.HapticsHands();
+
+        animator.SetTrigger("TouchTrigger");
+        isTouch = true;
+        //targetHand = collision.collider.gameObject;
+
+        //とりあえず右手で判定
+        targetHand = objRightHand;
+        posZbase = targetHand.transform.position.z;
+    }
+
+    void OnTriggerExit(Collider collider)
+    {
+        ResetStatus();
+        animator.SetTrigger("BackStateTrigger");
+    }
+
 
     void ButtonPushedCallback() {
         //Debug.Log("ButtonPushedCallback");

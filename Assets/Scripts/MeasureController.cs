@@ -208,7 +208,7 @@ public class MeasureController : UtilComponent {
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
             DEFINE_APP.BODY_SCALE.SHOULDER_POS = new Vector3(shoulderTr.position.x, averagePos.y, shoulderTr.position.z);
             shoulderTr.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS;
-            //DEFINE_APP.BODY_SCALE.ARM_POS = new Vector3(handTr.position.x, handTr.position.y, averagePos.z);
+            DEFINE_APP.BODY_SCALE.HAND_POS = new Vector3(handTr.position.x, handTr.position.y, averagePos.z);
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
 
             ShowUI(false);
@@ -225,11 +225,11 @@ public class MeasureController : UtilComponent {
     void UpdateDirction()
     {
 
-        if (measureCollider.enabled & OVRInput.GetDown(OVRInput.RawButton.Any))
+        if (measureCollider.enabled && OVRInput.GetDown(OVRInput.RawButton.Any) && DEFINE_APP.BODY_SCALE.GOAL_DIC.Count == currentRotateNumber)
         {
 
 
-            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add((int)maxAngle, maxAngleVector);
+            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(maxAngleVector);
 
             if(currentRotateNumber == 8)
             {
@@ -245,6 +245,7 @@ public class MeasureController : UtilComponent {
             armBaseTr.localRotation = Quaternion.identity;
             currentDiagnosisRotAnchorIndex = 0;
             measureCollider.enabled = false;
+            maxAngle = 0f;
 
         }
         if (!measureCollider.enabled)
@@ -272,10 +273,10 @@ public class MeasureController : UtilComponent {
         {
             if (!DEFINE_APP.BODY_SCALE.GOAL_DIC.ContainsKey(currentRotateNumber))
             {
-                DEFINE_APP.BODY_SCALE.GOAL_DIC.Add(currentRotateNumber, new Dictionary<int, Vector3>());
+                DEFINE_APP.BODY_SCALE.GOAL_DIC.Add(currentRotateNumber, new List<Vector3>());
             }
             Vector3 vector = new Vector3(diff.x, diff.y, diff.z);
-            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(currentDiagnosisRotAnchorIndex, vector);
+            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(vector);
             //SetLabel(txtRotateDetail, "("
             //    + angle.ToString() + ":  "
             //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].x.ToString() + ","
