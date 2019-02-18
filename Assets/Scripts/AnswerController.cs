@@ -30,6 +30,8 @@ public class AnswerController : UtilComponent
     int[] leftArray = new int[] { 2, 5, 8 };
     int[] bothArray = new int[] { 4, 7 };
 
+    List<int> tutorialTargets = new List<int> { 1, 5, 7 };
+
 
     int playEggCount = 1;
 
@@ -56,8 +58,8 @@ public class AnswerController : UtilComponent
         {
             switch (egg.answerType)
             {
-                case DEFINE_APP.ANSWER_TYPE_ENUM.START:
-                    if(egg.answerIndex == 8)
+                case DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL:
+                    if(tutorialTargets.Count == 0)
                     {
                         callback(egg.answerType);
                     }
@@ -111,24 +113,19 @@ public class AnswerController : UtilComponent
             int num;
             switch (answerType)
             {
-                case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+                case DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL:
+                    num = tutorialTargets[0];
+                    tutorialTargets.Remove(num);
+                    break;
                 case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
                 case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
                 default:
-                    if (playEggCount <= 8)
-                    {
-                        num = playEggCount;
-                    }
-                    else
-                    {
-                        num = UnityEngine.Random.Range(1, 9);
-                    }
-
-                    playEggCount++;
-                    preNum = num;
+                    num = UnityEngine.Random.Range(1, 9);
                     break;
 
             }
+            playEggCount++;
+            preNum = num;
         }
 
         

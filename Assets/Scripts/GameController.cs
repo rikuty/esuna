@@ -65,18 +65,21 @@ public class GameController : UtilComponent {
     {
         yield return new WaitForSeconds(3.0f);
         context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
-        answerController.SetGravity(false);
     }
 
     // Use this for initialization
     private void Start () {
 
-        panelButtonComponent.Init(()　=> { Debug.Log("OKOK");/*ここにキューブを押した後の処理を記述*/});
+        panelButtonComponent.Init(()　=> 
+        {
+            this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL);
+            context.currentStatus = DEFINE_APP.STATUS_ENUM.TUTORIAL;
+            answerController.SetGravity(false);
+        });
 
         answerController.Init(CallbackFromAnswerControllers, context, handController);
         handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing, context);
         //this.context.Init();
-        this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.START);
 
         //this.gazeButtonInput.Init(this.context);
 
@@ -106,7 +109,7 @@ public class GameController : UtilComponent {
     {
         switch(answerType)
         {
-            case DEFINE_APP.ANSWER_TYPE_ENUM.START:
+            case DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL:
                 this.context.currentStatus = DEFINE_APP.STATUS_ENUM.COUNT;
                 StartCoroutine(this.SetCountDown());
                 break;
@@ -150,7 +153,7 @@ public class GameController : UtilComponent {
         //}
 
         switch(this.context.currentStatus){
-            case DEFINE_APP.STATUS_ENUM.START:
+            case DEFINE_APP.STATUS_ENUM.TUTORIAL:
                 this.UpdateStart();
     			break;
     		case DEFINE_APP.STATUS_ENUM.COUNT:

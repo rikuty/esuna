@@ -51,15 +51,26 @@ public class PanelButtonComponent : UtilComponent
     
     void OnCollisionEnter(Collision collision)
     {
+        OVRGrabberBothHands hand = collision.gameObject.GetComponent<OVRGrabberBothHands>();
+        if (hand == null) return;
+
+
         grabbeHandsRight.HapticsHands();
 
         animator.SetTrigger("TouchTrigger");
         isTouch = true;
         //targetHand = collision.collider.gameObject;
 
-        //とりあえず右手で判定
-        targetHand = objRightHand;
+        if(hand.m_controller == OVRInput.Controller.RTouch)
+        {
+            targetHand = objRightHand;
+        }
+        else if (hand.m_controller == OVRInput.Controller.RTouch)
+        {
+            targetHand = objLeftHand;
+        }
         posZbase = targetHand.transform.position.z;
+
     }
 
     void OnCollisionExit(Collision collision)
@@ -70,15 +81,25 @@ public class PanelButtonComponent : UtilComponent
 
     void OnTriggerEnter(Collider collider)
     {
+        OVRGrabberBothHands hand = collider.gameObject.GetComponent<OVRGrabberBothHands>();
+        if (hand == null) return;
+
         grabbeHandsRight.HapticsHands();
 
         animator.SetTrigger("TouchTrigger");
         isTouch = true;
         //targetHand = collision.collider.gameObject;
 
-        //とりあえず右手で判定
-        targetHand = objRightHand;
+        if (hand.m_controller == OVRInput.Controller.RTouch)
+        {
+            targetHand = objRightHand;
+        }
+        else if (hand.m_controller == OVRInput.Controller.LTouch)
+        {
+            targetHand = objLeftHand;
+        }
         posZbase = targetHand.transform.position.z;
+
     }
 
     void OnTriggerExit(Collider collider)

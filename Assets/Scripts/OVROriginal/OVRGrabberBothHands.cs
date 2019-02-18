@@ -53,7 +53,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
 
     // Should be OVRInput.Controller.LTouch or OVRInput.Controller.RTouch.
     [SerializeField]
-    protected OVRInput.Controller m_controller;
+    public OVRInput.Controller m_controller;
 
     [SerializeField]
     protected Transform m_parentTransform;

@@ -8,6 +8,7 @@ public partial class DEFINE_APP {//ApplictionDefine
     {
         PREPARE,
         START,
+        TUTORIAL,
         COUNT,
         PLAY,
         FINISH,
@@ -46,7 +47,7 @@ public partial class DEFINE_APP {//ApplictionDefine
 
     public enum ANSWER_TYPE_ENUM
     {
-        START,
+        TUTORIAL,
         PLAY,
         RESULT
     }
