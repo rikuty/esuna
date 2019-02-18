@@ -120,7 +120,7 @@ public class AnswerController : UtilComponent
                 case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
                 case DEFINE_APP.ANSWER_TYPE_ENUM.PLAY:
                 default:
-                    num = UnityEngine.Random.Range(1, 9);
+                    num = SetNextAnswers();
                     break;
 
             }
@@ -178,6 +178,47 @@ public class AnswerController : UtilComponent
 
         context.isAnswering = false;
     }
+
+
+    int[] randoms = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+    public int SetNextAnswers()
+    {
+        int currentAnswer = 1;
+
+        bool plus = false;
+        foreach (int value in this.randoms)
+        {
+            if (value != -1)
+            {
+                plus = true;
+            }
+        }
+        if (!plus)
+        {
+            randoms = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        }
+
+        bool hit = false;
+        while (hit == false)
+        {
+            int ran = UnityEngine.Random.Range(1, 9);
+            foreach (int answer in this.randoms)
+            {
+                if (answer == ran)
+                {
+                    hit = true;
+                }
+            }
+            if (hit)
+            {
+                randoms[ran - 1] = -1;
+                currentAnswer = ran;
+            }
+        }
+
+        return currentAnswer;
+    }
+
 
     public void SetGravity(bool active)
     {
