@@ -46,6 +46,9 @@ public class MeasureController : UtilComponent {
 
     public Collider measureCollider;
 
+    public Collider rightHandCollider;
+    public Collider leftHandCollider;
+
 
     enum DIAGNOSIS_STATUS_ENUM
     {
@@ -120,6 +123,9 @@ public class MeasureController : UtilComponent {
 
     // 測定中。colliderが当たってからボタンが押されるまで。
     bool isDiagnosising = false;
+
+    bool isSetHandCollider = false;
+    OVRInput.Controller controller;
 
 
 	// Use this for initialization
@@ -213,14 +219,19 @@ public class MeasureController : UtilComponent {
 
             ShowUI(false);
 
-            StartCoroutine(CoroutineWaitNextStep());
+            StartCoroutine(CoroutineWaitNextStep(FinishShoulderArm));
 
-            measureCollider.enabled = true;
-            SetActive(shoulderTr, true);
-            shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+
         }
     }
 
+
+    void FinishShoulderArm()
+    {
+        measureCollider.enabled = true;
+        SetActive(shoulderTr, true);
+        shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+    }
 
     void UpdateDirction()
     {
@@ -246,6 +257,9 @@ public class MeasureController : UtilComponent {
             currentDiagnosisRotAnchorIndex = 0;
             measureCollider.enabled = false;
             maxAngle = 0f;
+            isSetHandCollider = false;
+            rightHandCollider.enabled = false;
+            leftHandCollider.enabled = false;
 
         }
         if (!measureCollider.enabled)
@@ -254,7 +268,38 @@ public class MeasureController : UtilComponent {
             float angleRight = GetAngle(diffRight);
             Vector3 diffLeft = leftHandTr.position - shoulderTr.position;
             float angleLeft = GetAngle(diffLeft);
-            measureCollider.enabled = (angleRight < 0) && (angleLeft < 0);
+            measureCollider.enabled = 
+                (angleRight < 0 && controller == OVRInput.Controller.RTouch) 
+                || (angleLeft < 0 && controller == OVRInput.Controller.LTouch)
+                || (angleLeft < 0 && angleRight < 0 && controller == OVRInput.Controller.All);
+        }
+
+        if (!isSetHandCollider)
+        {
+            isSetHandCollider = true;
+
+            bool resultRight = Array.IndexOf(DEFINE_APP.RIGHT_HAND_TARGET, currentRotateNumber) >= 0;
+            bool resultLeft = Array.IndexOf(DEFINE_APP.LEFT_HAND_TARGET, currentRotateNumber) >= 0;
+            bool resultBoth = Array.IndexOf(DEFINE_APP.BOTH_HAND_TARGET, currentRotateNumber) >= 0;
+            if (resultRight)
+            {
+                rightHandCollider.enabled = true;
+                leftHandCollider.enabled = false;
+                controller = OVRInput.Controller.RTouch;
+            }
+            else if (resultLeft)
+            {
+                leftHandCollider.enabled = true;
+                rightHandCollider.enabled = false;
+                controller = OVRInput.Controller.LTouch;
+            }
+            else if (resultBoth)
+            {
+                rightHandCollider.enabled = true;
+                leftHandCollider.enabled = true;
+                controller = OVRInput.Controller.All;
+
+            }
         }
     }
 
@@ -325,11 +370,15 @@ public class MeasureController : UtilComponent {
 
 
 
-    IEnumerator CoroutineWaitNextStep()
+    IEnumerator CoroutineWaitNextStep(Action callback = null)
     {
         yield return new WaitForSeconds(3.0f);
         isWaiting = false;
         ShowUI(true);
+        if(callback != null)
+        {
+            callback();
+        }
     }
 
 

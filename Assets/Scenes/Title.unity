@@ -1760,6 +1760,8 @@ MonoBehaviour:
   txtRotateDetail: {fileID: 1919210910}
   measureComponent: {fileID: 385981492}
   measureCollider: {fileID: 385981490}
+  rightHandCollider: {fileID: 428384077}
+  leftHandCollider: {fileID: 428384078}
 --- !u!1 &1511535618 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a,

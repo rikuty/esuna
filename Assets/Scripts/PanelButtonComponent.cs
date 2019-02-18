@@ -65,7 +65,7 @@ public class PanelButtonComponent : UtilComponent
         {
             targetHand = objRightHand;
         }
-        else if (hand.m_controller == OVRInput.Controller.RTouch)
+        else if (hand.m_controller == OVRInput.Controller.LTouch)
         {
             targetHand = objLeftHand;
         }
@@ -112,7 +112,7 @@ public class PanelButtonComponent : UtilComponent
     void ButtonPushedCallback() {
         //Debug.Log("ButtonPushedCallback");
         this.callback();
-        //SetActive(this, false);
+        SetActive(this, false);
     }
 
     void ResetStatus()

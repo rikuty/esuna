@@ -52,6 +52,10 @@ public partial class DEFINE_APP {//ApplictionDefine
         RESULT
     }
 
+    public static int[] RIGHT_HAND_TARGET = new int[] { 1, 3, 6 };
+    public static int[] LEFT_HAND_TARGET = new int[] { 2, 5, 8 };
+    public static int[] BOTH_HAND_TARGET = new int[] { 4, 7 };
+
     public static class BODY_SCALE
     {
         public static Vector3 PLAYER_BASE_POS;

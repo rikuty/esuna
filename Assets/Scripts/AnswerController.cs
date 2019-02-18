@@ -26,9 +26,9 @@ public class AnswerController : UtilComponent
 
     HandController handController;
 
-    int[] rightArray = new int[] { 1, 3, 6 };
-    int[] leftArray = new int[] { 2, 5, 8 };
-    int[] bothArray = new int[] { 4, 7 };
+    int[] rightArray = DEFINE_APP.RIGHT_HAND_TARGET;
+    int[] leftArray = DEFINE_APP.LEFT_HAND_TARGET;
+    int[] bothArray = DEFINE_APP.BOTH_HAND_TARGET;
 
     List<int> tutorialTargets = new List<int> { 1, 5, 7 };
 
