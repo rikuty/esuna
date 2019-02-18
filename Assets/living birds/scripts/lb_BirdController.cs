@@ -78,7 +78,7 @@ public class lb_BirdController : MonoBehaviour {
 	void Start () {
 		//find the camera
 		if (currentCamera == null){
-			currentCamera = GameObject.FindGameObjectWithTag("MainCamera").camera;
+			currentCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 		}
 
 		if(idealNumberOfBirds >= maximumNumberOfBirds){
@@ -154,12 +154,12 @@ public class lb_BirdController : MonoBehaviour {
 	Vector3 FindPointInGroundTarget(GameObject target){
 		//find a random point within the collider of a ground target that touches the ground
 		Vector3 point;
-		point.x = Random.Range (target.collider.bounds.max.x,target.collider.bounds.min.x);
-		point.y = target.collider.bounds.max.y;
-		point.z = Random.Range (target.collider.bounds.max.z,target.collider.bounds.min.z);
+		point.x = Random.Range (target.GetComponent<Collider>().bounds.max.x,target.GetComponent<Collider>().bounds.min.x);
+		point.y = target.GetComponent<Collider>().bounds.max.y;
+		point.z = Random.Range (target.GetComponent<Collider>().bounds.max.z,target.GetComponent<Collider>().bounds.min.z);
 		//raycast down until it hits the ground
 		RaycastHit hit;
-		if (Physics.Raycast (point,-Vector3.up,out hit,target.collider.bounds.size.y,groundLayer)){
+		if (Physics.Raycast (point,-Vector3.up,out hit,target.GetComponent<Collider>().bounds.size.y,groundLayer)){
 			return hit.point;
 		}
 
@@ -311,7 +311,7 @@ public class lb_BirdController : MonoBehaviour {
 			float ptArea=birdPerchTargets.Count*0.3f;
 
 			for (int i=0;i<birdGroundTargets.Count;i++){
-				gtArea += birdGroundTargets[i].collider.bounds.size.x*birdGroundTargets[i].collider.bounds.size.z;
+				gtArea += birdGroundTargets[i].GetComponent<Collider>().bounds.size.x*birdGroundTargets[i].GetComponent<Collider>().bounds.size.z;
 			}
 			if (ptArea == 0.0f || Random.value < gtArea/(gtArea+ptArea)){
 				target = birdGroundTargets[Mathf.FloorToInt (Random.Range (0,birdGroundTargets.Count))];
