@@ -29,7 +29,7 @@ public class GameController : UtilComponent {
     [SerializeField] HandController handController;
 
 
-    [SerializeField] private CountDownComponent cdComponent;
+    [SerializeField] private CountdownComponet cdComponent;
 
     [SerializeField] private GameObject objStart;
     [SerializeField] private GameObject objCountDown;
@@ -129,7 +129,8 @@ public class GameController : UtilComponent {
 
         yield return new WaitForSeconds(2);
 
-        this.cdComponent.Init(3.0f, this.FinishCountDown, false);
+        this.cdComponent.Init(this.FinishCountDown);
+        SetActive(this.cdComponent, true);
         
         SetActive(this.objStart, false);
         SetActive(this.objCountDown, true);
