@@ -112,7 +112,7 @@ public class PanelButtonComponent : UtilComponent
     void ButtonPushedCallback() {
         //Debug.Log("ButtonPushedCallback");
         this.callback();
-        SetActive(this, false);
+        //SetActive(this, false);
     }
 
     void ResetStatus()

@@ -3708,13 +3708,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelButtonComponent: {fileID: 1609083142}
   answerController: {fileID: 1332106584}
-  avatar: {fileID: 0}
   handController: {fileID: 428384079}
   cdComponent: {fileID: 36469561}
-  objStart: {fileID: 590481341}
-  objCountDown: {fileID: 1396930029}
-  objPlay: {fileID: 2087039180}
-  objResult: {fileID: 415669292}
+  objStart:
+  - {fileID: 590481341}
+  - {fileID: 1769464870}
+  objTutorial: []
+  objCountDown:
+  - {fileID: 1396930029}
+  objPlay:
+  - {fileID: 2087039180}
+  objResult:
+  - {fileID: 415669292}
+  objNestAndEgg:
+  - {fileID: 1277662452}
+  - {fileID: 1514448692}
+  objGuide: {fileID: 1472240466}
   audioSource: {fileID: 0}
   leftTime: {fileID: 812501889}
   resultModalPresenter: {fileID: 1563096021}

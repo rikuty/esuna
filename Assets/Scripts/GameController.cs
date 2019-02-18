@@ -24,17 +24,20 @@ public class GameController : UtilComponent {
     [SerializeField] PanelButtonComponent panelButtonComponent;
     [SerializeField] AnswerController answerController;
 
-    [SerializeField] private GameObject avatar;
 
     [SerializeField] HandController handController;
 
 
     [SerializeField] private CountdownComponet cdComponent;
 
-    [SerializeField] private GameObject objStart;
-    [SerializeField] private GameObject objCountDown;
-    [SerializeField] private GameObject objPlay;
-    [SerializeField] private GameObject objResult;
+    [SerializeField] private GameObject[] objStart;
+    [SerializeField] private GameObject[] objTutorial;
+    [SerializeField] private GameObject[] objCountDown;
+    [SerializeField] private GameObject[] objPlay;
+    [SerializeField] private GameObject[] objResult;
+
+    [SerializeField] private GameObject[] objNestAndEgg;
+    [SerializeField] private GameObject objGuide;
 
 
     [SerializeField] private AudioSource audioSource;
@@ -65,16 +68,26 @@ public class GameController : UtilComponent {
     {
         yield return new WaitForSeconds(3.0f);
         context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
+        SetActive(this.objStart, true);
     }
 
     // Use this for initialization
     private void Start () {
+
+        SetActive(this.objStart, false);
+        SetActive(this.objCountDown, false);
+        SetActive(this.objPlay, false);
+        SetActive(this.objResult, false);
+        SetActive(this.objNestAndEgg, false);
 
         panelButtonComponent.Init(()　=> 
         {
             this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL);
             context.currentStatus = DEFINE_APP.STATUS_ENUM.TUTORIAL;
             answerController.SetGravity(false);
+            SetActive(this.objStart, false);
+            SetActive(this.objTutorial, true);
+            SetActive(this.objNestAndEgg, true);
         });
 
         answerController.Init(CallbackFromAnswerControllers, context, handController);
@@ -83,9 +96,6 @@ public class GameController : UtilComponent {
 
         //this.gazeButtonInput.Init(this.context);
 
-        SetActive(this.objCountDown, false);
-        SetActive(this.objPlay, false);
-        SetActive(this.objResult, false);
 
         //resultModalPresenter = ResourceLoader.Instance.Create<ResultModalPresenter>("Prefabs/ResultModal", trResult, false);
 
@@ -134,11 +144,13 @@ public class GameController : UtilComponent {
         
         SetActive(this.objStart, false);
         SetActive(this.objCountDown, true);
+        SetActive(this.objNestAndEgg, false);
         SetActive(this.objPlay, false);
+        SetActive(this.objResult, false);
     }
-	
-	// Update is called once per frame
-	private void Update () {
+
+    // Update is called once per frame
+    private void Update () {
         OVRInput.Controller activeController = OVRInput.GetActiveController();
         Quaternion rot = OVRInput.GetLocalControllerRotation(activeController);
         //SetLabel(this.x, rot.eulerAngles.x.ToString());
@@ -192,6 +204,7 @@ public class GameController : UtilComponent {
 
         SetActive(this.objStart, false);
         SetActive(this.objCountDown, false);
+        SetActive(this.objNestAndEgg, true);
         SetActive(this.objPlay, true);
 
 
@@ -221,13 +234,15 @@ public class GameController : UtilComponent {
         SetActive(this.objResult, true);
         SetActive(this.objPlay, false);
         //this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.RESULT);
+        SetActive(this.objNestAndEgg, false);
+        SetActive(this.objGuide, false);
 
         this.context.isAnswering = false;
 
 
         this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
 
-        ResultCoroutine();
+        //StartCoroutine(ResultCoroutine());
     }
 
     private void UpdateShowResult(){
