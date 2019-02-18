@@ -12,6 +12,8 @@ public class AnswerController : UtilComponent
     [SerializeField] Material[] materials;
     [SerializeField] Nest nest;
     [SerializeField] GameObject[] guides;
+    [SerializeField] GameObject rightHand;
+    [SerializeField] GameObject leftHand;
 
     [SerializeField] Transform startEggParent;
     [SerializeField] Transform playEggParent;
@@ -132,13 +134,29 @@ public class AnswerController : UtilComponent
         
         bodyScale.SetTransformTarget(preNum);
         bodyScale.SetDisplay(preNum);
-        nest.Init(answerType, preNum, guides[preNum-1]);
 
-        SetActiveNest(true);
 
         bool resultRight = Array.IndexOf(rightArray, preNum) >= 0;
         bool resultLeft = Array.IndexOf(leftArray, preNum) >= 0;
         bool resultBoth = Array.IndexOf(bothArray, preNum) >= 0;
+
+        GameObject[] objs = new GameObject[2];
+        if (resultRight)
+        {
+            objs[0] = rightHand;
+        }else if (resultLeft)
+        {
+            objs[1] = leftHand;
+        }else if (resultBoth)
+        {
+            objs[0] = rightHand;
+            objs[1] = leftHand;
+        }
+
+        nest.Init(answerType, preNum, guides[preNum - 1], objs);
+
+        SetActiveNest(true);
+
         if (resultRight)
         {
             handController.SetCanTouchController(OVRInput.Controller.RTouch);
@@ -156,7 +174,6 @@ public class AnswerController : UtilComponent
             handController.PlayHaptics(OVRInput.Controller.LTouch);
             handController.PlayHaptics(OVRInput.Controller.RTouch);
         }
-
 
 
         currentEgg.Init(CallbackFromEggAnswer, answerType, preNum);
@@ -179,6 +196,9 @@ public class AnswerController : UtilComponent
         {
             SetActive(obj, false);
         }
+        SetActive(leftHand, false);
+        SetActive(rightHand, false);
+
         nest.SetActiveNest(active);
     }
 }

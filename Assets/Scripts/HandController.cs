@@ -49,6 +49,10 @@ public class HandController: UtilComponent {
         }else if(controller == OVRInput.Controller.LTouch)
         {
             leftHand.HapticsHands();
+        }else if(controller == OVRInput.Controller.All)
+        {
+            rightHand.HapticsHands();
+            leftHand.HapticsHands();
         }
     }
 
@@ -72,8 +76,10 @@ public class HandController: UtilComponent {
 
         if (wasAnswering && !context.isAnswering)
         {
-            //rightHand.isGrabberTriggerEnter = false;
-            //leftHand.isGrabberTriggerEnter = false;
+            rightHand.isGrabbableTriggerEnter = false;
+            leftHand.isGrabbableTriggerEnter = false;
+            rightHand.isGrab = false;
+            leftHand.isGrab = false;
         }
 
         bool canGrabbable = false;
@@ -103,7 +109,6 @@ public class HandController: UtilComponent {
         if (context == null) return;
         if (/*canGrabber &&*/ !context.isAnswering)
         {
-            //context.isAnswering = true;
             //rightHand.isGrabberTriggerEnter = false;
             //leftHand.isGrabberTriggerEnter = false;
             //callbackRelease();
@@ -111,6 +116,8 @@ public class HandController: UtilComponent {
 
         if (/*canGrabber &&*/ canGrabbable && !unableGrab)
         {
+            context.isAnswering = true;
+
             if (controller == OVRInput.Controller.RTouch)
             {
                 rightHand.isGrab = true;

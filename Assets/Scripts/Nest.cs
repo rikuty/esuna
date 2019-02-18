@@ -10,13 +10,15 @@ public class Nest : UtilComponent {
     [SerializeField] childColliderComponent childColliderComponent;
 
     GameObject guide;
+    GameObject[] hands;
 
 
-    public void Init(DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, GameObject guide = null)
+    public void Init(DEFINE_APP.ANSWER_TYPE_ENUM cubeType, int answerIndex, GameObject guide = null, GameObject[] hands = null)
     {
         this.answerType = cubeType;
         this.answerIndex = answerIndex;
         this.guide = guide;
+        this.hands = hands;
 
         //Quaternion r = this.gameObject.transform.rotation;
         //this.gameObject.transform.rotation = Quaternion.Euler(-30f, r.eulerAngles.y, r.eulerAngles.z);
@@ -27,6 +29,7 @@ public class Nest : UtilComponent {
     public void SetActiveNest(bool active)
     {
         SetActive(guide, active);
+        SetActive(hands, active);
         SetActive(this, active);
     }
 
