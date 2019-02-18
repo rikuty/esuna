@@ -66,50 +66,50 @@ public class MeasureController : UtilComponent {
     /// 回旋・屈曲・伸展の現在測定している方向
     /// </summary>
     int currentRotateNumber = 1;
-   
+
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextTitle = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
-    {
-        { DIAGNOSIS_STATUS_ENUM.PREPARE, "測定準備中" },
-        { DIAGNOSIS_STATUS_ENUM.BASE, "初期位置設定" },
-        { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "肩の高さ&腕長さ測定" },
-        { DIAGNOSIS_STATUS_ENUM.DIRECT, "８方向測定" },
-        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定終了" }
-    };
+   {
+       { DIAGNOSIS_STATUS_ENUM.PREPARE, "リラックスしてお待ち下さい" },
+       {DIAGNOSIS_STATUS_ENUM.BASE,"あなたの身体の情報をすべて取り込みます" },
+       { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "肩の高さ&腕長さ測定" },
+       { DIAGNOSIS_STATUS_ENUM.DIRECT, "さあ身体を動かしてみましょう！" },
+       { DIAGNOSIS_STATUS_ENUM.FINISH, "情報を取り込みました！" }
+   };
 
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextDetail = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
-    {
-        { DIAGNOSIS_STATUS_ENUM.PREPARE, "測定の準備をしています。少々お待ちください。" },
-        { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態で背筋を伸ばし、前を真っすぐ見て、ボタンをどれか押してください。" },
-        { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背筋を伸ばした状態のまま、両腕を前方に真っすぐ伸ばし、ボタンをどれか押してください。" },
-        { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
-        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。ボタンをどれか押してメニュー画面に戻ってください。" }
-    };
+   {
+       { DIAGNOSIS_STATUS_ENUM.PREPARE, "準備中です。少々お待ちください。" },
+       { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態で背中を伸ばし、前を真っすぐ見て、ボタンをどれか押してください。" },
+       { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背中を伸ばした状態のまま、両腕を前方に真っすぐ伸ばし、ボタンをどれか押してください。" },
+       { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
+       { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。ボタンをどれか押してください。" }
+   };
 
 
     Dictionary<int, string> rotateNumberTitle = new Dictionary<int, string>
-    {
-        { 1, "左回旋" },
-        { 2, "右回旋" },
-        { 3, "左回旋&伸展" },
-        { 4, "伸展" },
-        { 5, "右回旋&伸展" },
-        { 6, "左回旋&屈曲" },
-        { 7, "屈曲" },
-        { 8, "右回旋&屈曲" },
-    };
+   {
+       { 1, "体を左側に回す" },
+       { 2, "体を右側に回す" },
+       { 3, "体を左側に回して後ろに反る"},
+       { 4, "体を後ろに反る" },
+       { 5, "体を右に回して後ろに反る"},
+       { 6, "体を左に回して前に倒す" },
+       { 7, "体を前に倒す" },
+       { 8, "体を右に回して前に倒す" },
+   };
 
 
     Dictionary<int, string> rotateNumberDetail = new Dictionary<int, string>
-    {
-        { 1, "右腕を真っすぐ前に伸ばし、前方の板を左方向にできるだけ押してください"},
-        { 2, "左腕を真っすぐ前に伸ばし、前方の板を右方向にできるだけ押してください" },
-        { 3, "右腕を真っすぐ前に伸ばし、前方の板を左上方向にできるだけ押してください" },
-        { 4, "両腕を真っすぐ前に伸ばし、前方の板を上方向に押してください" },
-        { 5, "左腕を真っすぐ前に伸ばし、前方の板を右上方向に押してください" },
-        { 6, "右腕を真っすぐ前に伸ばし、前方の板を左下に押してください" },
-        { 7, "両腕を真っすぐ前に伸ばし、前方の板を下方向に押してください" },
-        { 8, "左腕を真っすぐ前に伸ばし、前方の板を右下に押してください" }
-    };
+   {
+       { 1, "右腕を真っすぐ前に伸ばし、前方の板を左方向にできるだけ押してください"},
+       { 2, "左腕を真っすぐ前に伸ばし、前方の板を右方向にできるだけ押してください" },
+       { 3, "右腕を真っすぐ前に伸ばし、前方の板を左上方向にできるだけ押してください" },
+       { 4, "両腕を真っすぐ前に伸ばし、前方の板を上方向に押してください" },
+       { 5, "左腕を真っすぐ前に伸ばし、前方の板を右上方向に押してください" },
+       { 6, "右腕を真っすぐ前に伸ばし、前方の板を左下に押してください" },
+       { 7, "両腕を真っすぐ前に伸ばし、前方の板を下方向に押してください" },
+       { 8, "左腕を真っすぐ前に伸ばし、前方の板を右下に押してください" }
+   };
 
 
     Action callbackFinish;
