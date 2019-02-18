@@ -24,8 +24,9 @@ public class AnswerController : UtilComponent
 
     HandController handController;
 
-    int[] rightArray = new int[] { 1, 3, 4, 6, 7 };
-    int[] leftArray = new int[] { 2, 4, 5, 7, 8 };
+    int[] rightArray = new int[] { 1, 3, 6 };
+    int[] leftArray = new int[] { 2, 5, 8 };
+    int[] bothArray = new int[] { 4, 7 };
 
 
     int playEggCount = 1;
@@ -137,6 +138,7 @@ public class AnswerController : UtilComponent
 
         bool resultRight = Array.IndexOf(rightArray, preNum) >= 0;
         bool resultLeft = Array.IndexOf(leftArray, preNum) >= 0;
+        bool resultBoth = Array.IndexOf(bothArray, preNum) >= 0;
         if (resultRight)
         {
             handController.SetCanTouchController(OVRInput.Controller.RTouch);
@@ -148,6 +150,13 @@ public class AnswerController : UtilComponent
             handController.SetCanTouchController(OVRInput.Controller.LTouch);
             handController.PlayHaptics(OVRInput.Controller.LTouch);
         }
+        else if (resultBoth)
+        {
+            handController.SetCanTouchController(OVRInput.Controller.All);
+            handController.PlayHaptics(OVRInput.Controller.LTouch);
+            handController.PlayHaptics(OVRInput.Controller.RTouch);
+        }
+
 
 
         currentEgg.Init(CallbackFromEggAnswer, answerType, preNum);

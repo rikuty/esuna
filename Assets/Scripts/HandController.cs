@@ -77,6 +77,7 @@ public class HandController: UtilComponent {
         bool canGrabbable = false;
         canGrabbable |= rightHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.RTouch;
         canGrabbable |= leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.LTouch;
+        canGrabbable |= rightHand.isGrabbableTriggerEnter && leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.All;
 
         bool canGrabber = false;
 
@@ -115,6 +116,10 @@ public class HandController: UtilComponent {
             else if (controller == OVRInput.Controller.LTouch)
             {
                 leftHand.isWrapBegin = true;
+            }
+            else if(controller == OVRInput.Controller.All)
+            {
+                rightHand.isWrapBegin = true;
             }
             //rightHand.isGrabbableTriggerEnter = false;
             //leftHand.isGrabbableTriggerEnter = false;
