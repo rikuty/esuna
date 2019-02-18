@@ -72,10 +72,10 @@ public class OVRGrabberBothHands :  MonoBehaviour
     protected Quaternion m_grabbedObjectRotOff;
 	protected Dictionary<OVRGrabbableBothHands, int> m_grabCandidates = new Dictionary<OVRGrabbableBothHands, int>();
 	protected bool operatingWithoutOVRCameraRig = true;
-    protected bool wasWrapBegin = false;
-    public bool isWrapBegin = false;
+    protected bool wasGrab = false;
+    public bool isGrab = false;
     public bool isGrabbableTriggerEnter = false;
-    public bool isGrabberTriggerEnter = false;
+    //public bool isGrabberTriggerEnter = false;
     public Nest nest;
     public Egg egg;
 
@@ -171,7 +171,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
 		m_prevFlex = OVRInput.Get(OVRInput.Axis1D.PrimaryHandTrigger, m_controller);
 
 		CheckForGrabOrRelease(prevFlex);
-        wasWrapBegin = isWrapBegin;
+        wasGrab = isGrab;
     }
 
     void OnDestroy()
@@ -206,7 +206,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
             nest = childColliderComponent.nest;
         }
 
-        isGrabberTriggerEnter = true;
+        //isGrabberTriggerEnter = true;
 
 
         // Get the grab trigger
@@ -262,11 +262,11 @@ public class OVRGrabberBothHands :  MonoBehaviour
     protected void CheckForGrabOrRelease(float prevFlex)
     {
         //if ((m_prevFlex >= grabBegin) && (prevFlex < grabBegin))
-        if (isWrapBegin && !wasWrapBegin)
+        if (isGrab && !wasGrab)
         {
             GrabBegin();
         }
-        else if (!isWrapBegin && wasWrapBegin)
+        else if (!isGrab && wasGrab)
         {
             GrabEnd();
         }

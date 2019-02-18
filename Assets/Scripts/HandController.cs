@@ -19,7 +19,7 @@ public class HandController: UtilComponent {
 
     bool isCallbacked = false;
 
-    System.Action callbackCanGrab;
+    System.Action callbackRelease;
     System.Action callbackGrabbing;
 
     Context context;
@@ -29,6 +29,8 @@ public class HandController: UtilComponent {
     private bool wasAnswering = false;
 
     bool finishTitleScene = false;
+
+    bool unableGrab = false;
 
 
     OVRInput.Controller controller = OVRInput.Controller.RTouch;
@@ -51,9 +53,9 @@ public class HandController: UtilComponent {
     }
 
 
-    public void Init(System.Action callbackCanGrab, System.Action callbackGrabbing, Context context)
+    public void Init(System.Action callbackRelease, System.Action callbackGrabbing, Context context)
     {
-        this.callbackCanGrab = callbackCanGrab;
+        this.callbackRelease = callbackRelease;
         this.callbackGrabbing = callbackGrabbing;
         this.context = context;
     }
@@ -70,8 +72,8 @@ public class HandController: UtilComponent {
 
         if (wasAnswering && !context.isAnswering)
         {
-            rightHand.isGrabberTriggerEnter = false;
-            leftHand.isGrabberTriggerEnter = false;
+            //rightHand.isGrabberTriggerEnter = false;
+            //leftHand.isGrabberTriggerEnter = false;
         }
 
         bool canGrabbable = false;
@@ -79,10 +81,10 @@ public class HandController: UtilComponent {
         canGrabbable |= leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.LTouch;
         canGrabbable |= rightHand.isGrabbableTriggerEnter && leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.All;
 
-        bool canGrabber = false;
+        //bool canGrabber = false;
 
-        canGrabber |= rightHand.isGrabberTriggerEnter;
-        canGrabber |= leftHand.isGrabberTriggerEnter;
+        //canGrabber |= rightHand.isGrabberTriggerEnter;
+        //canGrabber |= leftHand.isGrabberTriggerEnter;
 
 
         bool isCollisionStartCube = false;
@@ -99,27 +101,27 @@ public class HandController: UtilComponent {
         }
 
         if (context == null) return;
-        if (canGrabber && !context.isAnswering)
+        if (/*canGrabber &&*/ !context.isAnswering)
         {
-            context.isAnswering = true;
+            //context.isAnswering = true;
             //rightHand.isGrabberTriggerEnter = false;
             //leftHand.isGrabberTriggerEnter = false;
-            callbackCanGrab();
+            //callbackRelease();
         }
 
-        if (canGrabber && canGrabbable)
+        if (/*canGrabber &&*/ canGrabbable && !unableGrab)
         {
             if (controller == OVRInput.Controller.RTouch)
             {
-                rightHand.isWrapBegin = true;
+                rightHand.isGrab = true;
             }
             else if (controller == OVRInput.Controller.LTouch)
             {
-                leftHand.isWrapBegin = true;
+                leftHand.isGrab = true;
             }
             else if(controller == OVRInput.Controller.All)
             {
-                rightHand.isWrapBegin = true;
+                rightHand.isGrab = true;
             }
             //rightHand.isGrabbableTriggerEnter = false;
             //leftHand.isGrabbableTriggerEnter = false;
@@ -127,11 +129,26 @@ public class HandController: UtilComponent {
         }
         else
         {
-            rightHand.isWrapBegin = false;
-            leftHand.isWrapBegin = false;
+            rightHand.isGrab = false;
+            leftHand.isGrab = false;
         }
 
         wasAnswering = context.isAnswering;
+
+
+        if (canGrabbable && OVRInput.GetDown(OVRInput.Button.Any) && !unableGrab)
+        {
+            callbackRelease();
+            unableGrab = true;
+            StartCoroutine(CorouineUnableGrab());
+        }
+    }
+
+
+    IEnumerator CorouineUnableGrab()
+    {
+        yield return new WaitForSeconds(1.0f);
+        unableGrab = false;
     }
 
     // Update is called once per frame

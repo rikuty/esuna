@@ -515,9 +515,8 @@ MonoBehaviour:
   m_parentTransform: {fileID: 0}
   anotherHands: {fileID: 0}
   m_grabbedObj: {fileID: 0}
-  isWrapBegin: 0
+  isGrab: 0
   isGrabbableTriggerEnter: 0
-  isGrabberTriggerEnter: 0
   nest: {fileID: 0}
   egg: {fileID: 0}
   isCollisionEnter: 0
@@ -544,9 +543,8 @@ MonoBehaviour:
   m_parentTransform: {fileID: 0}
   anotherHands: {fileID: 0}
   m_grabbedObj: {fileID: 0}
-  isWrapBegin: 0
+  isGrab: 0
   isGrabbableTriggerEnter: 0
-  isGrabberTriggerEnter: 0
   nest: {fileID: 0}
   egg: {fileID: 0}
   isCollisionEnter: 0
@@ -573,9 +571,8 @@ MonoBehaviour:
   m_parentTransform: {fileID: 0}
   anotherHands: {fileID: 114319796944617982}
   m_grabbedObj: {fileID: 0}
-  isWrapBegin: 0
+  isGrab: 0
   isGrabbableTriggerEnter: 0
-  isGrabberTriggerEnter: 0
   nest: {fileID: 0}
   egg: {fileID: 0}
   isCollisionEnter: 0
@@ -602,9 +599,8 @@ MonoBehaviour:
   m_parentTransform: {fileID: 0}
   anotherHands: {fileID: 114258391972710582}
   m_grabbedObj: {fileID: 0}
-  isWrapBegin: 0
+  isGrab: 0
   isGrabbableTriggerEnter: 0
-  isGrabberTriggerEnter: 0
   nest: {fileID: 0}
   egg: {fileID: 0}
   isCollisionEnter: 0

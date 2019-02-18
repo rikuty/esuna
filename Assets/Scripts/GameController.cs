@@ -74,7 +74,7 @@ public class GameController : UtilComponent {
         panelButtonComponent.Init(()　=> { Debug.Log("OKOK");/*ここにキューブを押した後の処理を記述*/});
 
         answerController.Init(CallbackFromAnswerControllers, context, handController);
-        handController.Init(CallbackFromHandCanGrab, CallbackFromHandGrabbing, context);
+        handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing, context);
         //this.context.Init();
         this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.START);
 
@@ -92,9 +92,9 @@ public class GameController : UtilComponent {
         }
 	}
 
-    private void CallbackFromHandCanGrab()
+    private void CallbackFromHandRelease()
     {
-        //answerController.SetGravity(true);
+        answerController.SetGravity(true);
     }
 
     private void CallbackFromHandGrabbing()
