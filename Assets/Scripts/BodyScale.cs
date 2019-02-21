@@ -145,7 +145,7 @@ public class BodyScale : UtilComponent {
 
     public void SetTransformTarget(int index)
     {
-        hand.localPosition = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.GOAL_DIC[index].Count - 1];
+        hand.localPosition = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index]];
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
         //back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);
@@ -157,10 +157,38 @@ public class BodyScale : UtilComponent {
     }
 
 
+    private void Start()
+    {
+
+    }
+
+
+    public void SetCloseTarget(int index)
+    {
+        int nextIndex = DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index];
+        if(nextIndex > 0)
+        {
+            nextIndex--;
+        }
+        DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index] = nextIndex;
+        SetTransformTarget(index);
+    }
+
+
 
     // Use this for initialization
     void Awake() {
-        if (DEFINE_APP.BODY_SCALE.GOAL_DIC.Count > 0) return;
+        if (DEFINE_APP.BODY_SCALE.GOAL_DIC.Count > 0)
+        {
+            DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC = new Dictionary<int, int>();
+
+            for (int i = 1; i < 9; i++)
+            {
+
+                DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC.Add(i, DEFINE_APP.BODY_SCALE.GOAL_DIC[i].Count - 1);
+            }
+            return;
+        }
 
         DEFINE_APP.BODY_SCALE.GOAL_DIC = new Dictionary<int, List<Vector3>>()
         {
@@ -189,6 +217,13 @@ public class BodyScale : UtilComponent {
         DEFINE_APP.BODY_SCALE.SHOULDER_POS = new Vector3(0f,1.1f,0f);
         DEFINE_APP.BODY_SCALE.HAND_POS = new Vector3(0f,1.1f,0.5f);
 
+        DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC = new Dictionary<int, int>();
+
+        for (int i = 1; i < 9; i++)
+        {
+
+            DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC.Add(i, DEFINE_APP.BODY_SCALE.GOAL_DIC[i].Count - 1);
+        }
 
         //Dictionary<string, Vector3> backTransform1 = new Dictionary<string, Vector3>()
         //{

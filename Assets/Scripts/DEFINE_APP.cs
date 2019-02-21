@@ -63,6 +63,8 @@ public partial class DEFINE_APP {//ApplictionDefine
         public static Vector3 SHOULDER_POS;
         public static Vector3 HAND_POS;
 
+        public static Dictionary<int, int> TARGET_INDEX_DIC = new Dictionary<int, int>();
+
         public static Dictionary<int, List<Vector3>> GOAL_DIC = new Dictionary<int, List<Vector3>>();
 
         public static int[] DIAGNOSIS_ROT_ANCHOR = new int[]

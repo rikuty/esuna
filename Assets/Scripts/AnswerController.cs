@@ -35,7 +35,7 @@ public class AnswerController : UtilComponent
 
     int playEggCount = 1;
 
-    int preNum = 0;
+    public int targetNumber = 0;
 
     Context context;
 
@@ -125,17 +125,17 @@ public class AnswerController : UtilComponent
 
             }
             playEggCount++;
-            preNum = num;
+            targetNumber = num;
         }
 
         
-        bodyScale.SetTransformTarget(preNum);
-        bodyScale.SetDisplay(preNum);
+        bodyScale.SetTransformTarget(targetNumber);
+        bodyScale.SetDisplay(targetNumber);
 
 
-        bool resultRight = Array.IndexOf(rightArray, preNum) >= 0;
-        bool resultLeft = Array.IndexOf(leftArray, preNum) >= 0;
-        bool resultBoth = Array.IndexOf(bothArray, preNum) >= 0;
+        bool resultRight = Array.IndexOf(rightArray, targetNumber) >= 0;
+        bool resultLeft = Array.IndexOf(leftArray, targetNumber) >= 0;
+        bool resultBoth = Array.IndexOf(bothArray, targetNumber) >= 0;
 
         GameObject[] objs = new GameObject[2];
         if (resultRight)
@@ -150,7 +150,7 @@ public class AnswerController : UtilComponent
             objs[1] = leftHand;
         }
 
-        nest.Init(answerType, preNum, guides[preNum - 1], objs);
+        nest.Init(answerType, targetNumber, guides[targetNumber - 1], objs);
 
         SetActiveNest(true);
 
@@ -173,7 +173,7 @@ public class AnswerController : UtilComponent
         }
 
 
-        currentEgg.Init(CallbackFromEggAnswer, answerType, preNum);
+        currentEgg.Init(CallbackFromEggAnswer, answerType, targetNumber);
 
 
         context.isAnswering = false;
@@ -225,6 +225,12 @@ public class AnswerController : UtilComponent
         currentEgg.GetComponent<Rigidbody>().useGravity = active;
 
 
+    }
+
+
+    public void SetTransformTarget()
+    {
+        bodyScale.SetCloseTarget(targetNumber);
     }
 
 

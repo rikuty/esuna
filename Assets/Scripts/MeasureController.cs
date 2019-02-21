@@ -69,8 +69,8 @@ public class MeasureController : UtilComponent {
 
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextTitle = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
    {
-       { DIAGNOSIS_STATUS_ENUM.PREPARE, "リラックスしてお待ち下さい" },
-       {DIAGNOSIS_STATUS_ENUM.BASE,"あなたの身体の情報をすべて取り込みます" },
+       { DIAGNOSIS_STATUS_ENUM.PREPARE, "準備中です" },
+       {DIAGNOSIS_STATUS_ENUM.BASE,"身体の情報を取り込みます" },
        { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "肩の高さ&腕長さ測定" },
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "さあ身体を動かしてみましょう！" },
        { DIAGNOSIS_STATUS_ENUM.FINISH, "情報を取り込みました！" }
@@ -78,7 +78,7 @@ public class MeasureController : UtilComponent {
 
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextDetail = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
    {
-       { DIAGNOSIS_STATUS_ENUM.PREPARE, "準備中です。少々お待ちください。" },
+       { DIAGNOSIS_STATUS_ENUM.PREPARE, "リラックスしてお待ちください。" },
        { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態で背中を伸ばし、前を真っすぐ見て、ボタンをどれか押してください。" },
        { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背中を伸ばした状態のまま、両腕を前方に真っすぐ伸ばし、ボタンをどれか押してください。" },
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },

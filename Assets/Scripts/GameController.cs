@@ -108,7 +108,9 @@ public class GameController : UtilComponent {
     private void CallbackFromHandRelease()
     {
         answerController.SetGravity(true);
+        answerController.SetTransformTarget();
     }
+
 
     private void CallbackFromHandGrabbing()
     {
