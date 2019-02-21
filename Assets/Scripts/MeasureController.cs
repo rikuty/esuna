@@ -260,6 +260,7 @@ public class MeasureController : UtilComponent {
             isSetHandCollider = false;
             rightHandCollider.enabled = false;
             leftHandCollider.enabled = false;
+            ShowUI(true);
 
         }
         if (!measureCollider.enabled)

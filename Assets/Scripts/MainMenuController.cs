@@ -42,8 +42,8 @@ public class MainMenuController : UtilComponent
         this.userID = this.dateTime.ToString("yyMMddHHmm");
         SetLabel(this.txtID, this.userID);
         SetLabel(this.txtName, this.userName);
-        SetLabel(this.txtTitle, "");
-        SetLabel(this.txtDetail, "目の前にある青い箱を押してください");
+        SetLabel(this.txtTitle, "目の前にある青い箱を押してください");
+        SetLabel(this.txtDetail, "");
 
         //handController.Init(LoadMain);
         panelButtonComponent.Init(FinishPushButton);
