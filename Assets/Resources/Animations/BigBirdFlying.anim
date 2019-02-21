@@ -27,14 +27,23 @@ AnimationClip:
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.15171225}
       - serializedVersion: 3
-        time: 7.8333335
-        value: {x: 0, y: 4.629752, z: -2}
-        inSlope: {x: 0, y: -1.7458526, z: 2.4535608}
-        outSlope: {x: 0, y: -9.025103, z: 1.7142985}
+        time: 7.8
+        value: {x: 0, y: 2.0841665, z: -2.0817914}
+        inSlope: {x: 0, y: -1.4714136, z: 2.4539485}
+        outSlope: {x: 0, y: -4.383302, z: 2.4539485}
         tangentMode: 0
         weightedMode: 0
-        inWeight: {x: 0.33333334, y: 0.062371884, z: 0.11126305}
-        outWeight: {x: 0.33333334, y: 0.22361554, z: 0.2548571}
+        inWeight: {x: 0.33333334, y: 0.13258053, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.47839174, z: 0.33333334}
+      - serializedVersion: 3
+        time: 7.8333335
+        value: {x: 0, y: 1.9416043, z: -2}
+        inSlope: {x: 0, y: -4.1713815, z: 2.4535608}
+        outSlope: {x: 0, y: -4.1713815, z: 1.7142985}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.11126305}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.2548571}
       - serializedVersion: 3
         time: 9
         value: {x: 0, y: 0, z: 0}
@@ -328,14 +337,14 @@ AnimationClip:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 7.8333335
-        value: 4.629752
-        inSlope: -1.7458526
-        outSlope: -9.025103
+        time: 7.8
+        value: 2.0841665
+        inSlope: -1.4714136
+        outSlope: -4.383302
         tangentMode: 1
         weightedMode: 0
-        inWeight: 0.062371884
-        outWeight: 0.22361554
+        inWeight: 0.13258053
+        outWeight: 0.47839174
       - serializedVersion: 3
         time: 9
         value: 0
@@ -592,6 +601,13 @@ AnimationClip:
     messageOptions: 0
   - time: 9.5
     functionName: SetSitDownTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 9.616667
+    functionName: FlyingCallback
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
