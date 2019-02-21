@@ -8,11 +8,14 @@ public class BirdTransfer : MonoBehaviour
     [SerializeField] private Animator transferAnimator;
     [SerializeField] private Animator birdAnimator;
 
+    [SerializeField] private Camera OVRCamera;
+    [SerializeField] private Transform birdParent;
+    [SerializeField] private Transform trackingParent;
 
     // Use this for initialization
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -28,6 +31,8 @@ public class BirdTransfer : MonoBehaviour
 
     void PlayFlying()
     {
+        //カメラスイッチ
+        OVRCamera.transform.parent = birdParent;
         transferAnimator.SetTrigger("FlyingTrigger");
     }
 
@@ -69,6 +74,8 @@ public class BirdTransfer : MonoBehaviour
 
     void FlyingCallback()
     {
+        //カメラスイッチ
+        OVRCamera.transform.parent = trackingParent;
         Debug.Log("flying callback.");
     }
 }
