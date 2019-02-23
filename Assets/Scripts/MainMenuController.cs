@@ -31,6 +31,8 @@ public class MainMenuController : UtilComponent
 
     public MeasureController measureController;
 
+    public BirdTransfer birdTransfer;
+
     private GameData gameData;
 
     public void Start()
@@ -47,6 +49,7 @@ public class MainMenuController : UtilComponent
 
         //handController.Init(LoadMain);
         panelButtonComponent.Init(FinishPushButton);
+        birdTransfer.Init(LoadMain);
 
         measureController.Init(LoadMain);
 
@@ -55,7 +58,7 @@ public class MainMenuController : UtilComponent
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main"); }
+        if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
     }
 
 

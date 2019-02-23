@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,8 @@ public class BirdTransfer : MonoBehaviour
     [SerializeField] private Transform birdParent;
     [SerializeField] private Transform trackingParent;
 
+    Action callback = null;
+
     // Use this for initialization
     void Start()
     {
@@ -24,12 +27,17 @@ public class BirdTransfer : MonoBehaviour
 
     }
 
-    void PlayStart()
+    public void Init(Action callback)
+    {
+        this.callback = callback;
+    }
+
+    public void PlayStart()
     {
         transferAnimator.SetTrigger("StartTrigger");
     }
 
-    void PlayFlying()
+    public void PlayFlying()
     {
         //カメラスイッチ
         OVRCamera.transform.parent = birdParent;
@@ -70,6 +78,10 @@ public class BirdTransfer : MonoBehaviour
     void StartCallback()
     {
         Debug.Log("start callback.");
+        if (this.callback != null)
+        {
+            this.callback();
+        }
     }
 
     void FlyingCallback()
@@ -77,5 +89,9 @@ public class BirdTransfer : MonoBehaviour
         //カメラスイッチ
         OVRCamera.transform.parent = trackingParent;
         Debug.Log("flying callback.");
+        if (this.callback != null)
+        {
+            this.callback();
+        }
     }
 }
