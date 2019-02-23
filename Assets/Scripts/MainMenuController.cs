@@ -51,7 +51,7 @@ public class MainMenuController : UtilComponent
         panelButtonComponent.Init(FinishPushButton);
         birdTransfer.Init(LoadMain);
 
-        measureController.Init(LoadMain);
+        measureController.Init(() => { birdTransfer.PlayStart(); });
 
         currentStatus = MENU_STATUS_ENUM.WAIT;
     }

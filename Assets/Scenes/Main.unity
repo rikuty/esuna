@@ -3773,6 +3773,7 @@ MonoBehaviour:
   currentEgg: {fileID: 0}
   resultNest: {fileID: 537588827}
   bodyScale: {fileID: 1514448694}
+  targetNumber: 0
 --- !u!114 &1332106585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3787,6 +3788,7 @@ MonoBehaviour:
   panelButtonComponent: {fileID: 1609083142}
   answerController: {fileID: 1332106584}
   handController: {fileID: 428384079}
+  birdTransfer: {fileID: 2075344656}
   cdComponent: {fileID: 36469561}
   objStart:
   - {fileID: 590481341}
@@ -6325,6 +6327,12 @@ Transform:
   m_Father: {fileID: 1734253240}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &2075344656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114135719366194638, guid: ac318c18fa2044374a5bf861139e3e2e,
+    type: 2}
+  m_PrefabInternal: {fileID: 827667047}
+  m_Script: {fileID: 11500000, guid: 825e1a58c6e154cb08e63288666f41d8, type: 3}
 --- !u!1 &2087039180
 GameObject:
   m_ObjectHideFlags: 0
