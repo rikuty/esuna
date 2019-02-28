@@ -40,7 +40,10 @@ public class BirdTransfer : MonoBehaviour
     public void PlayFlying()
     {
         //カメラスイッチ
-        OVRCamera.transform.parent = birdParent;
+        if (birdParent != null)
+        {
+            OVRCamera.transform.parent = birdParent;
+        }
         transferAnimator.SetTrigger("FlyingTrigger");
     }
 
@@ -87,7 +90,10 @@ public class BirdTransfer : MonoBehaviour
     void FlyingCallback()
     {
         //カメラスイッチ
-        OVRCamera.transform.parent = trackingParent;
+        if (trackingParent != null)
+        {
+            OVRCamera.transform.parent = trackingParent;
+        }
         Debug.Log("flying callback.");
         if (this.callback != null)
         {
