@@ -34,6 +34,10 @@ public class MeasureController : UtilComponent {
     /// 左腕の位置のTransform
     /// </summary>
     public Transform leftHandTr;
+    /// <summary>
+    /// HandController
+    /// </summary>
+    public HandControllerMeasure handController;
 
 
     public GameObject objUI;
@@ -146,8 +150,21 @@ public class MeasureController : UtilComponent {
         measureCollider.enabled = false;
         SetActive(shoulderTr, false);
 
+        handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing);
+
     }
 
+
+    private void CallbackFromHandRelease()
+    {
+        Debug.Log("release");
+    }
+
+    private void CallbackFromHandGrabbing()
+    {
+        Debug.Log("grabbing");
+
+    }
 
     public void StartDiagnosis()
     {

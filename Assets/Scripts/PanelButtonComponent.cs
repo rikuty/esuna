@@ -17,7 +17,8 @@ public class PanelButtonComponent : UtilComponent
     float posZcheck = 0;
     OVRGrabberBothHands grabbeHandsRight;
     OVRGrabberBothHands grabberHandsLeft;
-
+    OVRGrabberMeasure grabberMeasureRight;
+    OVRGrabberMeasure grabberMeasureLeft;
 
     private void Start()
     {
@@ -25,6 +26,8 @@ public class PanelButtonComponent : UtilComponent
         {
             grabbeHandsRight = objRightHand.GetComponent<OVRGrabberBothHands>();
             grabberHandsLeft = objLeftHand.GetComponent<OVRGrabberBothHands>();
+            grabberMeasureLeft = objRightHand.GetComponent<OVRGrabberMeasure>();
+            grabberMeasureRight = objLeftHand.GetComponent<OVRGrabberMeasure>();
         }
     }
 
@@ -51,25 +54,7 @@ public class PanelButtonComponent : UtilComponent
     
     void OnCollisionEnter(Collision collision)
     {
-        OVRGrabberBothHands hand = collision.gameObject.GetComponent<OVRGrabberBothHands>();
-        if (hand == null) return;
-
-
-        grabbeHandsRight.HapticsHands();
-
-        animator.SetTrigger("TouchTrigger");
-        isTouch = true;
-        //targetHand = collision.collider.gameObject;
-
-        if(hand.m_controller == OVRInput.Controller.RTouch)
-        {
-            targetHand = objRightHand;
-        }
-        else if (hand.m_controller == OVRInput.Controller.LTouch)
-        {
-            targetHand = objLeftHand;
-        }
-        posZbase = targetHand.transform.position.z;
+        OnTriggerEnter(collision.collider); 
 
     }
 
@@ -82,21 +67,59 @@ public class PanelButtonComponent : UtilComponent
     void OnTriggerEnter(Collider collider)
     {
         OVRGrabberBothHands hand = collider.gameObject.GetComponent<OVRGrabberBothHands>();
-        if (hand == null) return;
+        OVRGrabberMeasure handMeasure = collider.gameObject.GetComponent<OVRGrabberMeasure>();
+        if (hand == null && handMeasure == null) return;
 
-        grabbeHandsRight.HapticsHands();
+        OVRInput.Controller controller = hand != null ? hand.m_controller : handMeasure.m_controller;
+        bool isHandBoth = hand = null;
+        if(controller == OVRInput.Controller.RTouch)
+        {
+            if (isHandBoth)
+            {
+                grabbeHandsRight.HapticsHands();
+            }
+            else
+            {
+                grabberMeasureRight.HapticsHands();
+
+            }
+        }
+        else if(controller == OVRInput.Controller.LTouch)
+        {
+            if (isHandBoth)
+            {
+                grabberHandsLeft.HapticsHands();
+            }
+            else
+            {
+                grabberMeasureLeft.HapticsHands();
+
+            }
+        }
 
         animator.SetTrigger("TouchTrigger");
         isTouch = true;
         //targetHand = collision.collider.gameObject;
-
-        if (hand.m_controller == OVRInput.Controller.RTouch)
+        if (hand != null)
         {
-            targetHand = objRightHand;
-        }
-        else if (hand.m_controller == OVRInput.Controller.LTouch)
+            if (controller == OVRInput.Controller.RTouch)
+            {
+                targetHand = objRightHand;
+            }
+            else if (controller == OVRInput.Controller.LTouch)
+            {
+                targetHand = objLeftHand;
+            }
+        }else if(handMeasure != null)
         {
-            targetHand = objLeftHand;
+            if (handMeasure.m_controller == OVRInput.Controller.RTouch)
+            {
+                targetHand = objRightHand;
+            }
+            else if (handMeasure.m_controller == OVRInput.Controller.LTouch)
+            {
+                targetHand = objLeftHand;
+            }
         }
         posZbase = targetHand.transform.position.z;
 

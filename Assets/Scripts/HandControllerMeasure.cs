@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HandController: UtilComponent {
+public class HandControllerMeasure: UtilComponent {
 
-    [SerializeField] OVRGrabberBothHands rightHand;
-    [SerializeField] OVRGrabberBothHands leftHand;
+    [SerializeField] OVRGrabberMeasure rightHand;
+    [SerializeField] OVRGrabberMeasure leftHand;
 
     [SerializeField] MeshCollider rightHandCollider;
     [SerializeField] MeshCollider leftHandCollider;
@@ -106,8 +106,8 @@ public class HandController: UtilComponent {
             //callbackCollision();
         }
 
-        if (context == null) return;
-        if (/*canGrabber &&*/ !context.isAnswering)
+        //if (context == null) return;
+        if (context != null && !context.isAnswering)
         {
             //rightHand.isGrabberTriggerEnter = false;
             //leftHand.isGrabberTriggerEnter = false;
@@ -116,7 +116,9 @@ public class HandController: UtilComponent {
 
         if (/*canGrabber &&*/ canGrabbable && !unableGrab)
         {
-            context.isAnswering = true;
+            if (context != null){
+                context.isAnswering = true;
+            }
 
             if (controller == OVRInput.Controller.RTouch)
             {
@@ -139,8 +141,10 @@ public class HandController: UtilComponent {
             rightHand.isGrab = false;
             leftHand.isGrab = false;
         }
-
-        wasAnswering = context.isAnswering;
+        if(context != null)
+        {
+            wasAnswering = context.isAnswering;
+        }
 
 
         if (canGrabbable && OVRInput.GetDown(OVRInput.Button.Any) && !unableGrab)
