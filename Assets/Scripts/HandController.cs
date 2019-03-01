@@ -57,7 +57,7 @@ public class HandController: UtilComponent {
     }
 
 
-    public void Init(System.Action callbackRelease, System.Action callbackGrabbing, Context context = null)
+    public void Init(System.Action callbackRelease, System.Action callbackGrabbing, Context context)
     {
         this.callbackRelease = callbackRelease;
         this.callbackGrabbing = callbackGrabbing;

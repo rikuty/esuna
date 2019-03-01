@@ -37,7 +37,6 @@ public class OVRGrabbableMeasure : MonoBehaviour
     protected Transform m_snapOffset;
     [SerializeField]
     protected Collider[] m_grabPoints = null;
- 
 
     protected bool m_grabbedKinematic = false;
     protected Collider m_grabbedCollider = null;

@@ -58,6 +58,9 @@ public class OVRGrabberMeasure :  MonoBehaviour
     [SerializeField]
     protected Transform m_parentTransform;
 
+    [SerializeField]
+    protected OVRGrabberMeasure anotherHands;
+
     protected bool m_grabVolumeEnabled = true;
     protected Vector3 m_lastPos;
     protected Quaternion m_lastRot;
@@ -73,6 +76,8 @@ public class OVRGrabberMeasure :  MonoBehaviour
     public bool isGrab = false;
     public bool isGrabbableTriggerEnter = false;
     //public bool isGrabberTriggerEnter = false;
+    public Nest nest;
+    public Egg egg;
 
     public bool isCollisionEnter = false;
     public string collisionObjName;
@@ -194,17 +199,29 @@ public class OVRGrabberMeasure :  MonoBehaviour
     {
 
 
+        // ‘ƒ‚É“–‚½‚Á‚½Žž
+        childColliderComponent childColliderComponent = otherCollider.GetComponent<childColliderComponent>();
+        if(childColliderComponent != null)
+        {
+            nest = childColliderComponent.nest;
+        }
+
+        //isGrabberTriggerEnter = true;
+
+
         // Get the grab trigger
         OVRGrabbableMeasure grabbable = otherCollider.GetComponent<OVRGrabbableMeasure>() ?? otherCollider.GetComponentInParent<OVRGrabbableMeasure>();
-        MeasureComponent measure = otherCollider.GetComponent<MeasureComponent>() ?? otherCollider.GetComponentInParent<MeasureComponent>();
-        if (grabbable != null && measure != null)
+        Egg egg = otherCollider.GetComponent<Egg>() ?? otherCollider.GetComponentInParent<Egg>();
+        if (grabbable != null && egg != null)
         {
+
 
             // Add the grabbable
             int refCount = 0;
             m_grabCandidates.TryGetValue(grabbable, out refCount);
             m_grabCandidates[grabbable] = refCount + 1;
             isGrabbableTriggerEnter = true;
+            this.egg = egg;
             return;
         }
         //OVRGrabberBothHands grabber = otherCollider.GetComponent<OVRGrabberBothHands>();
@@ -220,9 +237,11 @@ public class OVRGrabberMeasure :  MonoBehaviour
 
         OVRGrabbableMeasure grabbable = otherCollider.GetComponent<OVRGrabbableMeasure>() ?? otherCollider.GetComponentInParent<OVRGrabbableMeasure>();
         //Egg egg = otherCollider.GetComponent<Egg>() ?? otherCollider.GetComponentInParent<Egg>();
+        if (grabbable == null || egg == null) return;
 
         // Remove the grabbable
         isGrabbableTriggerEnter = false;
+        this.egg = null;
         int refCount = 0;
         bool found = m_grabCandidates.TryGetValue(grabbable, out refCount);
         if (!found)
