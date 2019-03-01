@@ -444,14 +444,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 385981488}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.0008726948, z: 0, w: 0.99999964}
   m_LocalPosition: {x: 0, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 416566389}
   m_Father: {fileID: 557376483}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0.1, z: 0}
 --- !u!65 &385981490
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -462,8 +462,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.12, z: 1.7802823}
-  m_Center: {x: 0, y: 0.03, z: 0}
+  m_Size: {x: 0.5, y: 0.08528933, z: 1.7802895}
+  m_Center: {x: 0.00000005892248, y: 0.0057224995, z: -1.1906611e-12}
 --- !u!54 &385981491
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -478,7 +478,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 110
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &385981492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +618,26 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 126d619cf4daa52469682f85c1378b4a, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 54199495321145786, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 54332717047875256, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114405546991234702, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114319796944617982, guid: 126d619cf4daa52469682f85c1378b4a,
+        type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
