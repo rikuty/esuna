@@ -14,7 +14,7 @@ public class BirdTransfer : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        
+        //ScreenCapture.CaptureScreenshot("Assets/Resources/ScreenShot/ss.png");
     }
 
     // Update is called once per frame
