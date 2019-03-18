@@ -1,0 +1,14 @@
+[
+    {
+        "$type": "AddCube, Assembly-CSharp",
+        "p": "125;-18;16",
+        "s": "1;1;11",
+        "v": "Default"
+    },
+    {
+        "$type": "DigCube, Assembly-CSharp",
+        "p": "0;-17;16",
+        "s": "1;15;1",
+        "v": "Default"
+    }
+]

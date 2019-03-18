@@ -1,0 +1,8 @@
+[
+    {
+        "$type": "AddCube, Assembly-CSharp",
+        "p": "3;3;3",
+        "s": "4;4;4",
+        "v": "Default"
+    }
+]

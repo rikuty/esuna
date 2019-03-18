@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: BumpedTriplanarTerrain
+  m_Shader: {fileID: 4800000, guid: 90cee4c3ce815b64fbd82536e03f702e, type: 3}
+  m_ShaderKeywords: _LIGHTMAPPING_DYNAMIC_LIGHTMAPS _UVSEC_UV1
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaBump:
+        m_Texture: {fileID: 2800000, guid: 471fa866a9fb86b44bbb5e80420e2630, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTexture:
+        m_Texture: {fileID: 2800000, guid: f66ec1486f73c3c4e86723168dc52fc9, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _BlueBump:
+        m_Texture: {fileID: 2800000, guid: aa07ee91cb10a4fb4a8189945ff41b19, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _BlueTexture:
+        m_Texture: {fileID: 2800000, guid: 30d83e640a70e47a2b68e462e5c5d58b, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _GreenBump:
+        m_Texture: {fileID: 2800000, guid: a04cbd0fa61ae47dab52b15deb5911b3, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _GreenTexture:
+        m_Texture: {fileID: 2800000, guid: bce1ec8748bec4a0fa21b52f14826bd7, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _RedBump:
+        m_Texture: {fileID: 2800000, guid: 93e536585bc2f924c98c1fc0666e1907, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _RedTexture:
+        m_Texture: {fileID: 2800000, guid: 440eb36db91ca410f800ff3cfe43572f, type: 3}
+        m_Scale: {x: 0.1, y: 0.1}
+        m_Offset: {x: 0, y: 0}
+    - _SidesBump:
+        m_Texture: {fileID: 2800000, guid: 9d4515cff1ba84d16b9396c09b31acb9, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _SidesTexture:
+        m_Texture: {fileID: 2800000, guid: 4eadcc55dbc734dd0a3dc14999a572cc, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
+        m_Offset: {x: 0, y: 0}
+    - _TopBump:
+        m_Texture: {fileID: 2800000, guid: 8b19ceb198e60490c97ad966e96ba673, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _TopTexture:
+        m_Texture: {fileID: 2800000, guid: 17457b74961f148c99c559a2ad82a354, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpMultiplierAlpha: 1
+    - _BumpMultiplierBlue: 1.2
+    - _BumpMultiplierGreen: 1
+    - _BumpMultiplierRed: 1.3
+    - _BumpMultiplierSides: 1.3
+    - _BumpMultiplierTop: 1
+    - _Shininess: 0.03
+    - _SpecularPower: 0
+    - _TexPower: 1
+    m_Colors:
+    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbc83e9ea504a079267db136c51cc28, type: 3}
+  m_Name: biomeSelector upsidedown
+  m_EditorClassIdentifier: 
+  Name: 
+  graph3D:
+    isBiomeSelector: 1
+    nodes:
+      keys:
+      - 216124c3-5fbe-41c8-821c-a3e5b14878d2
+      - c73d7d78-7e41-4fe1-8a78-098b1bb4306b
+      - c74de610-102d-4caf-9773-7fc84ffff0ed
+      - 3e5915e4-ea69-4b78-8620-b17af9985a3b
+      - 18c419ec-d858-4f42-858f-b294e408b3bc
+      - 0b21fba7-7843-48aa-a1bb-c64615b9b451
+      values:
+      - GUID: 216124c3-5fbe-41c8-821c-a3e5b14878d2
+        content: {fileID: 114172847552499312}
+        Rect:
+          serializedVersion: 2
+          x: 442.58765
+          y: 34.366577
+          width: 277
+          height: 63
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: c73d7d78-7e41-4fe1-8a78-098b1bb4306b
+        content: {fileID: 114805540565680502}
+        Rect:
+          serializedVersion: 2
+          x: 242.58765
+          y: 34.366577
+          width: 100
+          height: 59
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+      - GUID: c74de610-102d-4caf-9773-7fc84ffff0ed
+        content: {fileID: 114439782779926470}
+        Rect:
+          serializedVersion: 2
+          x: 444.74393
+          y: 123.31535
+          width: 277
+          height: 63
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+      - GUID: 3e5915e4-ea69-4b78-8620-b17af9985a3b
+        content: {fileID: 114788530992660162}
+        Rect:
+          serializedVersion: 2
+          x: 54.582203
+          y: 111.18598
+          width: 54
+          height: 41.383667
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+      - GUID: 18c419ec-d858-4f42-858f-b294e408b3bc
+        content: {fileID: 114258511025389928}
+        Rect:
+          serializedVersion: 2
+          x: 34.36658
+          y: 169.81134
+          width: 100
+          height: 59
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+      - GUID: 0b21fba7-7843-48aa-a1bb-c64615b9b451
+        content: {fileID: 114647923015376316}
+        Rect:
+          serializedVersion: 2
+          x: 172.84343
+          y: 117.25062
+          width: 218
+          height: 160.63625
+        isDragged: 0
+        isSelected: 1
+        isRemovable: 1
+    connections:
+    - inNodeGUID: 216124c3-5fbe-41c8-821c-a3e5b14878d2
+      outNodeGUID: c73d7d78-7e41-4fe1-8a78-098b1bb4306b
+      inPointIndex: 0
+    - inNodeGUID: 0b21fba7-7843-48aa-a1bb-c64615b9b451
+      outNodeGUID: 3e5915e4-ea69-4b78-8620-b17af9985a3b
+      inPointIndex: 0
+    - inNodeGUID: 0b21fba7-7843-48aa-a1bb-c64615b9b451
+      outNodeGUID: 18c419ec-d858-4f42-858f-b294e408b3bc
+      inPointIndex: 1
+    - inNodeGUID: c74de610-102d-4caf-9773-7fc84ffff0ed
+      outNodeGUID: 0b21fba7-7843-48aa-a1bb-c64615b9b451
+      inPointIndex: 0
+--- !u!114 &114172847552499312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6729e9064ea181682d6cc56522fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeIndex: 0
+--- !u!114 &114258511025389928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 100
+  constantName: Altitude
+--- !u!114 &114439782779926470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6729e9064ea181682d6cc56522fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeIndex: 1
+--- !u!114 &114647923015376316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680c94a69a6d74da0838587d62a29677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combinerType: 1
+  inWeight: 0.5
+--- !u!114 &114788530992660162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b3b34956118438abfdfad5f2ee1f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114805540565680502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  constantName: Constant name

@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbc83e9ea504a079267db136c51cc28, type: 3}
+  m_Name: biomeSelector
+  m_EditorClassIdentifier: 
+  Name: 
+  graph3D:
+    isBiomeSelector: 1
+    nodes:
+      keys:
+      - c51d188b-bde9-42d0-a7fe-e7c44a104cc2
+      - 4ee77553-d5e1-40dc-8947-2d27bf0204df
+      values:
+      - GUID: c51d188b-bde9-42d0-a7fe-e7c44a104cc2
+        content: {fileID: 114062311133455182}
+        Rect:
+          serializedVersion: 2
+          x: 484.2693
+          y: 84.60177
+          width: 277
+          height: 63
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: 4ee77553-d5e1-40dc-8947-2d27bf0204df
+        content: {fileID: 114319950052173136}
+        Rect:
+          serializedVersion: 2
+          x: 284.2695
+          y: 84.60177
+          width: 100
+          height: 59
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+    connections:
+    - inNodeGUID: c51d188b-bde9-42d0-a7fe-e7c44a104cc2
+      outNodeGUID: 4ee77553-d5e1-40dc-8947-2d27bf0204df
+      inPointIndex: 0
+--- !u!114 &114017735117599282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91ceb0c39f2274b58b2adf408705dd8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114019893052270786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680c94a69a6d74da0838587d62a29677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  combinerType: 1
+  inWeight: 0.5
+--- !u!114 &114062311133455182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6729e9064ea181682d6cc56522fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeIndex: 0
+--- !u!114 &114302033964531594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 100
+  constantName: Altitude
+--- !u!114 &114319950052173136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  constantName: Default
+--- !u!114 &114549606732860844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6729e9064ea181682d6cc56522fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeIndex: 1
+--- !u!114 &114760946280585698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32b3b34956118438abfdfad5f2ee1f31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114773540978462102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6729e9064ea181682d6cc56522fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeIndex: 0
+--- !u!114 &114963549489217772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad8f35de43f54b3695f5d6e9c3ee981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frequency: 0.005
+  scale: 2
+  seed: 0
+  quality: 1

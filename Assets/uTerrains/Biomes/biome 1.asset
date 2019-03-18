@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b50ebc0ccc5ff4f8957c691ff245d6, type: 3}
+  m_Name: biome 1
+  m_EditorClassIdentifier: 
+  Name: 
+  graph3D:
+    isBiomeSelector: 0
+    nodes:
+      keys:
+      - 561694ea-ea5c-4a8b-831f-ab7426720117
+      - f1449035-ef63-4cca-9e61-b7013ec1f995
+      - 05ed90a5-ff8c-466f-a964-fd096c4e3c60
+      values:
+      - GUID: 561694ea-ea5c-4a8b-831f-ab7426720117
+        content: {fileID: 114038879517743542}
+        Rect:
+          serializedVersion: 2
+          x: 477
+          y: 40
+          width: 223
+          height: 63
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: f1449035-ef63-4cca-9e61-b7013ec1f995
+        content: {fileID: 114533504682081108}
+        Rect:
+          serializedVersion: 2
+          x: 477
+          y: 140
+          width: 277
+          height: 81
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: 05ed90a5-ff8c-466f-a964-fd096c4e3c60
+        content: {fileID: 114656131322500826}
+        Rect:
+          serializedVersion: 2
+          x: 277
+          y: 140
+          width: 100
+          height: 59
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+    connections:
+    - inNodeGUID: f1449035-ef63-4cca-9e61-b7013ec1f995
+      outNodeGUID: 05ed90a5-ff8c-466f-a964-fd096c4e3c60
+      inPointIndex: 0
+--- !u!114 &114038879517743542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67648dab8582497b9dc301ba354de6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114533504682081108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cd2a2b91cfe4f20bd7b10761b11922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voxelTypeIndex: 0
+--- !u!114 &114656131322500826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  constantName: VoxelType weight

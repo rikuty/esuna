@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1dbc83e9ea504a079267db136c51cc28, type: 3}
+  m_Name: biomeSelector 3
+  m_EditorClassIdentifier: 
+  Name: 
+  graph3D:
+    isBiomeSelector: 1
+    nodes:
+      keys:
+      - a16fb0f5-7ec9-4b21-90a2-8e29adc9839d
+      - f334b2d6-a892-4af6-a319-892dbb8612ce
+      values:
+      - GUID: a16fb0f5-7ec9-4b21-90a2-8e29adc9839d
+        content: {fileID: 114223354756877360}
+        Rect:
+          serializedVersion: 2
+          x: 200
+          y: 0
+          width: 100
+          height: 25
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: f334b2d6-a892-4af6-a319-892dbb8612ce
+        content: {fileID: 114159342580950204}
+        Rect:
+          serializedVersion: 2
+          x: 0
+          y: 0
+          width: 100
+          height: 10
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+    connections:
+    - inNodeGUID: a16fb0f5-7ec9-4b21-90a2-8e29adc9839d
+      outNodeGUID: f334b2d6-a892-4af6-a319-892dbb8612ce
+      inPointIndex: 0
+--- !u!114 &114159342580950204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  constantName: Constant name
+--- !u!114 &114223354756877360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febe6729e9064ea181682d6cc56522fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  biomeIndex: 0

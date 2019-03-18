@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Asteroid_BumpedSpecularTriplanar
+  m_Shader: {fileID: 4800000, guid: bcc6c53e11d7e3d4a882a088cb4d0ac7, type: 3}
+  m_ShaderKeywords: _LIGHTMAPPING_DYNAMIC_LIGHTMAPS _UVSEC_UV1
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaBump:
+        m_Texture: {fileID: 2800000, guid: 471fa866a9fb86b44bbb5e80420e2630, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AlphaTexture:
+        m_Texture: {fileID: 2800000, guid: f66ec1486f73c3c4e86723168dc52fc9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlueBump:
+        m_Texture: {fileID: 2800000, guid: 9be3af83fa001554a814b4665fda4e57, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlueTexture:
+        m_Texture: {fileID: 2800000, guid: d42e87372015ad24c803007bd4e5736f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GreenBump:
+        m_Texture: {fileID: 2800000, guid: 323a32421225b4ba7b428d4f65c41a3c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _GreenTexture:
+        m_Texture: {fileID: 2800000, guid: e075fcb96707d422e97f93cea93854c9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RedBump:
+        m_Texture: {fileID: 2800000, guid: 5b285eb46312b4dfeb68246a4acd1869, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _RedTexture:
+        m_Texture: {fileID: 2800000, guid: a53f689fe3c834464904c15bba50732e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SidesBump:
+        m_Texture: {fileID: 2800000, guid: 6bf40a7de883b4d7c92a6c3b10ed0412, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _SidesTexture:
+        m_Texture: {fileID: 2800000, guid: 7f8f7b0869c7a4a61a18363d1bb7b14e, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _TopBump:
+        m_Texture: {fileID: 2800000, guid: 6bf40a7de883b4d7c92a6c3b10ed0412, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    - _TopTexture:
+        m_Texture: {fileID: 2800000, guid: 7f8f7b0869c7a4a61a18363d1bb7b14e, type: 3}
+        m_Scale: {x: 0.2, y: 0.2}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BumpMultiplierAlpha: 1
+    - _BumpMultiplierBlue: 1
+    - _BumpMultiplierGreen: 1
+    - _BumpMultiplierRed: 1
+    - _BumpMultiplierSides: 1
+    - _BumpMultiplierTop: 1
+    - _Shininess: 0.03
+    - _SpecularPower: 0
+    - _TexPower: 10
+    m_Colors:
+    - _SpecColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}

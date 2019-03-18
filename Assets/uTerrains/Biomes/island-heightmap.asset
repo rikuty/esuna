@@ -1,0 +1,154 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b50ebc0ccc5ff4f8957c691ff245d6, type: 3}
+  m_Name: island-heightmap
+  m_EditorClassIdentifier: 
+  Name: Default
+  graph3D:
+    isBiomeSelector: 0
+    nodes:
+      keys:
+      - f3f48c3f-19ad-42e4-82cc-fa9bc8757651
+      - 0bbffa97-54b3-47fa-bc04-d48d8b7e3b3e
+      - ff59880d-d1b5-4d5a-91a6-66d21c312619
+      - ddc5b53c-8fec-43bd-979d-cc2674887b55
+      - 449df1ff-84a8-407b-9171-852ebd1eb087
+      values:
+      - GUID: f3f48c3f-19ad-42e4-82cc-fa9bc8757651
+        content: {fileID: 114084516697238394}
+        Rect:
+          serializedVersion: 2
+          x: 797.1317
+          y: 52.956444
+          width: 223
+          height: 63
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: 0bbffa97-54b3-47fa-bc04-d48d8b7e3b3e
+        content: {fileID: 114712825588766578}
+        Rect:
+          serializedVersion: 2
+          x: 794.86926
+          y: 148.4314
+          width: 277
+          height: 81
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 0
+      - GUID: ff59880d-d1b5-4d5a-91a6-66d21c312619
+        content: {fileID: 114221034890342970}
+        Rect:
+          serializedVersion: 2
+          x: 619.7561
+          y: 158.6125
+          width: 100
+          height: 59
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+      - GUID: ddc5b53c-8fec-43bd-979d-cc2674887b55
+        content: {fileID: 114521436556610924}
+        Rect:
+          serializedVersion: 2
+          x: 105.04967
+          y: 39.381744
+          width: 300
+          height: 179
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+      - GUID: 449df1ff-84a8-407b-9171-852ebd1eb087
+        content: {fileID: 114253295188447210}
+        Rect:
+          serializedVersion: 2
+          x: 492.46136
+          y: 38.264046
+          width: 223
+          height: 91.49616
+        isDragged: 0
+        isSelected: 0
+        isRemovable: 1
+    connections:
+    - inNodeGUID: 0bbffa97-54b3-47fa-bc04-d48d8b7e3b3e
+      outNodeGUID: ff59880d-d1b5-4d5a-91a6-66d21c312619
+      inPointIndex: 0
+    - inNodeGUID: f3f48c3f-19ad-42e4-82cc-fa9bc8757651
+      outNodeGUID: 449df1ff-84a8-407b-9171-852ebd1eb087
+      inPointIndex: 0
+    - inNodeGUID: 449df1ff-84a8-407b-9171-852ebd1eb087
+      outNodeGUID: ddc5b53c-8fec-43bd-979d-cc2674887b55
+      inPointIndex: 0
+--- !u!114 &114084516697238394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a67648dab8582497b9dc301ba354de6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114221034890342970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 918c85409fe1245878e534fabc43a119, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  value: 0
+  constantName: Default weight
+--- !u!114 &114253295188447210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84df05708e558405b8f24180917ba2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 100
+--- !u!114 &114521436556610924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22862b291b40748ad8f0b0f6bce087a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fromX: -1100
+  fromZ: -1100
+  toX: 1100
+  toZ: 1100
+  heightmap: {fileID: 2800000, guid: 76f83d5da612840db8d339f098396923, type: 3}
+  heightScale: 1
+--- !u!114 &114712825588766578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7cd2a2b91cfe4f20bd7b10761b11922, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voxelTypeIndex: 0
