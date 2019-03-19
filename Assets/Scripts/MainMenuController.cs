@@ -4,6 +4,10 @@ using System.Collections;
 using System;
 using Gamestrap;
 
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 
 public class MainMenuController : UtilComponent
 {
@@ -38,6 +42,9 @@ public class MainMenuController : UtilComponent
     public void Start()
     {
 
+        // ユーザーデーター取得　※消しちゃダメ
+        StartCoroutine(ConnectAPI("http://18.179.32.33/sample/GetUserData.php", GetUserData));
+
         this.gameData = GameData.Instance;
 
         this.dateTime = DateTime.Now;
@@ -54,6 +61,16 @@ public class MainMenuController : UtilComponent
         measureController.Init(() => { birdTransfer.PlayStart(); });
 
         currentStatus = MENU_STATUS_ENUM.WAIT;
+    }
+
+    // JSON変換　※消しちゃダメ
+    private void GetUserData(string val)
+    {
+        Debug.Log(val);
+
+        UserData userData = JsonConvert.DeserializeObject<UserData>(val);
+        //Debug.Log("userId : "+userData.user_id);
+        //Debug.Log("name : " + userData.user_name);
     }
 
     private void Update()
