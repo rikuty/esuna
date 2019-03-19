@@ -375,7 +375,10 @@ public class MeasureController : UtilComponent {
     {
         yield return new WaitForSeconds(3.0f);
         isWaiting = false;
-        ShowUI(true);
+        if(currentStatus != DIAGNOSIS_STATUS_ENUM.END)
+        {
+	        ShowUI(true);
+        }
         if(callback != null)
         {
             callback();
