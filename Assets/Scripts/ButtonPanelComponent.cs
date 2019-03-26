@@ -10,8 +10,6 @@ public class ButtonPanelComponent : UtilComponent
     [SerializeField] GameObject objLeftHand;
     [SerializeField] GameObject objBackPanel;
 
-    Action callback;
-    
     GameObject targetHand = null;
     OVRGrabberBothHands grabbeHandsRight;
     OVRGrabberBothHands grabberHandsLeft;
@@ -26,12 +24,6 @@ public class ButtonPanelComponent : UtilComponent
         }
     }
 
-    public void Init(Action callback)
-    {
-        this.callback = callback;
-    }
-    
-
     // Update is called once per frame
     void Update()
     {
@@ -41,11 +33,9 @@ public class ButtonPanelComponent : UtilComponent
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("OnCollisionEnter");
-
         if (collision.gameObject.name == objBackPanel.name)
         {
-            this.callback();
-            SetActive(this, false);
+            //ButtonPushedCallback();
         } else {
             OVRGrabberBothHands hand = collision.gameObject.GetComponent<OVRGrabberBothHands>();
             if (hand == null) return;
@@ -67,11 +57,6 @@ public class ButtonPanelComponent : UtilComponent
     void OnCollisionExit(Collision collision)
     {
         ResetStatus();
-    }
-
-    void ButtonPushedCallback() {
-        this.callback();
-        SetActive(this, false);
     }
 
     void ResetStatus()

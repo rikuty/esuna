@@ -31,7 +31,8 @@ public class MainMenuController : UtilComponent
     public Text txtDetail;
 
     //public HandController handController;
-    public PanelButtonComponent panelButtonComponent;
+    //public PanelButtonComponent panelButtonComponent;
+    public BackPanelComponent backPanelComponent;
 
     public MeasureController measureController;
 
@@ -39,7 +40,7 @@ public class MainMenuController : UtilComponent
 
     private GameData gameData;
 
-    public void Start()
+    void Start()
     {
 
         // ユーザーデーター取得　※消しちゃダメ
@@ -55,7 +56,7 @@ public class MainMenuController : UtilComponent
         SetLabel(this.txtDetail, "");
 
         //handController.Init(LoadMain);
-        panelButtonComponent.Init(FinishPushButton);
+        backPanelComponent.Init(FinishPushButton, LoadMain);
         birdTransfer.Init(LoadMain);
 
         measureController.Init(() => { birdTransfer.PlayStart(); });
@@ -73,7 +74,7 @@ public class MainMenuController : UtilComponent
         //Debug.Log("name : " + userData.user_name);
     }
 
-    private void Update()
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
     }
@@ -89,7 +90,6 @@ public class MainMenuController : UtilComponent
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
         Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main");
     }
-
 
     private void FinishDiagnosis()
     {
