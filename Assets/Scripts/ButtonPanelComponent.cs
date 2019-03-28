@@ -8,7 +8,6 @@ public class ButtonPanelComponent : UtilComponent
     //[SerializeField] Animator animator;
     [SerializeField] GameObject objRightHand;
     [SerializeField] GameObject objLeftHand;
-    [SerializeField] GameObject objBackPanel;
 
     GameObject targetHand = null;
     OVRGrabberBothHands grabbeHandsRight;
@@ -28,39 +27,29 @@ public class ButtonPanelComponent : UtilComponent
     void Update()
     {
     }
-
     
     void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("OnCollisionEnter");
-        if (collision.gameObject.name == objBackPanel.name)
+        OVRGrabberBothHands hand = collision.gameObject.GetComponent<OVRGrabberBothHands>();
+        if (hand == null) return;
+
+
+        grabbeHandsRight.HapticsHands();
+        
+        if (hand.m_controller == OVRInput.Controller.RTouch)
         {
-            //ButtonPushedCallback();
-        } else {
-            OVRGrabberBothHands hand = collision.gameObject.GetComponent<OVRGrabberBothHands>();
-            if (hand == null) return;
-
-
-            grabbeHandsRight.HapticsHands();
-            
-            if (hand.m_controller == OVRInput.Controller.RTouch)
-            {
-                targetHand = objRightHand;
-            }
-            else if (hand.m_controller == OVRInput.Controller.LTouch)
-            {
-                targetHand = objLeftHand;
-            }
+            targetHand = objRightHand;
+        }
+        else if (hand.m_controller == OVRInput.Controller.LTouch)
+        {
+            targetHand = objLeftHand;
         }
     }
 
     void OnCollisionExit(Collision collision)
     {
-        ResetStatus();
-    }
-
-    void ResetStatus()
-    {
+        this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y, 0);
         targetHand = null;
     }
 }
