@@ -31,5 +31,8 @@ public class HitEffect : MonoBehaviour {
 
     public void SetLook(Transform target){
         trBird.LookAt(target);
+        float vectorY = trBird.localRotation.eulerAngles.y;
+        //Debug.Log("vectorY : "+ vectorY);
+        trBird.localRotation = Quaternion.Euler(30.0f, vectorY, 0.0f);
     }
 }
