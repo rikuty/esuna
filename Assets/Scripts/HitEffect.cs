@@ -28,4 +28,8 @@ public class HitEffect : MonoBehaviour {
         //Debug.Log("callback.");
         Destroy(this.gameObject);
     }
+
+    public void SetLook(Transform target){
+        trBird.LookAt(target);
+    }
 }

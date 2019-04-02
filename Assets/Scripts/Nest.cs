@@ -43,7 +43,7 @@ public class Nest : UtilComponent {
         objEffect.transform.parent = trCreateParent;
         objEffect.transform.localPosition = trCreatePos.localPosition;
 
-        objEffect.transform.LookAt(trCenterAnchor);
+        objEffect.SetLook(trCenterAnchor);
 
         SetActive(objEffect, true);
     }
