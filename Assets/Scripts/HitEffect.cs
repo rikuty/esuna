@@ -5,12 +5,10 @@ using UnityEngine;
 public class HitEffect : MonoBehaviour {
 
     [SerializeField] private Transform trBird;
-    [SerializeField] private Animator hitAnimator;
     [SerializeField] private Animator birdAnimator;
 
     // Use this for initialization
     void Start () {
-        hitAnimator.SetTrigger("HitTrigger");
     }
 	
 	// Update is called once per frame
