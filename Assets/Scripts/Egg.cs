@@ -8,7 +8,7 @@ public class Egg : UtilComponent {
 
     [SerializeField] MeshRenderer cubeRenderer;
 
-    [SerializeField] GameObject objParticle;
+    //[SerializeField] GameObject objParticle;
 
     [SerializeField] GameObject objCube;
 
@@ -53,10 +53,13 @@ public class Egg : UtilComponent {
             //collisionFromUpper = false;
             deltaTime = 0f;
 
-            objParticle.SetActive(true);
+            //objParticle.SetActive(true);
             objCube.SetActive(false);
             if (touchNest != null)
             {
+                // エフェクト生成
+                touchNest.SetActiveBird();
+
                 touchNest.SetActiveNest(false);
                 audioSource.Play();
 

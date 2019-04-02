@@ -25,6 +25,7 @@ public class HitEffect : MonoBehaviour {
 
     void HitCallback()
     {
-        Debug.Log("callback.");
+        //Debug.Log("callback.");
+        Destroy(this.gameObject);
     }
 }

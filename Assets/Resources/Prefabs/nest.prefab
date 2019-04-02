@@ -96,7 +96,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1733870872066910
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +638,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childColliderComponent: {fileID: 114950714359031142}
+  objEffect: {fileID: 1717713110002622, guid: 6ad3e48438c6a475aa08cde0353ad3db, type: 2}
+  trCreateParent: {fileID: 0}
+  trCreatePos: {fileID: 0}
 --- !u!114 &114950714359031142
 MonoBehaviour:
   m_ObjectHideFlags: 1
