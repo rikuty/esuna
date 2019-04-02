@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class HitEffect : MonoBehaviour {
 
+    [SerializeField] private Transform trBird;
     [SerializeField] private Animator hitAnimator;
     [SerializeField] private Animator birdAnimator;
-
 
     // Use this for initialization
     void Start () {

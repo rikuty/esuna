@@ -8,9 +8,10 @@ public class Nest : UtilComponent {
     [NonSerialized] public DEFINE_APP.ANSWER_TYPE_ENUM answerType;
     [NonSerialized] public int answerIndex;
     [SerializeField] childColliderComponent childColliderComponent;
-    [SerializeField] GameObject objEffect;
+    [SerializeField] HitEffect hitEffect;
     [SerializeField] Transform trCreateParent;
     [SerializeField] Transform trCreatePos;
+    [SerializeField] Transform trCenterAnchor;
 
     GameObject guide;
     GameObject[] hands;
@@ -37,10 +38,12 @@ public class Nest : UtilComponent {
 
     public void SetActiveBird()
     {
-        GameObject obj = (GameObject)Instantiate(objEffect, new Vector3(0,0,0), Quaternion.identity);
+        HitEffect objEffect = (HitEffect)Instantiate(hitEffect, new Vector3(0,0,0), Quaternion.identity);
 
-        obj.transform.parent = trCreateParent;
-        obj.transform.localPosition = trCreatePos.localPosition;
+        objEffect.transform.parent = trCreateParent;
+        objEffect.transform.localPosition = trCreatePos.localPosition;
+
+        objEffect.transform.LookAt(trCenterAnchor);
 
         SetActive(objEffect, true);
     }
