@@ -88,7 +88,7 @@ public class MainMenuController : UtilComponent
     public void LoadMain()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
-        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main");
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
     }
 
     private void FinishDiagnosis()
