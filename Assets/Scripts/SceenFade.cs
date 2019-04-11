@@ -6,7 +6,7 @@ public class SceenFade : MonoBehaviour
 {
 
     public float fadeTime = 2.0f;
-    public Color fadeColor = new Color(0.01f, 0.01f, 0.01f, 1.0f);
+    public Color fadeColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
     public Shader fadeShader = null;
 
     private Material fadeMaterial = null;
@@ -14,7 +14,7 @@ public class SceenFade : MonoBehaviour
 
     void Awake()
     {
-        fadeMaterial = (fadeShader != null) ? new Material(fadeShader) : new Material(Shader.Find("Transparent/Diffuse"));
+        fadeMaterial = (fadeShader != null) ? new Material(fadeShader) : new Material(Shader.Find("Legacy Shaders/Transparent/Diffuse"));
     }
 
     void OnEnable()
