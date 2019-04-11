@@ -14,7 +14,7 @@ public class SceenFade : MonoBehaviour
 
     void Awake()
     {
-        fadeMaterial = (fadeShader != null) ? new Material(fadeShader) : new Material(Shader.Find("Legacy Shaders/Transparent/Diffuse"));
+        fadeMaterial = (fadeShader != null) ? new Material(fadeShader) : new Material(Shader.Find("Sprites/Default"));
     }
 
     void OnEnable()
