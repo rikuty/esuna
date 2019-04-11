@@ -63,8 +63,6 @@ public class GameController : UtilComponent {
     {
         context.currentStatus = DEFINE_APP.STATUS_ENUM.PREPARE;
         StartCoroutine("PrepareCoroutine");
-
-        birdTransfer.PlayFlying();
     }
 
     IEnumerator PrepareCoroutine()
