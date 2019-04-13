@@ -36,7 +36,8 @@ public class MainMenuController : UtilComponent
 
     public MeasureController measureController;
 
-    public BirdTransfer birdTransfer;
+    //public BirdTransfer birdTransfer;
+    public GameObject objWarpEffect;
 
     private GameData gameData;
 
@@ -57,9 +58,10 @@ public class MainMenuController : UtilComponent
 
         //handController.Init(LoadMain);
         backPanelComponent.Init(FinishPushButton, LoadMain);
-        birdTransfer.Init(LoadMain);
+        //birdTransfer.Init(LoadMain);
 
-        measureController.Init(() => { birdTransfer.PlayStart(); });
+        //measureController.Init(() => { birdTransfer.PlayStart(); });
+        measureController.Init(() => { SetActive(objWarpEffect, true); });
 
         currentStatus = MENU_STATUS_ENUM.WAIT;
     }
@@ -76,7 +78,8 @@ public class MainMenuController : UtilComponent
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
+        //if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
+        if (Input.GetKeyDown(KeyCode.Space)) { SetActive(objWarpEffect, true); }
     }
 
 
@@ -88,6 +91,7 @@ public class MainMenuController : UtilComponent
     public void LoadMain()
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        SetActive(objWarpEffect, true);
         Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
     }
 
