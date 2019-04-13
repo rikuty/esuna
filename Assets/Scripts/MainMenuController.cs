@@ -92,7 +92,7 @@ public class MainMenuController : UtilComponent
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
         SetActive(objWarpEffect, true);
-        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Main");
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
     }
 
     private void FinishDiagnosis()
