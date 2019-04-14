@@ -4,7 +4,7 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: M_photoscanned_rocks_01_Leaves_Top
   m_Shader: {fileID: 4800000, guid: ac52aff10d15bf8499822f24a70aeee5, type: 3}
