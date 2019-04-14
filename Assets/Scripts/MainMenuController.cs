@@ -61,7 +61,7 @@ public class MainMenuController : UtilComponent
         //birdTransfer.Init(LoadMain);
 
         //measureController.Init(() => { birdTransfer.PlayStart(); });
-        measureController.Init(() => { SetActive(objWarpEffect, true); });
+        measureController.Init(LoadMain);
 
         currentStatus = MENU_STATUS_ENUM.WAIT;
     }
