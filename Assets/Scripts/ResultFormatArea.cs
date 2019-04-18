@@ -33,7 +33,8 @@ public class ResultFormatArea : MonoBehaviour {
         Object.Destroy(tex);
 
         //Write to a file in the project folder
-        File.WriteAllBytes(Application.dataPath + "/Resources/Images/ResultSheet.png", bytes);
+        //Debug.Log(Application.dataPath);
+        File.WriteAllBytes(Application.dataPath + "/Resources/ResultSheet.png", bytes);
 
     }
 }
