@@ -205,6 +205,7 @@ public class WMG_Radar_Graph : WMG_Axis_Graph {
 	[SerializeField] private float _labelsOffset;
 	[SerializeField] private int _fontSize;
 	[SerializeField] private bool _hideLabels;
+	[SerializeField] private List<float> _graph1ValueList;
 
 	/// <summary>
 	/// Reference to the radar grids.
@@ -264,6 +265,10 @@ public class WMG_Radar_Graph : WMG_Axis_Graph {
 
 	void Update () {
 		Refresh();
+	}
+
+	public void SetGraph1ValueList(List<float> list){
+		_graph1ValueList = list;
 	}
 
 	/// <summary>
@@ -374,7 +379,8 @@ public class WMG_Radar_Graph : WMG_Axis_Graph {
 		for (int i = 0; i < numDataSeries; i++) {
 			WMG_Series aSeries = lineSeries[i + numGrids].GetComponent<WMG_Series>();
 			if (randomData) {
-				aSeries.pointValues.SetList(WMG_Util.GenRadar(WMG_Util.GenRandomList(numPoints, radarMinVal, radarMaxVal), offset.x, offset.y, degreeOffset));
+				//aSeries.pointValues.SetList(WMG_Util.GenRadar(WMG_Util.GenRandomList(numPoints, radarMinVal, radarMaxVal), offset.x, offset.y, degreeOffset));
+				aSeries.pointValues.SetList(WMG_Util.GenRadar(WMG_Util.GenUserSetList(numPoints, _graph1ValueList), offset.x, offset.y, degreeOffset));
 			}
 			aSeries.lineScale = dataSeriesLineWidth;
 			aSeries.linePadding = dataSeriesLineWidth;

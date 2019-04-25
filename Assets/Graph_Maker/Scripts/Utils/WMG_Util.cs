@@ -286,10 +286,20 @@ public static class WMG_Util {
 	/// <param name="min">Minimum.</param>
 	/// <param name="max">Max.</param>
 	public static List<float> GenRandomList(int numPoints, float min, float max) {
+		//Debug.LogError(min+" : "+max);
 		List<float> results = new List<float>();
 		if (max <= min) return results;
 		for (int i = 0; i < numPoints; i++) {
 			results.Add(Random.Range(min,max));
+		}
+		return results;
+	}
+
+	public static List<float> GenUserSetList(int numPoints, List<float> list) {
+		List<float> results = new List<float>();
+		if (list == null || list.Count != numPoints) return results;
+		for (int i = 0; i < numPoints; i++) {
+			results.Add(list[i]*20);
 		}
 		return results;
 	}

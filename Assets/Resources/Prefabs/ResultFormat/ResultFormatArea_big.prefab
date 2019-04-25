@@ -52,7 +52,7 @@ GameObject:
   - component: {fileID: 224241060705772164}
   - component: {fileID: 114809086725277910}
   m_Layer: 0
-  m_Name: Series1
+  m_Name: Series2_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -210,7 +210,7 @@ GameObject:
   - component: {fileID: 224504898970341574}
   - component: {fileID: 114417254686869094}
   m_Layer: 0
-  m_Name: Series1
+  m_Name: Series5_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -575,7 +575,7 @@ GameObject:
   - component: {fileID: 224984081298019672}
   - component: {fileID: 114863635680276970}
   m_Layer: 0
-  m_Name: Series2
+  m_Name: Series2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1480,7 +1480,7 @@ GameObject:
   - component: {fileID: 224901658730151108}
   - component: {fileID: 114216696624704126}
   m_Layer: 0
-  m_Name: Series3
+  m_Name: Series2_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1945,7 +1945,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1429764294435316
 GameObject:
   m_ObjectHideFlags: 1
@@ -2851,6 +2851,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1616384267809706
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224473128834595600}
+  - component: {fileID: 222201145887012792}
+  m_Layer: 10
+  m_Name: PointArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1622501387335688
 GameObject:
   m_ObjectHideFlags: 1
@@ -3062,6 +3078,23 @@ GameObject:
   - component: {fileID: 114568993926135450}
   m_Layer: 5
   m_Name: AxisTitle-X
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1675627767536666
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224836808102282800}
+  - component: {fileID: 222991447570843536}
+  - component: {fileID: 114104104408463204}
+  m_Layer: 10
+  m_Name: P2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4089,7 +4122,7 @@ GameObject:
   - component: {fileID: 224443152687727866}
   - component: {fileID: 114426641001534680}
   m_Layer: 0
-  m_Name: Series1
+  m_Name: Series3_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4175,6 +4208,23 @@ GameObject:
   - component: {fileID: 114568122535752306}
   m_Layer: 10
   m_Name: text_height_l
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1968805375887366
+GameObject:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224990854647615018}
+  - component: {fileID: 222660056098955002}
+  - component: {fileID: 114743030461548242}
+  m_Layer: 10
+  m_Name: P1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5098,6 +5148,33 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114104104408463204
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675627767536666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: db8f2ef10ce414d7baaaf04240b7b9ef, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114110066699210070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -5737,12 +5814,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a122cb24f3e31040909d5a6c6307e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValues:
-  - {x: 1, y: 6}
-  - {x: 2, y: 5}
-  - {x: 3, y: 4}
-  - {x: 4, y: 3}
-  - {x: 5, y: 1.5}
+  _pointValues: []
   _pointColors: []
   dataLabelPrefab: {fileID: 100000, guid: 583ce437aae791741a4c0b267ffa466b, type: 2}
   dataLabelsParent: {fileID: 1302972690318340}
@@ -5762,7 +5834,7 @@ MonoBehaviour:
   areaShadingTextureResolution: 512
   _comboType: 1
   _useSecondYaxis: 0
-  _seriesName: Apples
+  _seriesName: graph2_3
   _pointWidthHeight: 10
   _lineScale: 0.6
   _pointColor: {r: 1, g: 1, b: 1, a: 1}
@@ -6114,7 +6186,7 @@ MonoBehaviour:
   _graphTitleOffset: {x: 0, y: 10}
   _graphTitleSize: 18
   _dataSeriesColors:
-  - {r: 0.33333334, g: 1, b: 0, a: 1}
+  - {r: 0.68235296, g: 0.68235296, b: 0.68235296, a: 1}
   _labelStrings:
   - T
   - TL
@@ -6126,7 +6198,7 @@ MonoBehaviour:
   - TR
   randomData: 1
   _numPoints: 8
-  _offset: {x: 0, y: -5}
+  _offset: {x: 0, y: 0}
   _degreeOffset: 90
   _radarMinVal: 0
   _radarMaxVal: 100
@@ -6137,8 +6209,9 @@ MonoBehaviour:
   _dataSeriesLineWidth: 1
   _labelsColor: {r: 0.5568628, g: 0.6156863, b: 0.09019608, a: 1}
   _labelsOffset: 16
-  _fontSize: 34
+  _fontSize: 24
   _hideLabels: 0
+  _graph1ValueList: []
   grids: []
   dataSeries: []
   radarLabels: {fileID: 0}
@@ -6448,19 +6521,7 @@ MonoBehaviour:
   yAxis: {fileID: 114918919570040902}
   xAxis: {fileID: 114367063719603988}
   yAxis2: {fileID: 114877551051639858}
-  _groups:
-  - Jan
-  - Feb
-  - Mar
-  - Apr
-  - May
-  - Jun
-  - Jul
-  - Aug
-  - Sep
-  - Oct
-  - Nov
-  - Dec
+  _groups: []
   tooltipOffset: {x: 10, y: 10}
   tooltipNumberDecimals: 2
   tooltipDisplaySeriesName: 1
@@ -7003,8 +7064,8 @@ MonoBehaviour:
   _AxisMinValue: 0
   _AxisMaxValue: 10
   _AxisNumTicks: 4
-  _MinAutoGrow: 0
-  _MaxAutoGrow: 0
+  _MinAutoGrow: 1
+  _MaxAutoGrow: 1
   _MinAutoShrink: 0
   _MaxAutoShrink: 0
   _AxisLinePadding: 20
@@ -7245,12 +7306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a122cb24f3e31040909d5a6c6307e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValues:
-  - {x: 1, y: 10000}
-  - {x: 2, y: 20000}
-  - {x: 3, y: 32000}
-  - {x: 4, y: 35000}
-  - {x: 5, y: 40000}
+  _pointValues: []
   _pointColors: []
   dataLabelPrefab: {fileID: 100000, guid: 583ce437aae791741a4c0b267ffa466b, type: 2}
   dataLabelsParent: {fileID: 1803547542422210}
@@ -7270,7 +7326,7 @@ MonoBehaviour:
   areaShadingTextureResolution: 512
   _comboType: 1
   _useSecondYaxis: 0
-  _seriesName: Apples
+  _seriesName: graph5_1
   _pointWidthHeight: 10
   _lineScale: 0.6
   _pointColor: {r: 1, g: 1, b: 1, a: 1}
@@ -7397,12 +7453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a122cb24f3e31040909d5a6c6307e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValues:
-  - {x: 1, y: 30}
-  - {x: 2, y: 40}
-  - {x: 3, y: 60}
-  - {x: 4, y: 80}
-  - {x: 5, y: 90}
+  _pointValues: []
   _pointColors: []
   dataLabelPrefab: {fileID: 100000, guid: 583ce437aae791741a4c0b267ffa466b, type: 2}
   dataLabelsParent: {fileID: 1340531729154794}
@@ -7422,7 +7473,7 @@ MonoBehaviour:
   areaShadingTextureResolution: 512
   _comboType: 1
   _useSecondYaxis: 0
-  _seriesName: Apples
+  _seriesName: graph3_1
   _pointWidthHeight: 10
   _lineScale: 0.6
   _pointColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9066,11 +9117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 114258677691636380}
-  _axisLabels:
-  - Q1 '15
-  - Q2 '15
-  - Q3 '15
-  - Q4 '15
+  _axisLabels: []
   AxisTitle: {fileID: 1673145114868242}
   GridLines: {fileID: 1672646695508100}
   AxisTicks: {fileID: 1025926099919698}
@@ -9081,7 +9128,7 @@ MonoBehaviour:
   AxisLabelObjs: {fileID: 1118308060556698}
   _AxisMinValue: -100
   _AxisMaxValue: 100
-  _AxisNumTicks: 5
+  _AxisNumTicks: 4
   _MinAutoGrow: 0
   _MaxAutoGrow: 0
   _MinAutoShrink: 0
@@ -9219,7 +9266,7 @@ MonoBehaviour:
   AxisLabelObjs: {fileID: 1439765415242528}
   _AxisMinValue: -100
   _AxisMaxValue: 100
-  _AxisNumTicks: 5
+  _AxisNumTicks: 4
   _MinAutoGrow: 0
   _MaxAutoGrow: 0
   _MinAutoShrink: 0
@@ -9377,12 +9424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a122cb24f3e31040909d5a6c6307e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValues:
-  - {x: 2, y: 2}
-  - {x: 4, y: 3}
-  - {x: 6, y: 6}
-  - {x: 8, y: 8}
-  - {x: 10, y: 9}
+  _pointValues: []
   _pointColors: []
   dataLabelPrefab: {fileID: 100000, guid: 583ce437aae791741a4c0b267ffa466b, type: 2}
   dataLabelsParent: {fileID: 1925244661455872}
@@ -9407,7 +9449,7 @@ MonoBehaviour:
   _lineScale: 1
   _pointColor: {r: 1, g: 1, b: 1, a: 1}
   _usePointColors: 0
-  _lineColor: {r: 0.85490197, g: 0.08235294, b: 0.29411766, a: 1}
+  _lineColor: {r: 0.85490197, g: 0.08235294, b: 0.29411766, a: 0}
   _UseXDistBetweenToSpace: 1
   _ManuallySetXDistBetween: 0
   _xDistBetweenPoints: 0
@@ -9783,6 +9825,33 @@ MonoBehaviour:
   noHorizontalLinks: 0
   linkColor: {r: 1, g: 1, b: 1, a: 1}
   linkWidth: 0
+--- !u!114 &114743030461548242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968805375887366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: a82aeaf0dfa994dd89fb28c379f14843, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
 --- !u!114 &114754116765741998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10064,12 +10133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a122cb24f3e31040909d5a6c6307e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValues:
-  - {x: 1, y: 10}
-  - {x: 2, y: 8}
-  - {x: 3, y: 7}
-  - {x: 4, y: 5}
-  - {x: 5, y: 4}
+  _pointValues: []
   _pointColors: []
   dataLabelPrefab: {fileID: 100000, guid: 583ce437aae791741a4c0b267ffa466b, type: 2}
   dataLabelsParent: {fileID: 1610926821740524}
@@ -10089,7 +10153,7 @@ MonoBehaviour:
   areaShadingTextureResolution: 512
   _comboType: 1
   _useSecondYaxis: 0
-  _seriesName: Apples
+  _seriesName: graph2_1
   _pointWidthHeight: 10
   _lineScale: 0.6
   _pointColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10454,12 +10518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a122cb24f3e31040909d5a6c6307e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _pointValues:
-  - {x: 1, y: 8}
-  - {x: 2, y: 7}
-  - {x: 3, y: 5}
-  - {x: 4, y: 4}
-  - {x: 5, y: 3}
+  _pointValues: []
   _pointColors: []
   dataLabelPrefab: {fileID: 100000, guid: 583ce437aae791741a4c0b267ffa466b, type: 2}
   dataLabelsParent: {fileID: 1005281390754368}
@@ -10479,7 +10538,7 @@ MonoBehaviour:
   areaShadingTextureResolution: 512
   _comboType: 1
   _useSecondYaxis: 0
-  _seriesName: Apples
+  _seriesName: graph2_2
   _pointWidthHeight: 10
   _lineScale: 0.6
   _pointColor: {r: 1, g: 1, b: 1, a: 1}
@@ -10779,6 +10838,46 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RenderTextureRef: {fileID: 8400000, guid: 796a4e24add6b4359b4526207ad983f5, type: 2}
+  graph1: {fileID: 114258677691636380}
+  graph2: {fileID: 114096210407106012}
+  graph3: {fileID: 114214905307481448}
+  graph5: {fileID: 114768689113370616}
+  graph4P1: {fileID: 224990854647615018}
+  graph4P2: {fileID: 224836808102282800}
+  graph2_1ValueList:
+  - 10
+  - 9
+  - 8
+  graph2_1: {fileID: 114809086725277910}
+  graph2_2ValueList:
+  - 9
+  - 7
+  - 6
+  graph2_2: {fileID: 114863635680276970}
+  graph2_3ValueList:
+  - 7
+  - 6
+  - 4
+  graph2_3: {fileID: 114216696624704126}
+  graph1ValueList:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 4
+  - 3
+  - 2
+  graph3_1: {fileID: 114426641001534680}
+  graph3ValueList:
+  - 30
+  - 60
+  - 90
+  graph5_1: {fileID: 114417254686869094}
+  graph5ValueList:
+  - 10000
+  - 20000
+  - 30000
 --- !u!114 &114893687149473908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11661,6 +11760,13 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1531432656359976}
   m_CullTransparentMesh: 0
+--- !u!222 &222201145887012792
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1616384267809706}
+  m_CullTransparentMesh: 0
 --- !u!222 &222215549497080932
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -11989,6 +12095,13 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1311136940933010}
+  m_CullTransparentMesh: 0
+--- !u!222 &222660056098955002
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968805375887366}
   m_CullTransparentMesh: 0
 --- !u!222 &222660240161815740
 CanvasRenderer:
@@ -12354,6 +12467,13 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1741205911634072}
   m_CullTransparentMesh: 0
+--- !u!222 &222991447570843536
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675627767536666}
+  m_CullTransparentMesh: 0
 --- !u!222 &222996329713637356
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -12461,7 +12581,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224017657494249094
 RectTransform:
@@ -14084,7 +14204,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224351487205628064
 RectTransform:
@@ -14478,7 +14598,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -280}
+  m_AnchoredPosition: {x: 0, y: -295}
   m_SizeDelta: {x: 900, y: 700}
   m_Pivot: {x: 0, y: 1}
 --- !u!224 &224447742719987024
@@ -14515,8 +14635,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 180, y: 80}
-  m_SizeDelta: {x: -360, y: -160}
+  m_AnchoredPosition: {x: 182, y: 84}
+  m_SizeDelta: {x: -364, y: -144}
   m_Pivot: {x: 0, y: 0}
 --- !u!224 &224459365988188928
 RectTransform:
@@ -14532,6 +14652,7 @@ RectTransform:
   - {fileID: 224255207930371126}
   - {fileID: 224786417057253512}
   - {fileID: 224999959178722760}
+  - {fileID: 224473128834595600}
   m_Father: {fileID: 224214862808263830}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14654,6 +14775,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 12}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224473128834595600
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1616384267809706}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224990854647615018}
+  - {fileID: 224836808102282800}
+  m_Father: {fileID: 224459365988188928}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 124, y: 24}
+  m_SizeDelta: {x: 530, y: 385}
+  m_Pivot: {x: 0, y: 0}
 --- !u!224 &224475493767291760
 RectTransform:
   m_ObjectHideFlags: 1
@@ -16152,7 +16293,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224769939887340658
 RectTransform:
@@ -16603,6 +16744,24 @@ RectTransform:
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 12}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224836808102282800
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1675627767536666}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224473128834595600}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 290, y: 210}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224843039300230306
 RectTransform:
@@ -17306,7 +17465,25 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224990854647615018
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1968805375887366}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224473128834595600}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 300, y: 160}
+  m_SizeDelta: {x: 18, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224991763353705084
 RectTransform:

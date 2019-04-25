@@ -6,10 +6,57 @@ using UnityEngine;
 public class ResultFormatArea : MonoBehaviour {
 
     public RenderTexture RenderTextureRef;
+    [SerializeField] private WMG_Radar_Graph graph1;
+    [SerializeField] private WMG_Axis_Graph graph2;
+    [SerializeField] private WMG_Axis_Graph graph3;
+    [SerializeField] private WMG_Axis_Graph graph5;
+
+    [SerializeField] private Transform graph4P1;
+    [SerializeField] private Transform graph4P2;
+
+    #region Data
+	[SerializeField] private List<float> graph2_1ValueList;
+    [SerializeField] private WMG_Series graph2_1;
+	[SerializeField] private List<float> graph2_2ValueList;
+    [SerializeField] private WMG_Series graph2_2;
+	[SerializeField] private List<float> graph2_3ValueList;
+    [SerializeField] private WMG_Series graph2_3;
+
+	[SerializeField] private List<float> graph1ValueList;
+    [SerializeField] private WMG_Series graph3_1;
+	[SerializeField] private List<float> graph3ValueList;
+    [SerializeField] private WMG_Series graph5_1;
+	[SerializeField] private List<float> graph5ValueList;
+        
+    #endregion
 
     // Use this for initialization
     void Start () {
         //Debug.Log("path : "+Application.dataPath);
+        graph1.SetGraph1ValueList(graph1ValueList);
+
+
+        for(int i=0; i<graph2_1ValueList.Count; i++){
+            float x = (float)(i+1);
+            graph2_1.pointValues.Add(new Vector2(x, graph2_1ValueList[i]));
+        }
+        for(int i=0; i<graph2_2ValueList.Count; i++){
+            float x = (float)(i+1);
+            graph2_2.pointValues.Add(new Vector2(x, graph2_2ValueList[i]));
+        }
+        for(int i=0; i<graph2_3ValueList.Count; i++){
+            float x = (float)(i+1);
+            graph2_3.pointValues.Add(new Vector2(x, graph2_3ValueList[i]));
+        }
+
+        for(int i=0; i<graph3ValueList.Count; i++){
+            float x = (float)(i+1);
+            graph3_1.pointValues.Add(new Vector2(x, graph3ValueList[i]));
+        }
+        for(int i=0; i<graph5ValueList.Count; i++){
+            float x = (float)(i+1);
+            graph5_1.pointValues.Add(new Vector2(x, graph5ValueList[i]));
+        }
 	}
 	
 	// Update is called once per frame
