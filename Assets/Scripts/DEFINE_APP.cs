@@ -58,10 +58,21 @@ public partial class DEFINE_APP {//ApplictionDefine
 
     public static class BODY_SCALE
     {
+        // WorldPosition ※フロントのみ
         public static Vector3 PLAYER_BASE_POS;
         public static Vector3 PLAYER_BASE_ROT;
-        public static Vector3 SHOULDER_POS;
-        public static Vector3 HAND_POS;
+        // LocalPosition ※BasePositionから
+        // DEFINEで設定 ※フロントのみ
+        public static Vector3 BACK_POS = new Vector3(0f,0.5f,0f);
+        // CenterEyeの位置　※サーバー通信
+        public static Vector3 HEAD_POS;
+        // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
+        public static Vector3 SHOULDER_POS_R = new Vector3(HAND_POS_R.x, HAND_POS_R.y, HEAD_POS.z) - BACK_POS;
+        // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
+        public static Vector3 SHOULDER_POS_L = new Vector3(HAND_POS_L.x, HAND_POS_L.y, HEAD_POS.z) - BACK_POS;
+        // 各コントローラーの位置　BasePositionから　※サーバー通信
+        public static Vector3 HAND_POS_R;
+        public static Vector3 HAND_POS_L;
 
         public static Dictionary<int, int> TARGET_INDEX_DIC = new Dictionary<int, int>();
 

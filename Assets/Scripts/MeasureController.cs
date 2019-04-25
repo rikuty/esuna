@@ -11,13 +11,25 @@ public class MeasureController : UtilComponent {
     /// </summary>
     public Transform playerBaseTr;
     /// <summary>
+    /// 腰の位置のTransform
+    /// </summary>
+    public Transform backTr;
+    /// <summary>
     ///　肩の高さと測定器具の測定方向への設置用のTransform
     /// </summary>
-    public Transform shoulderTr;
+    public Transform shoulderTrR;
+    /// <summary>
+    ///　肩の高さと測定器具の測定方向への設置用のTransform
+    /// </summary>
+    public Transform shoulderTrL;
     /// <summary>
     /// 手の長さ調整用Transform
     /// </summary>
-    public Transform handTr;
+    public Transform handTrR;
+    /// <summary>
+    /// 手の長さ調整用Transform
+    /// </summary>
+    public Transform handTrL;
     /// <summary>
     /// 測定用円柱の角度調整用Transform
     /// </summary>
@@ -144,7 +156,7 @@ public class MeasureController : UtilComponent {
         measureComponent.Init(CallbackFromComponent);
 
         measureCollider.enabled = false;
-        SetActive(shoulderTr, false);
+        SetActive(backTr, false);
 
     }
 
@@ -196,6 +208,8 @@ public class MeasureController : UtilComponent {
             playerBaseTr.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
             DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
             playerBaseTr.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
+            DEFINE_APP.BODY_SCALE.HEAD_POS = centerEyeTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+            backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
 
@@ -212,10 +226,12 @@ public class MeasureController : UtilComponent {
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
-            DEFINE_APP.BODY_SCALE.SHOULDER_POS = new Vector3(shoulderTr.position.x, averagePos.y, shoulderTr.position.z);
-            shoulderTr.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS;
-            DEFINE_APP.BODY_SCALE.HAND_POS = new Vector3(handTr.position.x, handTr.position.y, averagePos.z);
+            DEFINE_APP.BODY_SCALE.HAND_POS_R = rightHandTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+            DEFINE_APP.BODY_SCALE.HAND_POS_L = leftHandTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+            shoulderTrR.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_R;
+            shoulderTrL.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_L;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
+        
 
             ShowUI(false);
 
@@ -229,8 +245,8 @@ public class MeasureController : UtilComponent {
     void FinishShoulderArm()
     {
         measureCollider.enabled = true;
-        SetActive(shoulderTr, true);
-        shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+        SetActive(backTr, true);
+        // shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
     }
 
     void UpdateDirction()
@@ -247,12 +263,12 @@ public class MeasureController : UtilComponent {
                 //isWaiting = true;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
                 ShowUI(false);
-                SetActive(shoulderTr, false);
+                SetActive(backTr, false);
                 return;
             }
 
             currentRotateNumber++;
-            shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+            //shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
             armBaseTr.localRotation = Quaternion.identity;
             currentDiagnosisRotAnchorIndex = 0;
             measureCollider.enabled = false;
@@ -265,9 +281,9 @@ public class MeasureController : UtilComponent {
         }
         if (!measureCollider.enabled)
         {
-            Vector3 diffRight = rightHandTr.position - shoulderTr.position;
+            Vector3 diffRight = rightHandTr.position - shoulderTrR.position;
             float angleRight = GetAngle(diffRight);
-            Vector3 diffLeft = leftHandTr.position - shoulderTr.position;
+            Vector3 diffLeft = leftHandTr.position - shoulderTrL.position;
             float angleLeft = GetAngle(diffLeft);
             measureCollider.enabled = 
                 (angleRight < 0 && controller == OVRInput.Controller.RTouch) 
@@ -309,7 +325,7 @@ public class MeasureController : UtilComponent {
     {
         if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
 
-        Vector3 diff = collider.transform.position - shoulderTr.position;
+        Vector3 diff = collider.transform.position - shoulderTrR.position;
 
 
         float angle = GetAngle(diff);
@@ -342,7 +358,7 @@ public class MeasureController : UtilComponent {
 
     float GetAngle(Vector3 diff)
     {
-        Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
+        Vector3 axis = Vector3.Cross(shoulderTrR.forward, diff);
 
         float selectedAxis;
         switch (currentRotateNumber)
@@ -356,7 +372,7 @@ public class MeasureController : UtilComponent {
                 break;
         }
 
-        float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
+        float angle = Vector3.Angle(shoulderTrR.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
 
         return angle;
     }

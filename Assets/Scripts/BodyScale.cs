@@ -33,8 +33,10 @@ public class BodyScale : UtilComponent {
 
     public Transform playerBase;
     public Transform back;
-    public Transform shoulder;
-    public Transform hand;
+    public Transform shoulderR;
+    public Transform shoulderL;
+    public Transform handR;
+    public Transform handL;
     public Transform bullet;
 
     public Dictionary<int, Dictionary<string, Dictionary<string, Vector3>>> goalBodyTransformDictionary;
@@ -138,14 +140,15 @@ public class BodyScale : UtilComponent {
 
         playerBase.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
         playerBase.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
-        shoulder.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS;
-        bullet.position = DEFINE_APP.BODY_SCALE.HAND_POS;
+        shoulderR.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS_R;
+        shoulderL.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS_L;
+        bullet.position = DEFINE_APP.BODY_SCALE.HAND_POS_R;
     }
 
 
     public void SetTransformTarget(int index)
     {
-        hand.localPosition = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index]];
+        handR.localPosition = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index]];
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
         //back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);
@@ -214,8 +217,10 @@ public class BodyScale : UtilComponent {
 
         DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(0f,0f,0f);
         DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(0f,0f,0f);
-        DEFINE_APP.BODY_SCALE.SHOULDER_POS = new Vector3(0f,1.1f,0f);
-        DEFINE_APP.BODY_SCALE.HAND_POS = new Vector3(0f,1.1f,0.5f);
+        DEFINE_APP.BODY_SCALE.BACK_POS = new Vector3(0f, 0.5f, 0f);
+        DEFINE_APP.BODY_SCALE.SHOULDER_POS_R = new Vector3(0f,0.6f,0f);
+        DEFINE_APP.BODY_SCALE.SHOULDER_POS_L = new Vector3(0f, 0.6f, 0f);
+        DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f,1.1f,0.5f);
 
         DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC = new Dictionary<int, int>();
 
