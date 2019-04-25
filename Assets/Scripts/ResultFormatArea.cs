@@ -35,7 +35,6 @@ public class ResultFormatArea : MonoBehaviour {
         //Debug.Log("path : "+Application.dataPath);
         graph1.SetGraph1ValueList(graph1ValueList);
 
-
         for(int i=0; i<graph2_1ValueList.Count; i++){
             float x = (float)(i+1);
             graph2_1.pointValues.Add(new Vector2(x, graph2_1ValueList[i]));
@@ -48,15 +47,19 @@ public class ResultFormatArea : MonoBehaviour {
             float x = (float)(i+1);
             graph2_3.pointValues.Add(new Vector2(x, graph2_3ValueList[i]));
         }
+        graph2.xAxis.AxisNumTicks = graph2_1ValueList.Count;
 
         for(int i=0; i<graph3ValueList.Count; i++){
             float x = (float)(i+1);
             graph3_1.pointValues.Add(new Vector2(x, graph3ValueList[i]));
         }
+        graph3.xAxis.AxisNumTicks = graph3ValueList.Count;
+
         for(int i=0; i<graph5ValueList.Count; i++){
             float x = (float)(i+1);
             graph5_1.pointValues.Add(new Vector2(x, graph5ValueList[i]));
         }
+        graph5.xAxis.AxisNumTicks = graph5ValueList.Count;
 	}
 	
 	// Update is called once per frame
