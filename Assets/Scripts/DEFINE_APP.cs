@@ -62,9 +62,9 @@ public partial class DEFINE_APP {//ApplictionDefine
         public static Vector3 PLAYER_BASE_POS;
         public static Vector3 PLAYER_BASE_ROT;
         // LocalPosition ※BasePositionから
-        // DEFINEで設定 ※フロントのみ
+        // DEFINEで設定 ※フロントのみ ※BasePositionから
         public static Vector3 BACK_POS = new Vector3(0f,0.5f,0f);
-        // CenterEyeの位置　※サーバー通信
+        // CenterEyeの位置　※サーバー通信 ※BasePositionから
         public static Vector3 HEAD_POS;
         // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
         public static Vector3 SHOULDER_POS_R = new Vector3(HAND_POS_R.x, HAND_POS_R.y, HEAD_POS.z) - BACK_POS;
