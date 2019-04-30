@@ -17,11 +17,7 @@ public class MeasureController : UtilComponent {
     /// <summary>
     ///　肩の高さと測定器具の測定方向への設置用のTransform
     /// </summary>
-    public Transform shoulderTrR;
-    /// <summary>
-    ///　肩の高さと測定器具の測定方向への設置用のTransform
-    /// </summary>
-    public Transform shoulderTrL;
+    public Transform shoulderTr;
     /// <summary>
     /// 手の長さ調整用Transform
     /// </summary>
@@ -56,7 +52,7 @@ public class MeasureController : UtilComponent {
 
     public MeasureComponent measureComponent;
 
-    public Collider measureCollider;
+    public GameObject objBulletOriginal;
 
     public Collider rightHandCollider;
     public Collider leftHandCollider;
@@ -153,9 +149,7 @@ public class MeasureController : UtilComponent {
         isWaiting = true;
         currentDiagnosisRotAnchorIndex = 0;
         maxAngle = 0f;
-        measureComponent.Init(CallbackFromComponent);
 
-        measureCollider.enabled = false;
         SetActive(backTr, false);
 
     }
@@ -188,7 +182,7 @@ public class MeasureController : UtilComponent {
                 UpdateShoulderArm();
                 break;
             case DIAGNOSIS_STATUS_ENUM.DIRECT:
-                UpdateDirction();
+                UpdateDirection();
                 break;
             case DIAGNOSIS_STATUS_ENUM.FINISH:
                 UpdateFinish();
@@ -228,35 +222,63 @@ public class MeasureController : UtilComponent {
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
             DEFINE_APP.BODY_SCALE.HAND_POS_R = rightHandTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
             DEFINE_APP.BODY_SCALE.HAND_POS_L = leftHandTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-            shoulderTrR.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_R;
-            shoulderTrL.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_L;
+            shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_R;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
         
 
             ShowUI(false);
 
-            StartCoroutine(CoroutineWaitNextStep(FinishShoulderArm));
+            StartCoroutine(CoroutineWaitNextStep(PreparingDirection));
 
 
         }
     }
 
 
-    void FinishShoulderArm()
+    void PreparingDirection()
     {
-        measureCollider.enabled = true;
-        SetActive(backTr, true);
+
         // shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+
+        StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
     }
 
-    void UpdateDirction()
+
+    IEnumerator CoroutineInstantiateBullets(Action callback = null)
+    {
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            GameObject bullet = Instantiate(objBulletOriginal, this.transform);
+            MeasureComponent measureComponent = bullet.GetComponent<MeasureComponent>();
+            measureComponent.Init(Hit, DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[i], DEFINE_APP.BODY_SCALE.HAND_POS_R.z);
+        }
+    }
+
+
+    void PreparedDirection()
     {
 
-        if (measureCollider.enabled && OVRInput.GetDown(OVRInput.RawButton.Any) && DEFINE_APP.BODY_SCALE.GOAL_DIC.Count == currentRotateNumber)
+    }
+
+
+    void Hit(Collider collider)
+    {
+
+
+
+    }
+
+
+     void UpdateDirection()
+    {
+
+        if (OVRInput.GetDown(OVRInput.RawButton.Any) && DEFINE_APP.BODY_SCALE.GOAL_DIC.Count == currentRotateNumber)
         {
 
 
-            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(maxAngleVector);
+            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber] = maxAngleVector;
 
             if(currentRotateNumber == 8)
             {
@@ -271,7 +293,6 @@ public class MeasureController : UtilComponent {
             //shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
             armBaseTr.localRotation = Quaternion.identity;
             currentDiagnosisRotAnchorIndex = 0;
-            measureCollider.enabled = false;
             maxAngle = 0f;
             isSetHandCollider = false;
             rightHandCollider.enabled = false;
@@ -281,7 +302,7 @@ public class MeasureController : UtilComponent {
         }
         if (!measureCollider.enabled)
         {
-            Vector3 diffRight = rightHandTr.position - shoulderTrR.position;
+            Vector3 diffRight = rightHandTr.position - shoulderTr.position;
             float angleRight = GetAngle(diffRight);
             Vector3 diffLeft = leftHandTr.position - shoulderTrL.position;
             float angleLeft = GetAngle(diffLeft);
@@ -325,7 +346,7 @@ public class MeasureController : UtilComponent {
     {
         if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
 
-        Vector3 diff = collider.transform.position - shoulderTrR.position;
+        Vector3 diff = collider.transform.position - shoulderTr.position;
 
 
         float angle = GetAngle(diff);
@@ -358,7 +379,7 @@ public class MeasureController : UtilComponent {
 
     float GetAngle(Vector3 diff)
     {
-        Vector3 axis = Vector3.Cross(shoulderTrR.forward, diff);
+        Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
 
         float selectedAxis;
         switch (currentRotateNumber)
@@ -372,7 +393,7 @@ public class MeasureController : UtilComponent {
                 break;
         }
 
-        float angle = Vector3.Angle(shoulderTrR.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
+        float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
 
         return angle;
     }

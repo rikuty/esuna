@@ -33,10 +33,8 @@ public class BodyScale : UtilComponent {
 
     public Transform playerBase;
     public Transform back;
-    public Transform shoulderR;
-    public Transform shoulderL;
-    public Transform handR;
-    public Transform handL;
+    public Transform shoulder;
+    public Transform hand;
     public Transform bullet;
 
     public Dictionary<int, Dictionary<string, Dictionary<string, Vector3>>> goalBodyTransformDictionary;
@@ -135,20 +133,19 @@ public class BodyScale : UtilComponent {
     }
 
 
-    public void SetTransformBodyAndBullet()
+    public void SetTransformBodyAndBullet(int index = 4)
     {
 
         playerBase.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
         playerBase.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
-        shoulderR.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS_R;
-        shoulderL.position = DEFINE_APP.BODY_SCALE.SHOULDER_POS_L;
+        shoulder.position = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index]];
         bullet.position = DEFINE_APP.BODY_SCALE.HAND_POS_R;
     }
 
 
     public void SetTransformTarget(int index)
     {
-        handR.localPosition = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index]];
+        hand.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index], 0f, 0f);
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
         //back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);
@@ -166,14 +163,13 @@ public class BodyScale : UtilComponent {
     }
 
 
+    /// <summary>
+    /// ミスしたときに近づける
+    /// </summary>
+    /// <param name="index"></param>
     public void SetCloseTarget(int index)
     {
-        int nextIndex = DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index];
-        if(nextIndex > 0)
-        {
-            nextIndex--;
-        }
-        DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC[index] = nextIndex;
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[index] = DEFINE_APP.BODY_SCALE.GOAL_DIC[index] - 2f;
         SetTransformTarget(index);
     }
 
@@ -181,38 +177,18 @@ public class BodyScale : UtilComponent {
 
     // Use this for initialization
     void Awake() {
-        if (DEFINE_APP.BODY_SCALE.GOAL_DIC.Count > 0)
+
+        DEFINE_APP.BODY_SCALE.GOAL_DIC = new Dictionary<int, float>()
         {
-            DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC = new Dictionary<int, int>();
-
-            for (int i = 1; i < 9; i++)
-            {
-
-                DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC.Add(i, DEFINE_APP.BODY_SCALE.GOAL_DIC[i].Count - 1);
-            }
-            return;
-        }
-
-        DEFINE_APP.BODY_SCALE.GOAL_DIC = new Dictionary<int, List<Vector3>>()
-        {
-            {1, new List<Vector3>() },
-            {2, new List<Vector3>() },
-            {3, new List<Vector3>() },
-            {4, new List<Vector3>() },
-            {5, new List<Vector3>() },
-            {6, new List<Vector3>() },
-            {7, new List<Vector3>() },
-            {8, new List<Vector3>() }
+            {1, 45f},
+            {2, 45f},
+            {3, 45f},
+            {4, 45f},
+            {5, 45f},
+            {6, 45f},
+            {7, 45f},
+            {8, 45f}
         };
-
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[1].Add(new Vector3(-0.5f, 0f, 0f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[2].Add(new Vector3(0.5f, 0f, 0f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[3].Add(new Vector3(-0.3f, 0.3f, 0f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[4].Add(new Vector3(0f, 0.5f, 0f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[5].Add(new Vector3(0.3f, 0.3f, 0f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[6].Add(new Vector3(-0.3f, -0.8f, 0.5f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[7].Add(new Vector3(0f, -0.8f, 0.5f));
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[8].Add(new Vector3(0.3f, -0.8f, 0.5f));
 
 
         DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(0f,0f,0f);
@@ -222,13 +198,6 @@ public class BodyScale : UtilComponent {
         DEFINE_APP.BODY_SCALE.SHOULDER_POS_L = new Vector3(0f, 0.6f, 0f);
         DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f,1.1f,0.5f);
 
-        DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC = new Dictionary<int, int>();
-
-        for (int i = 1; i < 9; i++)
-        {
-
-            DEFINE_APP.BODY_SCALE.TARGET_INDEX_DIC.Add(i, DEFINE_APP.BODY_SCALE.GOAL_DIC[i].Count - 1);
-        }
 
         //Dictionary<string, Vector3> backTransform1 = new Dictionary<string, Vector3>()
         //{

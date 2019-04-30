@@ -6,36 +6,34 @@ using System;
 public class MeasureComponent : UtilComponent {
 
 
-    Action<Collider> callbackCollisionStay;
+    Action<Collider> callbackCollisionEnter;
+
+    public int rot;
+
+    public Transform trArmLength;
+
+    public GameObject objBullet;
+    public GameObject objEffect;
 
 
-	public void Init(Action<Collider> callbackCollisionStay)
+	public void Init(Action<Collider> callbackCollisionEnter, int rot, float armLength)
     {
-        this.callbackCollisionStay = callbackCollisionStay;
+        this.callbackCollisionEnter = callbackCollisionEnter;
+        this.rot = rot;
+
+        this.transform.localRotation = Quaternion.Euler(rot, 0, 0);
+        trArmLength.localPosition = new Vector3(0f, 0f, armLength);
     }
 
 
-    void OnCollisionStay(Collision collision)
+    void OnCollisionEnter(Collision collision)
     {
         //Debug.Log("Stay");
 
-        this.callbackCollisionStay(collision.collider);
+        this.callbackCollisionEnter(collision.collider);
+
+        SetActive(objBullet, false);
+        SetActive(objEffect, true);
 
     }
-
-    //void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log("Enter");
-
-    //    //this.callbackCollisionStay(collision.collider);
-
-    //}
-
-    //void OnCollisionExit(Collision collision)
-    //{
-    //    Debug.Log("Exit");
-
-    //    //this.callbackCollisionStay(collision.collider);
-
-    //}
 }
