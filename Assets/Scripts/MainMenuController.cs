@@ -49,10 +49,10 @@ public class MainMenuController : UtilComponent
 
         this.gameData = GameData.Instance;
 
-        this.dateTime = DateTime.Now;
-        this.userID = this.dateTime.ToString("yyMMddHHmm");
-        SetLabel(this.txtID, this.userID);
-        SetLabel(this.txtName, this.userName);
+        //this.dateTime = DateTime.Now;
+        //this.userID = this.dateTime.ToString("yyMMddHHmm");
+        //SetLabel(this.txtID, this.userID);
+        //SetLabel(this.txtName, this.userName);
         SetLabel(this.txtTitle, "目の前にある青い箱を押してください");
         SetLabel(this.txtDetail, "");
 
@@ -74,6 +74,9 @@ public class MainMenuController : UtilComponent
         UserData userData = JsonConvert.DeserializeObject<UserData>(val);
         //Debug.Log("userId : "+userData.user_id);
         //Debug.Log("name : " + userData.user_name);
+        SetLabel(this.txtID, userData.user_id);
+        SetLabel(this.txtName, userData.user_name);
+
     }
 
     void Update()
