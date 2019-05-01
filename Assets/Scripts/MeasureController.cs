@@ -19,18 +19,6 @@ public class MeasureController : UtilComponent {
     /// </summary>
     public Transform shoulderTr;
     /// <summary>
-    /// 手の長さ調整用Transform
-    /// </summary>
-    public Transform handTrR;
-    /// <summary>
-    /// 手の長さ調整用Transform
-    /// </summary>
-    public Transform handTrL;
-    /// <summary>
-    /// 測定用円柱の角度調整用Transform
-    /// </summary>
-    public Transform armBaseTr;
-    /// <summary>
     /// 眼の位置のTransform
     /// </summary>
     public Transform centerEyeTr;
@@ -42,6 +30,10 @@ public class MeasureController : UtilComponent {
     /// 左腕の位置のTransform
     /// </summary>
     public Transform leftHandTr;
+    /// <summary>
+    /// Bullet親のTransform
+    /// </summary>
+    public Transform objBulletRoot;
 
 
     public GameObject objUI;
@@ -49,8 +41,6 @@ public class MeasureController : UtilComponent {
     public Text txtDetail;
     public Text txtRotateTitle;
     public Text txtRotateDetail;
-
-    public MeasureComponent measureComponent;
 
     public GameObject objBulletOriginal;
 
@@ -149,7 +139,7 @@ public class MeasureController : UtilComponent {
         currentDiagnosisRotAnchorIndex = 0;
         maxAngle = 0f;
 
-        SetActive(backTr, false);
+        //SetActive(backTr, false);
 
     }
 
@@ -219,9 +209,10 @@ public class MeasureController : UtilComponent {
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
-            DEFINE_APP.BODY_SCALE.HAND_POS_R = rightHandTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-            DEFINE_APP.BODY_SCALE.HAND_POS_L = leftHandTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-            shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_R;
+            DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            DEFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+
+            shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
         
 
@@ -237,7 +228,7 @@ public class MeasureController : UtilComponent {
     void PreparingDirection()
     {
 
-        // shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+        shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
 
         StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
     }
@@ -247,9 +238,10 @@ public class MeasureController : UtilComponent {
     {
         for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.1f);
 
-            GameObject bullet = Instantiate(objBulletOriginal, this.transform);
+            GameObject bullet = Instantiate(objBulletOriginal, objBulletRoot);
+            SetActive(bullet, true);
             MeasureComponent measureComponent = bullet.GetComponent<MeasureComponent>();
             measureComponent.Init(Hit, DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[i], DEFINE_APP.BODY_SCALE.HAND_POS_R.z);
         }
@@ -284,13 +276,12 @@ public class MeasureController : UtilComponent {
                 //isWaiting = true;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
                 ShowUI(false);
-                SetActive(backTr, false);
+                //SetActive(backTr, false);
                 return;
             }
 
             currentRotateNumber++;
-            //shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
-            armBaseTr.localRotation = Quaternion.identity;
+            shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
             currentDiagnosisRotAnchorIndex = 0;
             maxAngle = 0f;
             isSetHandCollider = false;

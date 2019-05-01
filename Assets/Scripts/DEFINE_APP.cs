@@ -75,11 +75,30 @@ public partial class DEFINE_APP {//ApplictionDefine
         // CenterEyeの位置　※サーバー通信 ※BasePositionから
         public static Vector3 HEAD_POS;
         // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
-        public static Vector3 SHOULDER_POS_R = new Vector3(HAND_POS_R.x, HAND_POS_R.y, HEAD_POS.z) - BACK_POS;
+        public static Vector3 SHOULDER_POS_R
+        {
+            get
+            {
+                return new Vector3(HAND_POS_R.x, HAND_POS_R.y, HEAD_POS.z) - BACK_POS;
+            }
+        }
         // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
-        public static Vector3 SHOULDER_POS_L = new Vector3(HAND_POS_L.x, HAND_POS_L.y, HEAD_POS.z) - BACK_POS;
+        public static Vector3 SHOULDER_POS_L
+        {
+            get
+            {
+                return new Vector3(HAND_POS_L.x, HAND_POS_L.y, HEAD_POS.z) - BACK_POS;
+            }
+        }
         // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
-        public static Vector3 SHOULDER_POS_C = new Vector3((HAND_POS_L.x+ HAND_POS_R.x)/2, (HAND_POS_L.y+HAND_POS_R.y)/2, HEAD_POS.z) - BACK_POS;
+        public static Vector3 SHOULDER_POS_C
+        {
+            get
+            {
+                return new Vector3((HAND_POS_L.x + HAND_POS_R.x) / 2, (HAND_POS_L.y + HAND_POS_R.y) / 2, HEAD_POS.z) - BACK_POS;
+            }
+        }
+
         // 各コントローラーの位置　BasePositionから　※サーバー通信
         public static Vector3 HAND_POS_R;
         public static Vector3 HAND_POS_L;
@@ -106,14 +125,14 @@ public partial class DEFINE_APP {//ApplictionDefine
 
         public static Dictionary<int, float> SHOULDER_ROT_Z = new Dictionary<int, float>()
         {
-            {1,90f},
-            {2,-90f},
-            {3,45f},
+            {1,-90f},
+            {2,90f},
+            {3,-45f},
             {4,0f},
-            {5,-45f},
-            {6,135f},
-            {7,180f},
-            {8,-135f}
+            {5,45f},
+            {6,-135f},
+            {7,-180f},
+            {8,135f}
         };
 
 

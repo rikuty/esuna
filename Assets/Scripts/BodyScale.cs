@@ -194,9 +194,8 @@ public class BodyScale : UtilComponent {
         DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(0f,0f,0f);
         DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(0f,0f,0f);
         DEFINE_APP.BODY_SCALE.BACK_POS = new Vector3(0f, 0.5f, 0f);
-        DEFINE_APP.BODY_SCALE.SHOULDER_POS_R = new Vector3(0f,0.6f,0f);
-        DEFINE_APP.BODY_SCALE.SHOULDER_POS_L = new Vector3(0f, 0.6f, 0f);
         DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f,1.1f,0.5f);
+        DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f, 1.1f, 0.5f);
 
 
         //Dictionary<string, Vector3> backTransform1 = new Dictionary<string, Vector3>()
