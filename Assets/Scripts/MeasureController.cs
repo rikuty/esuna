@@ -127,7 +127,6 @@ public class MeasureController : UtilComponent {
     int currentDiagnosisRotAnchorIndex;
 
     float maxAngle;
-    Vector3 maxAngleVector;
 
     // 測定中。colliderが当たってからボタンが押されるまで。
     bool isDiagnosising = false;
@@ -273,12 +272,12 @@ public class MeasureController : UtilComponent {
 
      void UpdateDirection()
     {
-
+        // ボタン押下、最大角度確定処理
         if (OVRInput.GetDown(OVRInput.RawButton.Any) && DEFINE_APP.BODY_SCALE.GOAL_DIC.Count == currentRotateNumber)
         {
 
 
-            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber] = maxAngleVector;
+            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber] = maxAngle;
 
             if(currentRotateNumber == 8)
             {
@@ -300,38 +299,39 @@ public class MeasureController : UtilComponent {
             ShowUI(true);
 
         }
-        if (!measureCollider.enabled)
-        {
-            Vector3 diffRight = rightHandTr.position - shoulderTr.position;
-            float angleRight = GetAngle(diffRight);
-            Vector3 diffLeft = leftHandTr.position - shoulderTrL.position;
-            float angleLeft = GetAngle(diffLeft);
-            measureCollider.enabled = 
-                (angleRight < 0 && controller == OVRInput.Controller.RTouch) 
-                || (angleLeft < 0 && controller == OVRInput.Controller.LTouch)
-                || (angleLeft < 0 && angleRight < 0 && controller == OVRInput.Controller.All);
-        }
+
+        // 測定開始部分
+        //if (!measureCollider.enabled)
+        //{
+        //    Vector3 diffRight = rightHandTr.position - shoulderTr.position;
+        //    float angleRight = GetAngle(diffRight);
+        //    Vector3 diffLeft = leftHandTr.position - shoulderTrL.position;
+        //    float angleLeft = GetAngle(diffLeft);
+        //    measureCollider.enabled = 
+        //        (angleRight < 0 && controller == OVRInput.Controller.RTouch) 
+        //        || (angleLeft < 0 && controller == OVRInput.Controller.LTouch)
+        //        || (angleLeft < 0 && angleRight < 0 && controller == OVRInput.Controller.All);
+        //}
 
         if (!isSetHandCollider)
         {
             isSetHandCollider = true;
 
-            bool resultRight = Array.IndexOf(DEFINE_APP.RIGHT_HAND_TARGET, currentRotateNumber) >= 0;
-            bool resultLeft = Array.IndexOf(DEFINE_APP.LEFT_HAND_TARGET, currentRotateNumber) >= 0;
-            bool resultBoth = Array.IndexOf(DEFINE_APP.BOTH_HAND_TARGET, currentRotateNumber) >= 0;
-            if (resultRight)
+            string result = DEFINE_APP.HAND_TARGET[currentRotateNumber];
+
+            if (result == "R")
             {
                 rightHandCollider.enabled = true;
                 leftHandCollider.enabled = false;
                 controller = OVRInput.Controller.RTouch;
             }
-            else if (resultLeft)
+            else if (result == "L")
             {
                 leftHandCollider.enabled = true;
                 rightHandCollider.enabled = false;
                 controller = OVRInput.Controller.LTouch;
             }
-            else if (resultBoth)
+            else if (result == "C")
             {
                 rightHandCollider.enabled = true;
                 leftHandCollider.enabled = true;
@@ -352,27 +352,9 @@ public class MeasureController : UtilComponent {
         float angle = GetAngle(diff);
         //SetLabel(txtRotateTitle, angle.ToString());
         
-        if(angle > DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[currentDiagnosisRotAnchorIndex])
-        {
-            if (!DEFINE_APP.BODY_SCALE.GOAL_DIC.ContainsKey(currentRotateNumber))
-            {
-                DEFINE_APP.BODY_SCALE.GOAL_DIC.Add(currentRotateNumber, new List<Vector3>());
-            }
-            Vector3 vector = new Vector3(diff.x, diff.y, diff.z);
-            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber].Add(vector);
-            //SetLabel(txtRotateDetail, "("
-            //    + angle.ToString() + ":  "
-            //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].x.ToString() + ","
-            //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].y.ToString() + ","
-            //    + DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber][currentDiagnosisRotAnchorIndex].z.ToString()
-            //    + ")");
-
-            currentDiagnosisRotAnchorIndex++;
-        }
         if(angle > maxAngle)
         {
             maxAngle = angle;
-            maxAngleVector = diff;
         }
     }
 
