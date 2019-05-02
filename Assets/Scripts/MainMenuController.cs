@@ -45,7 +45,8 @@ public class MainMenuController : UtilComponent
     {
 
         // ユーザーデーター取得　※消しちゃダメ
-        StartCoroutine(ConnectAPI("http://18.179.32.33/sample/GetUserData.php", GetUserData));
+        //StartCoroutine(ConnectAPI("http://18.179.32.33/sample/GetUserData.php", GetUserData));
+        StartCoroutine(ConnectAPI("http://dev.rikuty.net/api/GetUserData.php", GetUserData));
 
         this.gameData = GameData.Instance;
 
@@ -69,11 +70,11 @@ public class MainMenuController : UtilComponent
     // JSON変換　※消しちゃダメ
     private void GetUserData(string val)
     {
-        Debug.Log(val);
+        //Debug.Log(val);
 
         UserData userData = JsonConvert.DeserializeObject<UserData>(val);
         //Debug.Log("userId : "+userData.user_id);
-        //Debug.Log("name : " + userData.user_name);
+        //Debug.Log("name : " + userData.name);
         SetLabel(this.txtID, userData.user_id);
         SetLabel(this.txtName, userData.user_name);
 
