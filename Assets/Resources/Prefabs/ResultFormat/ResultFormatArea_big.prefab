@@ -10843,6 +10843,15 @@ MonoBehaviour:
   graph5: {fileID: 114768689113370616}
   graph4P1: {fileID: 224990854647615018}
   graph4P2: {fileID: 224836808102282800}
+  graph1ValueList:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 4
+  - 3
+  - 2
   graph2_1ValueList:
   - 10
   - 9
@@ -10858,20 +10867,13 @@ MonoBehaviour:
   - 6
   - 4
   graph2_3: {fileID: 114216696624704126}
-  graph1ValueList:
-  - 1
-  - 2
-  - 3
-  - 4
-  - 5
-  - 4
-  - 3
-  - 2
   graph3_1: {fileID: 114426641001534680}
   graph3ValueList:
   - 30
   - 60
   - 90
+  graph4NowValue: {x: 64, y: 60}
+  graph4PreValue: {x: 55, y: 55}
   graph5_1: {fileID: 114417254686869094}
   graph5ValueList:
   - 10000
@@ -16759,7 +16761,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 290, y: 210}
+  m_AnchoredPosition: {x: 530, y: 385}
   m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224843039300230306
@@ -17481,7 +17483,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 300, y: 160}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 18, y: 18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224991763353705084

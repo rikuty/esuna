@@ -15,6 +15,8 @@ public class ResultFormatArea : MonoBehaviour {
     [SerializeField] private Transform graph4P2;
 
     #region Data
+	[SerializeField] private List<float> graph1ValueList;
+
 	[SerializeField] private List<float> graph2_1ValueList;
     [SerializeField] private WMG_Series graph2_1;
 	[SerializeField] private List<float> graph2_2ValueList;
@@ -22,9 +24,12 @@ public class ResultFormatArea : MonoBehaviour {
 	[SerializeField] private List<float> graph2_3ValueList;
     [SerializeField] private WMG_Series graph2_3;
 
-	[SerializeField] private List<float> graph1ValueList;
     [SerializeField] private WMG_Series graph3_1;
 	[SerializeField] private List<float> graph3ValueList;
+
+    [SerializeField] private Vector2 graph4NowValue;
+    [SerializeField] private Vector2 graph4PreValue;
+
     [SerializeField] private WMG_Series graph5_1;
 	[SerializeField] private List<float> graph5ValueList;
         
@@ -33,8 +38,11 @@ public class ResultFormatArea : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //Debug.Log("path : "+Application.dataPath);
+
+        // Graph1 Setting
         graph1.SetGraph1ValueList(graph1ValueList);
 
+        // Graph2 Setting
         for(int i=0; i<graph2_1ValueList.Count; i++){
             float x = (float)(i+1);
             graph2_1.pointValues.Add(new Vector2(x, graph2_1ValueList[i]));
@@ -49,12 +57,18 @@ public class ResultFormatArea : MonoBehaviour {
         }
         graph2.xAxis.AxisNumTicks = graph2_1ValueList.Count;
 
+        // Graph3 Setting
         for(int i=0; i<graph3ValueList.Count; i++){
             float x = (float)(i+1);
             graph3_1.pointValues.Add(new Vector2(x, graph3ValueList[i]));
         }
         graph3.xAxis.AxisNumTicks = graph3ValueList.Count;
 
+        // Graph4 Setting
+        graph4P1.localPosition = new Vector3(graph4NowValue.x * 5.3f, graph4NowValue.y * 3.85f, 0.0f);
+        graph4P2.localPosition = new Vector3(graph4PreValue.x * 5.3f, graph4PreValue.y * 3.85f, 0.0f);
+
+        // Graph5 Setting
         for(int i=0; i<graph5ValueList.Count; i++){
             float x = (float)(i+1);
             graph5_1.pointValues.Add(new Vector2(x, graph5ValueList[i]));
