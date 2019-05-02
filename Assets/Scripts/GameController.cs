@@ -30,6 +30,7 @@ public class GameController : UtilComponent {
     [SerializeField] BirdTransfer birdTransfer;
 
     [SerializeField] private CountdownComponet cdComponent;
+    [SerializeField] private FinishComponent finishComponent;
 
     [SerializeField] private GameObject[] objStart;
     [SerializeField] private GameObject[] objTutorial;
@@ -220,12 +221,29 @@ public class GameController : UtilComponent {
         SetLabel(leftTime, context.leftPlayTime.ToString("F0"));
 
         if(!this.context.isPlay){
-            this.context.currentStatus = DEFINE_APP.STATUS_ENUM.FINISH;
+
+            //this.context.currentStatus = DEFINE_APP.STATUS_ENUM.FINISH;
             //this.context.Finish();
+            SetActive(this.objPlay, false);
+            SetActive(this.objNestAndEgg, false);
+            SetActive(this.objGuide, false);
+            this.context.isAnswering = false;
+
+            this.ShowFinish();
             return;
         }
         //SetLabel(this.curretSpeed, this.context.answerTime.ToString("F2"));
 	}
+
+    private void ShowFinish() {
+        this.finishComponent.Init(this.ShowFinishCallback);
+        SetActive(this.finishComponent.gameObject, true);
+    }
+
+    private void ShowFinishCallback() {
+        SetActive(this.finishComponent.gameObject, false);
+        this.context.currentStatus = DEFINE_APP.STATUS_ENUM.FINISH;
+    }
 
     private void UpdateFinish()
     {

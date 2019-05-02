@@ -9,7 +9,13 @@ public class FinishComponent : MonoBehaviour {
 
     Action callback;
 
-	// Use this for initialization
+    void Start()
+    {
+        animator.SetTrigger("FinishTrigger");
+
+    }
+
+    // Use this for initialization
     public void Init(Action callback )
     {
         this.callback = callback;
