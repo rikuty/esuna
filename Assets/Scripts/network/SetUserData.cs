@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class SetUserData : MonoBehaviour {
     // POSTする対象のURL
-    string url = "http://rikuty.main.jp/test/SetUserData.php";
+    string url = "http://dev.rikuty.net/api/SetUserData.php";
     // タイムアウト時間
     float timeoutsec = 10f;
 
@@ -13,9 +13,9 @@ public class SetUserData : MonoBehaviour {
         // サーバへPOSTするデータを設定 
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("user_id", "1");
-        dic.Add("shoulder_height", "1.111");
-        dic.Add("arm_length", "2.222");
-        dic.Add("back_height", "3.336");
+        dic.Add("last_name", "山田");
+        dic.Add("first_name", "太郎");
+        dic.Add("age", "20");
 
         StartCoroutine(HttpPost(url, dic));
     }
