@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#if UNITY_EDITOR
 using UnityEditor;
 
 [CustomEditor(typeof(BodyScale))]//拡張するクラスを指定
@@ -27,6 +28,7 @@ public class ExampleScriptEditor : Editor
     }
 
 }
+#endif
 
 
 public class BodyScale : UtilComponent {
