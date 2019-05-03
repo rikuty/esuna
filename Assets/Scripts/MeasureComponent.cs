@@ -26,11 +26,11 @@ public class MeasureComponent : UtilComponent {
     }
 
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
         //Debug.Log("Stay");
 
-        this.callbackCollisionEnter(collision.collider);
+        this.callbackCollisionEnter(collider);
 
         SetActive(objBullet, false);
         SetActive(objEffect, true);
