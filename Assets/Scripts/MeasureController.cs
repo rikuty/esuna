@@ -151,6 +151,9 @@ public class MeasureController : UtilComponent {
         StartCoroutine(CoroutineWaitNextStep());
         currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
 
+        // ここからはTriggerを使う。
+        rightHandTr.GetComponent<MeshCollider>().isTrigger = true;
+        leftHandCollider.GetComponent<MeshCollider>().isTrigger = true;
 
     }
 
@@ -254,7 +257,7 @@ public class MeasureController : UtilComponent {
     }
 
 
-    void Hit(Collider collider)
+    void Hit(MeasureComponent measureComponent)
     {
 
 
@@ -308,7 +311,7 @@ public class MeasureController : UtilComponent {
         {
             isSetHandCollider = true;
 
-            string result = DEFINE_APP.HAND_TARGET[currentRotateNumber];
+            string result = DEFINE_APP.HAND_TARGET[currentRotateNumber-1];
 
             if (result == "R")
             {

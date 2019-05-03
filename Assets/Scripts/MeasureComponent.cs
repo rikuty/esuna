@@ -6,7 +6,7 @@ using System;
 public class MeasureComponent : UtilComponent {
 
 
-    Action<Collider> callbackCollisionEnter;
+    Action<MeasureComponent> callbackCollisionEnter;
 
     public int rot;
 
@@ -15,22 +15,25 @@ public class MeasureComponent : UtilComponent {
     public GameObject objBullet;
     public GameObject objEffect;
 
+    public Bullet bullet;
 
-	public void Init(Action<Collider> callbackCollisionEnter, int rot, float armLength)
+
+    public void Init(Action<MeasureComponent> callbackCollisionEnter, int rot, float armLength)
     {
         this.callbackCollisionEnter = callbackCollisionEnter;
         this.rot = rot;
 
         this.transform.localRotation = Quaternion.Euler(rot, 0, 0);
         trArmLength.localPosition = new Vector3(0f, 0f, armLength);
+        this.bullet.Init(CallbackFromBullet);
     }
 
 
-    void OnTriggerEnter(Collider collider)
+    void CallbackFromBullet(Collider collider)
     {
         //Debug.Log("Stay");
 
-        this.callbackCollisionEnter(collider);
+        this.callbackCollisionEnter(this);
 
         SetActive(objBullet, false);
         SetActive(objEffect, true);
