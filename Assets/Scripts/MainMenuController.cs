@@ -72,12 +72,15 @@ public class MainMenuController : UtilComponent
     {
         //Debug.Log(val);
 
-        UserData userData = JsonConvert.DeserializeObject<UserData>(val);
-        //Debug.Log("userId : "+userData.user_id);
-        //Debug.Log("name : " + userData.name);
-        SetLabel(this.txtID, userData.user_id);
-        SetLabel(this.txtName, userData.user_name);
-
+        if(val.Length == 1){
+            Debug.Log("アクティブなユーザーが設定されていません。");
+        } else {
+            UserData userData = JsonConvert.DeserializeObject<UserData>(val);
+            //Debug.Log("userId : "+userData.user_id);
+            //Debug.Log("name : " + userData.user_name);
+            SetLabel(this.txtID, userData.user_id);
+            SetLabel(this.txtName, userData.user_name);
+        }
     }
 
     void Update()
