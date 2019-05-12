@@ -2,16 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [Serializable] 
 public class UserData 
 {
 	public string user_id;
 	public string user_name;
-	/* 
-	public string password;
-	public float shoulder_height;
-	public float arm_length;
-	public float back_height;
-	*/
+	public int age;
+	public int height;
+	public int rank;
+	public Dictionary<int, MeasureData> measure;
 }

@@ -5437,7 +5437,7 @@ MonoBehaviour:
   AxisObj: {fileID: 1020662937139240}
   AxisLabelObjs: {fileID: 1632339221024932}
   _AxisMinValue: 0
-  _AxisMaxValue: 40000
+  _AxisMaxValue: 10000
   _AxisNumTicks: 9
   _MinAutoGrow: 0
   _MaxAutoGrow: 0
@@ -10837,12 +10837,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RenderTextureRef: {fileID: 8400000, guid: 796a4e24add6b4359b4526207ad983f5, type: 2}
+  txtDate: {fileID: 114856150619468888}
+  txtUserId: {fileID: 114872763130453240}
+  txtUserName: {fileID: 114836083520975106}
+  txtUserAge: {fileID: 114330127558095082}
+  txtUserHeight: {fileID: 114435001757709042}
+  txtPoint: {fileID: 114499646702156276}
+  txtRank: {fileID: 114610468428206618}
   graph1: {fileID: 114258677691636380}
   graph2: {fileID: 114096210407106012}
   graph3: {fileID: 114214905307481448}
-  graph5: {fileID: 114768689113370616}
   graph4P1: {fileID: 224990854647615018}
   graph4P2: {fileID: 224836808102282800}
+  graph5: {fileID: 114768689113370616}
   graph1ValueList:
   - 1
   - 2
@@ -10869,11 +10876,11 @@ MonoBehaviour:
   graph2_3: {fileID: 114216696624704126}
   graph3_1: {fileID: 114426641001534680}
   graph3ValueList:
-  - 30
-  - 60
+  - 3077
+  - 60.55
   - 90
-  graph4NowValue: {x: 64, y: 60}
-  graph4PreValue: {x: 55, y: 55}
+  graph4NowValue: {x: 20, y: 20}
+  graph4PreValue: {x: 5, y: 5}
   graph5_1: {fileID: 114417254686869094}
   graph5ValueList:
   - 10000
