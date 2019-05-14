@@ -107,7 +107,7 @@ Shader "NatureManufacture Shaders/Standard Shaders/Standard Metalic Snow"
 		uniform sampler2D _MetalicRAmbientOcclusionGSmoothnessA;
 		uniform float _MetallicPower;
 		uniform sampler2D _SnowMetalicRAmbientOcclusionGSmothnessA;
-		uniform float _SnowMetallicPower;
+		//uniform float _SnowMetallicPower;
 		uniform float _SmoothnessPower;
 		uniform float _SnowSmoothnessPower;
 		uniform float _AmbientOcclusionPower;
@@ -200,8 +200,8 @@ Shader "NatureManufacture Shaders/Standard Shaders/Standard Metalic Snow"
 			float4 tex2DNode2 = tex2D( _MetalicRAmbientOcclusionGSmoothnessA, uv_MainTex );
 			float4 triplanar459 = TriplanarSamplingSF( _SnowMetalicRAmbientOcclusionGSmothnessA, ase_worldPos, ase_worldNormal, _TriplanarCoverFalloff, temp_output_265_0, 1.0, 0 );
 			float4 break323 = triplanar459;
-			float lerpResult17 = lerp( ( tex2DNode2.r * _MetallicPower ) , ( break323.x * _SnowMetallicPower ) , staticSwitch497);
-			o.Metallic = lerpResult17;
+			//float lerpResult17 = lerp( ( tex2DNode2.r * _MetallicPower ) , ( break323.x * _SnowMetallicPower ) , staticSwitch497);
+			//o.Metallic = lerpResult17;
 			float lerpResult27 = lerp( ( tex2DNode2.a * _SmoothnessPower ) , ( break323.w * _SnowSmoothnessPower ) , staticSwitch497);
 			o.Smoothness = lerpResult27;
 			float clampResult96 = clamp( tex2DNode2.g , ( 1.0 - _AmbientOcclusionPower ) , 1.0 );
