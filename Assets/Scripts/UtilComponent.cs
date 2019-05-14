@@ -362,11 +362,31 @@ public class UtilComponent : MonoBehaviour {
 			tr.pivot = vec;
 		}
 	}
+
+
+    #region OVR
+
+    public static bool CheckHandTriggerButtonDown()
+    {
+        return CheckOVRInputGetDown(new OVRInput.RawButton[] { OVRInput.RawButton.LHandTrigger, OVRInput.RawButton.RHandTrigger });
+    }
+
+    public static bool CheckOVRInputGetDown(OVRInput.RawButton[] rawButtons)
+    {
+        bool result = false;
+        for(int i=0; i<rawButtons.Length; i++)
+        {
+            result |= OVRInput.GetDown(rawButtons[i]);
+        }
+        return result;
+    }
+
+    #endregion
 #endif
 
-	#region renderer
-	/// <summary> color設定(アルファ値のみ)</summary>
-	public static void SetRendererAlpha(Transform transform, float alpha){
+    #region renderer
+    /// <summary> color設定(アルファ値のみ)</summary>
+    public static void SetRendererAlpha(Transform transform, float alpha){
 		SetRendererAlpha (transform.GetComponentsInChildren<Renderer> (true), alpha);
 	}
 

@@ -52,36 +52,87 @@ public partial class DEFINE_APP {//ApplictionDefine
         RESULT
     }
 
-    public static int[] RIGHT_HAND_TARGET = new int[] { 1, 3, 6 };
-    public static int[] LEFT_HAND_TARGET = new int[] { 2, 5, 8 };
-    public static int[] BOTH_HAND_TARGET = new int[] { 4, 7 };
+
+    /// <summary>
+    /// R=右手、L=左手、C=両手
+    /// </summary>
+    public static string[] HAND_TARGET = new string[] { "R","L","R","C","L","R","C","L"};
+    public static Dictionary<string, Vector3> SHOULDER_POS_DIC = new Dictionary<string, Vector3>()
+    {
+        { "R", BODY_SCALE.SHOULDER_POS_R},
+        { "L", BODY_SCALE.SHOULDER_POS_L},
+        { "C", BODY_SCALE.SHOULDER_POS_C},
+    };
 
     public static class BODY_SCALE
     {
+        // WorldPosition ※フロントのみ
         public static Vector3 PLAYER_BASE_POS;
         public static Vector3 PLAYER_BASE_ROT;
-        public static Vector3 SHOULDER_POS;
-        public static Vector3 HAND_POS;
+        // LocalPosition ※BasePositionから
+        // DEFINEで設定 ※フロントのみ ※BasePositionから
+        public static Vector3 BACK_POS = new Vector3(0f,0.5f,0f);
+        // CenterEyeの位置　※サーバー通信 ※BasePositionから
+        public static Vector3 HEAD_POS;
+        // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
+        public static Vector3 SHOULDER_POS_R
+        {
+            get
+            {
+                return new Vector3(HAND_POS_R.x, HAND_POS_R.y, HEAD_POS.z) - BACK_POS;
+            }
+        }
+        // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
+        public static Vector3 SHOULDER_POS_L
+        {
+            get
+            {
+                return new Vector3(HAND_POS_L.x, HAND_POS_L.y, HEAD_POS.z) - BACK_POS;
+            }
+        }
+        // HEADとHandの位置から決定。BACK_POSから　※フロントのみ
+        public static Vector3 SHOULDER_POS_C
+        {
+            get
+            {
+                return new Vector3((HAND_POS_L.x + HAND_POS_R.x) / 2, (HAND_POS_L.y + HAND_POS_R.y) / 2, HEAD_POS.z) - BACK_POS;
+            }
+        }
 
-        public static Dictionary<int, int> TARGET_INDEX_DIC = new Dictionary<int, int>();
+        // 各コントローラーの位置　BasePositionから　※サーバー通信
+        public static Vector3 HAND_POS_R;
+        public static Vector3 HAND_POS_L;
 
-        public static Dictionary<int, List<Vector3>> GOAL_DIC = new Dictionary<int, List<Vector3>>();
+        /// <summary>
+        /// 8方向の最大角度を保存。
+        /// </summary>
+        public static Dictionary<int, float> GOAL_DIC = new Dictionary<int, float>()
+        {
+            {1, 45f},
+            {2, 45f},
+            {3, 45f},   
+            {4, 45f},
+            {5, 45f},
+            {6, 45f},
+            {7, 45f},
+            {8, 45f}
+        };
 
         public static int[] DIAGNOSIS_ROT_ANCHOR = new int[]
         {
-            0,10,20,30,40,50,60,70,80,90,100,110,120,130,140,150,160,170,180
+            10,20,30,40,50,60,70,80,90,100,110,120,130,140,150
         };
 
         public static Dictionary<int, float> SHOULDER_ROT_Z = new Dictionary<int, float>()
         {
-            {1,90f},
-            {2,-90f},
-            {3,45f},
-            {4,0f},
-            {5,-45f},
-            {6,135f},
-            {7,180f},
-            {8,-135f}
+            {1,-90f},
+            {2,90f},
+            {3,-135f},
+            {4,180f},
+            {5,135f},
+            {6,-45f},
+            {7,0f},
+            {8,45f}
         };
 
 
@@ -97,6 +148,11 @@ public partial class DEFINE_APP {//ApplictionDefine
             {8,1}
         };
     }
+
+    /// <summary>
+    /// 測定開始してから次のボールに触れないために次に移動する時間。
+    /// </summary>
+    public static float DIAGNOSIS_WAIT_TIME = 3f;
 }
 
 	

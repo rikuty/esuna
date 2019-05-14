@@ -26,9 +26,13 @@ public class AnswerController : UtilComponent
 
     HandController handController;
 
-    int[] rightArray = DEFINE_APP.RIGHT_HAND_TARGET;
-    int[] leftArray = DEFINE_APP.LEFT_HAND_TARGET;
-    int[] bothArray = DEFINE_APP.BOTH_HAND_TARGET;
+    string[] handTarget {
+        get
+        {
+            return DEFINE_APP.HAND_TARGET;
+        }
+    }
+
 
     List<int> tutorialTargets = new List<int> { 1, 5, 7 };
 
@@ -133,18 +137,16 @@ public class AnswerController : UtilComponent
         bodyScale.SetDisplay(targetNumber);
 
 
-        bool resultRight = Array.IndexOf(rightArray, targetNumber) >= 0;
-        bool resultLeft = Array.IndexOf(leftArray, targetNumber) >= 0;
-        bool resultBoth = Array.IndexOf(bothArray, targetNumber) >= 0;
+        string result = handTarget[targetNumber - 1];
 
         GameObject[] objs = new GameObject[2];
-        if (resultRight)
+        if (result == "R")
         {
             objs[0] = rightHand;
-        }else if (resultLeft)
+        }else if (result == "L")
         {
             objs[1] = leftHand;
-        }else if (resultBoth)
+        }else if (result == "C")
         {
             objs[0] = rightHand;
             objs[1] = leftHand;
@@ -154,18 +156,18 @@ public class AnswerController : UtilComponent
 
         SetActiveNest(true);
 
-        if (resultRight)
+        if (result == "R")
         {
             handController.SetCanTouchController(OVRInput.Controller.RTouch);
             handController.PlayHaptics(OVRInput.Controller.RTouch);
 
         }
-        else if (resultLeft)
+        else if (result == "L")
         {
             handController.SetCanTouchController(OVRInput.Controller.LTouch);
             handController.PlayHaptics(OVRInput.Controller.LTouch);
         }
-        else if (resultBoth)
+        else if (result == "C")
         {
             handController.SetCanTouchController(OVRInput.Controller.All);
             handController.PlayHaptics(OVRInput.Controller.LTouch);

@@ -169,7 +169,7 @@ public class HandController: UtilComponent {
             rightHandCollider.sharedMesh = rightSkinnedMeshRenderer.sharedMesh;
             leftHandCollider.sharedMesh = leftSkinnedMeshRenderer.sharedMesh;
         }
-	}
+    }
 
 
     
