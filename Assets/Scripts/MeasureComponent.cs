@@ -6,37 +6,93 @@ using System;
 public class MeasureComponent : UtilComponent {
 
 
-    Action<MeasureComponent> callbackCollisionEnter;
+    Action<MeasureComponent> callbackCollision;
 
     public int rot;
 
     public Transform trArmLength;
+    public Transform trRootObj;
 
     public GameObject objBullet;
     public GameObject objEffect;
 
     public Bullet bullet;
 
+    public string strhand;
 
-    public void Init(Action<MeasureComponent> callbackCollisionEnter, int rot, float armLength)
+    private bool isRightTouch = false;
+    private bool isLeftTouch = false;
+
+
+    public void Init(Action<MeasureComponent> callbackCollision, int rot, float armLength, string strHand, Bullet.CollisionEnum collisionStatus = Bullet.CollisionEnum.ENTER, float stayTime = 0.3f)
     {
-        this.callbackCollisionEnter = callbackCollisionEnter;
+        this.callbackCollision = callbackCollision;
         this.rot = rot;
+        this.strhand = strHand;
 
         this.transform.localRotation = Quaternion.Euler(rot, 0, 0);
         trArmLength.localPosition = new Vector3(0f, 0f, armLength);
-        this.bullet.Init(CallbackFromBullet);
+        bullet.Init(CallbackFromBullet, collisionStatus, stayTime);
+
+        Reset();
     }
 
 
-    void CallbackFromBullet(Collider collider)
+    public void ColliderEnabled(bool isEnabled)
     {
-        //Debug.Log("Stay");
+        if(bullet != null)
+        {
+            bullet.ColliderEnabled(isEnabled);
+        }
+    }
 
-        this.callbackCollisionEnter(this);
 
+    public void SetActiveBullet(bool isActive)
+    {
+        SetActive(objBullet, isActive);
+    }
+
+
+    public void Reset()
+    {
         SetActive(objBullet, false);
-        SetActive(objEffect, true);
+        SetActive(objEffect, false);
+        if (bullet != null)
+        {
+            bullet.Reset();
+        }
+    }
+
+    void CallbackFromBullet(OVRGrabberBothHands bothHands)
+    {
+        bool result = false;
+        result |= (bothHands.m_controller == OVRInput.Controller.RTouch && this.strhand == "R");
+        result |= (bothHands.m_controller == OVRInput.Controller.LTouch && this.strhand == "L");
+
+        if(this.strhand == "C")
+        {
+            if(bothHands.m_controller == OVRInput.Controller.LTouch)
+            {
+                isLeftTouch = true;
+            }
+            else if (bothHands.m_controller == OVRInput.Controller.RTouch)
+            {
+                isRightTouch = true;
+            }
+
+            if(isLeftTouch && isRightTouch)
+            {
+                result = true;
+            }
+        }
+
+        if (result)
+        {
+            this.callbackCollision(this);
+
+            SetActive(objBullet, false);
+            SetActive(objEffect, true);
+        }
 
     }
 }

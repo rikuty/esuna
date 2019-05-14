@@ -110,7 +110,7 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
             {1, 45f},
             {2, 45f},
-            {3, 45f},
+            {3, 45f},   
             {4, 45f},
             {5, 45f},
             {6, 45f},
@@ -127,12 +127,12 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
             {1,-90f},
             {2,90f},
-            {3,-45f},
-            {4,0f},
-            {5,45f},
-            {6,-135f},
-            {7,-180f},
-            {8,135f}
+            {3,-135f},
+            {4,180f},
+            {5,135f},
+            {6,-45f},
+            {7,0f},
+            {8,45f}
         };
 
 
@@ -148,6 +148,11 @@ public partial class DEFINE_APP {//ApplictionDefine
             {8,1}
         };
     }
+
+    /// <summary>
+    /// 測定開始してから次のボールに触れないために次に移動する時間。
+    /// </summary>
+    public static float DIAGNOSIS_WAIT_TIME = 3f;
 }
 
 	

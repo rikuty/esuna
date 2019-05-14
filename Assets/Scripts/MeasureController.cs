@@ -15,9 +15,13 @@ public class MeasureController : UtilComponent {
     /// </summary>
     public Transform backTr;
     /// <summary>
-    ///　肩の高さと測定器具の測定方向への設置用のTransform
+    ///　肩の高さのTransform
     /// </summary>
     public Transform shoulderTr;
+    /// <summary>
+    ///　測定器具の測定方向への設置用のTransform。測定スタート地点の手などもあるので複数。
+    /// </summary>
+    public Transform[] directRotateTrs;
     /// <summary>
     /// 眼の位置のTransform
     /// </summary>
@@ -33,7 +37,7 @@ public class MeasureController : UtilComponent {
     /// <summary>
     /// Bullet親のTransform
     /// </summary>
-    public Transform objBulletRoot;
+    //public Transform objBulletRoot;
 
 
     public GameObject objUI;
@@ -42,10 +46,15 @@ public class MeasureController : UtilComponent {
     public Text txtRotateTitle;
     public Text txtRotateDetail;
 
-    public GameObject objBulletOriginal;
+    //public GameObject objBulletOriginal;
 
     public Collider rightHandCollider;
     public Collider leftHandCollider;
+
+    public MeasureComponent[] measureComponents;
+    public MeasureComponent measureStartRightComponent;
+    public MeasureComponent measureStartLeftComponent;
+    public OvrAvatar ovrAvatar;
 
 
     enum DIAGNOSIS_STATUS_ENUM
@@ -112,16 +121,29 @@ public class MeasureController : UtilComponent {
 
     Action callbackFinish;
 
-    bool isWaiting = false;
+    bool isWaitingStartDiagnosis = false;
 
-    int currentDiagnosisRotAnchorIndex;
 
+    // 手がスタート地点に入り、OKとなったか
+    enum DirectionEnum
+    {
+        NONE, // 両手もしくは片手がスタンバイ位置に来ていない
+        STANDBY, // Rotateなどのセットアップ
+        PREPARNG, // 手のコライダーセット後、両手がスタンバイ位置に来るまで
+        LEFT,　// 両手がスタンバイ位置にくる必要があるときに片方が来ていない
+        RIGHT,　// 両手がスタンバイ位置にくる必要があるときに片方が来ていない
+        PREPARED,　// 両手もしくは片手がスタンバイ位置に来ている
+        WAITING, // 測定中。PREPAREDの1フレーム後になる。
+        MEASURING // コライダーが当たってからボタンが押されるか数秒立つまで
+    }
+    DirectionEnum directionStatus = DirectionEnum.NONE;
+
+    // 測定方向最大角度　※方向が変わるごとにリセット
     float maxAngle;
 
-    // 測定中。colliderが当たってからボタンが押されるまで。
-    bool isDiagnosising = false;
+    //　次のBulletに当たるまでの時間をカウント　※一定時間経過すると測定終了
+    float hitDeltaTime = 0f;
 
-    bool isSetHandCollider = false;
     OVRInput.Controller controller;
 
 
@@ -135,9 +157,7 @@ public class MeasureController : UtilComponent {
     {
         this.callbackFinish = callbackFinish;
         currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
-        isWaiting = true;
-        currentDiagnosisRotAnchorIndex = 0;
-        maxAngle = 0f;
+        isWaitingStartDiagnosis = true;
 
         //SetActive(backTr, false);
 
@@ -147,7 +167,7 @@ public class MeasureController : UtilComponent {
     public void StartDiagnosis()
     {
         ShowUI(true);
-        isWaiting = true;
+        isWaitingStartDiagnosis = true;
         StartCoroutine(CoroutineWaitNextStep());
         currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
 
@@ -162,7 +182,7 @@ public class MeasureController : UtilComponent {
 
     // Update is called once per frame
     void Update () {
-        if (isWaiting) return;
+        if (isWaitingStartDiagnosis) return;
 
 
         switch (currentStatus)
@@ -187,7 +207,7 @@ public class MeasureController : UtilComponent {
     {
         if (OVRInput.GetDown(OVRInput.RawButton.Any))
         {
-            isWaiting = true;
+            isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
 
             DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
@@ -208,7 +228,7 @@ public class MeasureController : UtilComponent {
     {
         if (OVRInput.GetDown(OVRInput.RawButton.Any))
         {
-            isWaiting = true;
+            isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
@@ -221,19 +241,38 @@ public class MeasureController : UtilComponent {
 
             ShowUI(false);
 
-            StartCoroutine(CoroutineWaitNextStep(PreparingDirection));
+            StartCoroutine(CoroutineWaitNextStep(InitDirection));
 
 
         }
     }
 
 
+    void InitDirection()
+    {
+        GameObject objLeft = Instantiate(ovrAvatar.trackedComponents["hand_left"].gameObject, measureStartLeftComponent.trRootObj.transform);
+        objLeft.transform.localPosition = Vector3.zero;
+        objLeft.transform.localRotation = Quaternion.identity;
+        //SetActive(objLeft, false);
+        GameObject objRight = Instantiate(ovrAvatar.trackedComponents["hand_right"].gameObject, measureStartRightComponent.trRootObj.transform);
+        objRight.transform.localPosition = Vector3.zero;
+        objRight.transform.localRotation = Quaternion.identity;
+        //SetActive(objRight, false);
+
+        PreparingDirection();
+    }
+
+
+
     void PreparingDirection()
     {
-
-        shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+        for (int i = 0; i < directRotateTrs.Length; i++)
+        {
+            directRotateTrs[i].localRotation = Quaternion.Euler(new Vector3(directRotateTrs[i].localRotation.x, directRotateTrs[i].localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+        }
 
         StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
+
     }
 
 
@@ -243,32 +282,89 @@ public class MeasureController : UtilComponent {
         {
             yield return new WaitForSeconds(0.1f);
 
-            GameObject bullet = Instantiate(objBulletOriginal, objBulletRoot);
-            SetActive(bullet, true);
-            MeasureComponent measureComponent = bullet.GetComponent<MeasureComponent>();
-            measureComponent.Init(Hit, DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[i], DEFINE_APP.BODY_SCALE.HAND_POS_R.z);
+            measureComponents[i].Init(Hit, DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[i], (DEFINE_APP.BODY_SCALE.HAND_POS_R.z + DEFINE_APP.BODY_SCALE.HAND_POS_L.z)/2, DEFINE_APP.HAND_TARGET[currentRotateNumber - 1]);
+            measureComponents[i].SetActiveBullet(true);
+            measureComponents[i].ColliderEnabled(false);
         }
+        PreparedDirection();
+
+        measureStartLeftComponent.Init(HitStartMeasure, 0, DEFINE_APP.BODY_SCALE.HAND_POS_L.z, "L", Bullet.CollisionEnum.STAY, 0.3f);
+
+        measureStartRightComponent.Init(HitStartMeasure, 0, DEFINE_APP.BODY_SCALE.HAND_POS_R.z, "R", Bullet.CollisionEnum.STAY, 0.3f);
+
     }
 
 
     void PreparedDirection()
     {
-
+        directionStatus = DirectionEnum.STANDBY;
     }
 
 
     void Hit(MeasureComponent measureComponent)
     {
 
+        hitDeltaTime = 0f;
+        directionStatus = DirectionEnum.MEASURING;
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber - 1] = (float)measureComponent.rot;
+
+    }
 
 
+    void HitStartMeasure(MeasureComponent measureComponent)
+    {
+        if(DEFINE_APP.HAND_TARGET[currentRotateNumber - 1] == "L" || DEFINE_APP.HAND_TARGET[currentRotateNumber - 1] == "R")
+        {
+            if(DEFINE_APP.HAND_TARGET[currentRotateNumber - 1] == measureComponent.strhand)
+            {
+                directionStatus = DirectionEnum.PREPARED;
+            }
+        }
+        else
+        {
+            if (directionStatus == DirectionEnum.PREPARNG)
+            {
+                if (measureComponent.strhand == "R")
+                {
+                    directionStatus = DirectionEnum.RIGHT;
+                }else if(measureComponent.strhand == "L")
+                {
+                    directionStatus = DirectionEnum.LEFT;
+                }
+            }
+            if ((directionStatus == DirectionEnum.LEFT && measureComponent.strhand == "R")
+                || (directionStatus == DirectionEnum.RIGHT && measureComponent.strhand == "L"))
+            {
+                directionStatus = DirectionEnum.PREPARED;
+            }
+        }
+
+        if(directionStatus == DirectionEnum.PREPARED)
+        {
+            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+            {
+                measureComponents[i].ColliderEnabled(true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 球体表示用
+    /// </summary>
+    /// <param name="isActive"></param>
+    void SetActiveBullets(bool isActive)
+    {
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+        {
+            measureComponents[i].SetActiveBullet(isActive);
+        }
     }
 
 
      void UpdateDirection()
     {
         // ボタン押下、最大角度確定処理
-        if (OVRInput.GetDown(OVRInput.RawButton.Any) && DEFINE_APP.BODY_SCALE.GOAL_DIC.Count == currentRotateNumber)
+        if (directionStatus == DirectionEnum.MEASURING && CheckHandTriggerButtonDown())
         {
 
 
@@ -284,32 +380,32 @@ public class MeasureController : UtilComponent {
             }
 
             currentRotateNumber++;
-            shoulderTr.localRotation = Quaternion.Euler(new Vector3(shoulderTr.localRotation.x, shoulderTr.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
-            currentDiagnosisRotAnchorIndex = 0;
-            maxAngle = 0f;
-            isSetHandCollider = false;
+            directionStatus = DirectionEnum.NONE;
             rightHandCollider.enabled = false;
             leftHandCollider.enabled = false;
             ShowUI(true);
+            SetActiveBullets(false);
+
+            PreparingDirection();
 
         }
 
         // 測定開始部分
-        //if (!measureCollider.enabled)
-        //{
-        //    Vector3 diffRight = rightHandTr.position - shoulderTr.position;
-        //    float angleRight = GetAngle(diffRight);
-        //    Vector3 diffLeft = leftHandTr.position - shoulderTrL.position;
-        //    float angleLeft = GetAngle(diffLeft);
-        //    measureCollider.enabled = 
-        //        (angleRight < 0 && controller == OVRInput.Controller.RTouch) 
-        //        || (angleLeft < 0 && controller == OVRInput.Controller.LTouch)
-        //        || (angleLeft < 0 && angleRight < 0 && controller == OVRInput.Controller.All);
-        //}
-
-        if (!isSetHandCollider)
+        if (directionStatus == DirectionEnum.PREPARED)
         {
-            isSetHandCollider = true;
+            directionStatus = DirectionEnum.WAITING;
+            // 測定器具のコライダーセット
+            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+            {
+                measureComponents[i].ColliderEnabled(true);
+            }
+
+        }
+
+         // 次の方向に合わせて手のコライダーを調整
+        if (directionStatus == DirectionEnum.STANDBY)
+        {
+            directionStatus = DirectionEnum.PREPARNG;
 
             string result = DEFINE_APP.HAND_TARGET[currentRotateNumber-1];
 
@@ -318,19 +414,22 @@ public class MeasureController : UtilComponent {
                 rightHandCollider.enabled = true;
                 leftHandCollider.enabled = false;
                 controller = OVRInput.Controller.RTouch;
+                measureStartRightComponent.SetActiveBullet(true);
             }
             else if (result == "L")
             {
                 leftHandCollider.enabled = true;
                 rightHandCollider.enabled = false;
                 controller = OVRInput.Controller.LTouch;
+                measureStartLeftComponent.SetActiveBullet(true);
             }
             else if (result == "C")
             {
                 rightHandCollider.enabled = true;
                 leftHandCollider.enabled = true;
                 controller = OVRInput.Controller.All;
-
+                measureStartLeftComponent.SetActiveBullet(true);
+                measureStartRightComponent.SetActiveBullet(true);
             }
         }
     }
@@ -387,7 +486,7 @@ public class MeasureController : UtilComponent {
     IEnumerator CoroutineWaitNextStep(Action callback = null)
     {
         yield return new WaitForSeconds(3.0f);
-        isWaiting = false;
+        isWaitingStartDiagnosis = false;
         if(currentStatus != DIAGNOSIS_STATUS_ENUM.END)
         {
 	        ShowUI(true);
