@@ -42,10 +42,15 @@ public class GameController : UtilComponent {
     [SerializeField] private GameObject objGuide;
 
 
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSourceForest;
+
+    [SerializeField] private AudioSource audioSourceGame;
+
     //[SerializeField] private AudioClip audioClip;
     //[SerializeField] private AnswerObjectController answerController;
     [SerializeField] private Text leftTime;
+
+
     //[SerializeField] private Text numMinus;
     //[SerializeField] private Text correctCount;
     //[SerializeField] private Text time;
@@ -82,6 +87,9 @@ public class GameController : UtilComponent {
         SetActive(this.objPlay, false);
         SetActive(this.objResult, false);
         SetActive(this.objNestAndEgg, false);
+        audioSourceGame.Stop();
+        audioSourceForest.Play();
+
 
         answerController.Init(CallbackFromAnswerControllers, context, handController);
         handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing, context);
@@ -104,9 +112,9 @@ public class GameController : UtilComponent {
 
         //resultModalPresenter = ResourceLoader.Instance.Create<ResultModalPresenter>("Prefabs/ResultModal", trResult, false);
 
-        if (this.audioSource != null)
+        if (this.audioSourceGame != null)
         {
-            this.audioSource.Play();
+            this.audioSourceGame.Play();
         }
 	}
 
@@ -143,6 +151,7 @@ public class GameController : UtilComponent {
 
     private IEnumerator SetCountDown(){
         //Debug.Log("CountDown");
+        audioSourceForest.Stop();
 
         yield return new WaitForSeconds(2);
 
@@ -214,8 +223,12 @@ public class GameController : UtilComponent {
         SetActive(this.objNestAndEgg, true);
         SetActive(this.objPlay, true);
 
+        SetActive(audioSourceGame.gameObject, true);
+        audioSourceGame.Play();
 
-	}
+
+
+    }
 
 
     private void UpdatePlay(){
@@ -233,6 +246,8 @@ public class GameController : UtilComponent {
             this.context.isAnswering = false;
 
             this.ShowFinish();
+            audioSourceGame.Stop();
+
             return;
         }
         //SetLabel(this.curretSpeed, this.context.answerTime.ToString("F2"));

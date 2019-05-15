@@ -106,8 +106,8 @@ public partial class DEFINE_APP {//ApplictionDefine
         }
 
         // 各コントローラーの位置　BasePositionから　※サーバー通信
-        public static Vector3 HAND_POS_R;
-        public static Vector3 HAND_POS_L;
+        public static Vector3 HAND_POS_R = new Vector3(0f, 1.1f, 0.5f);
+        public static Vector3 HAND_POS_L = new Vector3(0f, 1.1f, 0.5f);
         public static Vector3 HAND_POS_C
         {
             get
