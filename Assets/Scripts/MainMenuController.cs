@@ -54,7 +54,7 @@ public class MainMenuController : UtilComponent
         //this.userID = this.dateTime.ToString("yyMMddHHmm");
         //SetLabel(this.txtID, this.userID);
         //SetLabel(this.txtName, this.userName);
-        SetLabel(this.txtTitle, "目の前にある青い箱を押してください");
+        SetLabel(this.txtTitle, "");
         SetLabel(this.txtDetail, "");
 
         //handController.Init(LoadMain);
@@ -65,7 +65,18 @@ public class MainMenuController : UtilComponent
         measureController.Init(LoadMain);
 
         currentStatus = MENU_STATUS_ENUM.WAIT;
+
+        StartCoroutine("WaitStartCoroutine");
+
     }
+
+
+    IEnumerator WaitStartCoroutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+        measureController.StartDiagnosis();
+    }
+
 
     // JSON変換　※消しちゃダメ
     private void GetUserData(string val)
@@ -92,7 +103,9 @@ public class MainMenuController : UtilComponent
 
     private void FinishPushButton()
     {
-        measureController.StartDiagnosis();
+        //measureController.StartDiagnosis();
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+
     }
 
     public void LoadMain()

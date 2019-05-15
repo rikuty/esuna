@@ -187,24 +187,24 @@ public class BodyScale : UtilComponent {
     // Use this for initialization
     void Awake() {
 
-        DEFINE_APP.BODY_SCALE.GOAL_DIC = new Dictionary<int, float>()
-        {
-            {1, 45f},
-            {2, 45f},
-            {3, 45f},
-            {4, 45f},
-            {5, 45f},
-            {6, 45f},
-            {7, 45f},
-            {8, 45f}
-        };
+        //DEFINE_APP.BODY_SCALE.GOAL_DIC = new Dictionary<int, float>()
+        //{
+        //    {1, 45f},
+        //    {2, 45f},
+        //    {3, 45f},
+        //    {4, 45f},
+        //    {5, 45f},
+        //    {6, 45f},
+        //    {7, 45f},
+        //    {8, 45f}
+        //};
 
 
-        DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(0f,0f,0f);
-        DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(0f,0f,0f);
-        DEFINE_APP.BODY_SCALE.BACK_POS = new Vector3(0f, 0.5f, 0f);
-        DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f,1.1f,0.5f);
-        DEFINE_APP.BODY_SCALE.HAND_POS_L = new Vector3(0f, 1.1f, 0.5f);
+        //DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(0f,0f,0f);
+        //DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(0f,0f,0f);
+        //DEFINE_APP.BODY_SCALE.BACK_POS = new Vector3(0f, 0.5f, 0f);
+        //DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f,1.1f,0.5f);
+        //DEFINE_APP.BODY_SCALE.HAND_POS_L = new Vector3(0f, 1.1f, 0.5f);
 
 
         //Dictionary<string, Vector3> backTransform1 = new Dictionary<string, Vector3>()

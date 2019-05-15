@@ -68,9 +68,10 @@ public class GameController : UtilComponent {
 
     IEnumerator PrepareCoroutine()
     {
-        yield return new WaitForSeconds(3.0f);
-        context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
-        SetActive(this.objStart, true);
+        yield return new WaitForSeconds(0.0f);
+        //yield return new WaitForSeconds(3.0f);
+        //context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
+        //SetActive(this.objStart, true);
     }
 
     // Use this for initialization
@@ -82,18 +83,20 @@ public class GameController : UtilComponent {
         SetActive(this.objResult, false);
         SetActive(this.objNestAndEgg, false);
 
-        panelButtonComponent.Init(()　=> 
-        {
-            this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL);
+        answerController.Init(CallbackFromAnswerControllers, context, handController);
+        handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing, context);
+
+        //panelButtonComponent.Init(()　=> 
+        //{
+        this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL);
             context.currentStatus = DEFINE_APP.STATUS_ENUM.TUTORIAL;
             answerController.SetGravity(false);
             SetActive(this.objStart, false);
             SetActive(this.objTutorial, true);
             SetActive(this.objNestAndEgg, true);
-        });
+        //});
 
-        answerController.Init(CallbackFromAnswerControllers, context, handController);
-        handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing, context);
+
         //this.context.Init();
 
         //this.gazeButtonInput.Init(this.context);
