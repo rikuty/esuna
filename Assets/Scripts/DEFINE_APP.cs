@@ -63,6 +63,12 @@ public partial class DEFINE_APP {//ApplictionDefine
         { "L", BODY_SCALE.SHOULDER_POS_L},
         { "C", BODY_SCALE.SHOULDER_POS_C},
     };
+    public static Dictionary<string, Vector3> HAND_POS_DIC = new Dictionary<string, Vector3>()
+    {
+        { "R", BODY_SCALE.HAND_LOCALPOS_R},
+        { "L", BODY_SCALE.HAND_LOCALPOS_L},
+        { "C", BODY_SCALE.HAND_LOCALPOS_C},
+    };
 
     public static class BODY_SCALE
     {
@@ -95,13 +101,44 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
             get
             {
-                return new Vector3((HAND_POS_L.x + HAND_POS_R.x) / 2, (HAND_POS_L.y + HAND_POS_R.y) / 2, HEAD_POS.z) - BACK_POS;
+                return new Vector3((HAND_POS_L.x + HAND_POS_R.x) / 2f, (HAND_POS_L.y + HAND_POS_R.y) / 2f, HEAD_POS.z) - BACK_POS;
             }
         }
 
         // 各コントローラーの位置　BasePositionから　※サーバー通信
         public static Vector3 HAND_POS_R;
         public static Vector3 HAND_POS_L;
+        public static Vector3 HAND_POS_C
+        {
+            get
+            {
+                return (HAND_POS_L + HAND_POS_R) / 2f;
+            }
+        }
+
+        // 各コントローラーの位置　BasePositionから　※サーバーしない
+        public static Vector3 HAND_LOCALPOS_R
+        {
+            get
+            {
+                return HAND_POS_R - SHOULDER_POS_R - BACK_POS;
+            }
+        }
+        public static Vector3 HAND_LOCALPOS_L
+        {
+            get
+            {
+                return HAND_POS_L - SHOULDER_POS_L - BACK_POS;
+            }
+        }
+        public static Vector3 HAND_LOCALPOS_C
+        {
+            get
+            {
+                return (HAND_LOCALPOS_L + HAND_LOCALPOS_R) / 2f;
+            }
+        }
+
 
         /// <summary>
         /// 8方向の最大角度を保存。

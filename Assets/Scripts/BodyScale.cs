@@ -35,9 +35,11 @@ public class BodyScale : UtilComponent {
 
     public Transform playerBase;
     public Transform back;
+    public Transform backHeight;
     public Transform shoulder;
+    public Transform targetRoot;
     public Transform hand;
-    public Transform bullet;
+    public Transform bulletRoot;
 
     public Dictionary<int, Dictionary<string, Dictionary<string, Vector3>>> goalBodyTransformDictionary;
 
@@ -140,14 +142,19 @@ public class BodyScale : UtilComponent {
 
         playerBase.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
         playerBase.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
-        shoulder.position = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index]];
-        bullet.position = DEFINE_APP.BODY_SCALE.HAND_POS_R;
+        back.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
+        backHeight.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
+        shoulder.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index]];
+        bulletRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index]]+ DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index]];
+        hand.localPosition =  DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index]];
     }
 
 
     public void SetTransformTarget(int index)
     {
-        hand.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index], 0f, 0f);
+        shoulder.localRotation = Quaternion.Euler(shoulder.localRotation.y, shoulder.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[index]);
+        targetRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index], targetRoot.localRotation.y, targetRoot.localRotation.z);
+        hand.rotation = Quaternion.identity;
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
         //back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);
@@ -197,7 +204,7 @@ public class BodyScale : UtilComponent {
         DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(0f,0f,0f);
         DEFINE_APP.BODY_SCALE.BACK_POS = new Vector3(0f, 0.5f, 0f);
         DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f,1.1f,0.5f);
-        DEFINE_APP.BODY_SCALE.HAND_POS_R = new Vector3(0f, 1.1f, 0.5f);
+        DEFINE_APP.BODY_SCALE.HAND_POS_L = new Vector3(0f, 1.1f, 0.5f);
 
 
         //Dictionary<string, Vector3> backTransform1 = new Dictionary<string, Vector3>()

@@ -41,7 +41,7 @@ public class Nest : UtilComponent {
         HitEffect objEffect = (HitEffect)Instantiate(hitEffect, new Vector3(0,0,0), Quaternion.identity);
 
         objEffect.transform.parent = trCreateParent;
-        objEffect.transform.localPosition = trCreatePos.localPosition;
+        objEffect.transform.position = transform.position;
 
         objEffect.SetLook(trCenterAnchor);
 
