@@ -105,7 +105,7 @@ public class MainMenuController : UtilComponent
     private void FinishPushButton()
     {
         //measureController.StartDiagnosis();
-        ApiSetUserData();
+        //ApiSetUserData();
         Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
 
     }
@@ -114,7 +114,7 @@ public class MainMenuController : UtilComponent
     {
         //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
         SetActive(objWarpEffect, true);
-        ApiSetUserData();
+        //ApiSetUserData();
         Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
     }
 
