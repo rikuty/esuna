@@ -19,8 +19,8 @@ namespace OKCANCELDIALOG
 			DOTween.Sequence()
 				.Append(transform.DOScale(ClickedScale, t))
 				.Join(GetComponent<Image>().DOColor(ClickedColor, t))
-				.Join(transform.Find("Button_arrow").GetComponent<Image>().DOFade(0, t))
-				.Join(transform.Find("Checkmark").GetComponent<Image>().DOFade(1, t))
+				//.Join(transform.Find("Button_arrow").GetComponent<Image>().DOFade(0, t))
+				//.Join(transform.Find("Checkmark").GetComponent<Image>().DOFade(1, t))
 				.OnComplete(() =>
 				{
 					DOVirtual.DelayedCall(HitEventWait, () => ClickedEvents.Invoke());
