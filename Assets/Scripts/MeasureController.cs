@@ -56,6 +56,8 @@ public class MeasureController : UtilComponent {
     public MeasureComponent measureStartLeftComponent;
     public OvrAvatar ovrAvatar;
 
+    [SerializeField] private AudioSource audioSourceVoice;
+    [SerializeField] private List<AudioClip> voiceList; 
 
     enum DIAGNOSIS_STATUS_ENUM
     {
