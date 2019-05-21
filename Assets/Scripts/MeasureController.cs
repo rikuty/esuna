@@ -174,8 +174,8 @@ public class MeasureController : UtilComponent {
         currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
 
         // ここからはTriggerを使う。
-        rightHandTr.GetComponent<MeshCollider>().isTrigger = true;
-        leftHandCollider.GetComponent<MeshCollider>().isTrigger = true;
+        //rightHandTr.GetComponent<MeshCollider>().isTrigger = true;
+        //leftHandCollider.GetComponent<MeshCollider>().isTrigger = true;
 
     }
 

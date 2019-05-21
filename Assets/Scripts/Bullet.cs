@@ -76,4 +76,39 @@ public class Bullet : UtilComponent {
     {
         this.stayDeltaTime = 0f;
     }
+
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collisionStatus != CollisionEnum.ENTER) return;
+
+
+        OVRGrabberBothHands bothHands = collision.collider.GetComponent<OVRGrabberBothHands>();
+        if (bothHands != null)
+        {
+            this.callbackCollision(bothHands);
+        }
+    }
+
+
+    void OnCollisionStay(Collision collision)
+    {
+        if (collisionStatus != CollisionEnum.STAY) return;
+
+
+        stayDeltaTime += Time.deltaTime;
+        if (stayDeltaTime < stayTime) return;
+
+        OVRGrabberBothHands bothHands = collision.collider.GetComponent<OVRGrabberBothHands>();
+        if (bothHands != null)
+        {
+            this.callbackCollision(bothHands);
+        }
+    }
+
+
+    private void OnCollisionExit(Collision collision)
+    {
+        this.stayDeltaTime = 0f;
+    }
 }
