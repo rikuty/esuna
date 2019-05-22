@@ -156,7 +156,7 @@ public class BodyScale : UtilComponent {
         shoulder.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
         shoulder.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
         bulletRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]] + DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
-        hand.rotation = Quaternion.Euler(new Vector3(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[index]));
+        hand.localRotation = Quaternion.Euler(new Vector3(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[index]));
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
         //back.localRotation = Quaternion.Euler(goalBodyTransformDictionary[index]["back"]["rotation"]);

@@ -118,6 +118,8 @@ public class OVRGrabberBothHands :  MonoBehaviour
 			rig.UpdatedAnchors += (r) => {OnUpdatedAnchors();};
 			operatingWithoutOVRCameraRig = false;
 		}
+
+        hapticsClip = new OVRHapticsClip(audioClip);
     }
 
     protected virtual void Start()
@@ -138,7 +140,6 @@ public class OVRGrabberBothHands :  MonoBehaviour
             }
         }
 
-        hapticsClip = new OVRHapticsClip(audioClip);
     }
 
 	void FixedUpdate()

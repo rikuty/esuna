@@ -161,17 +161,17 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
             _GOAL_DIC = new Dictionary<int, Dictionary<string, Vector3>>()
             {
-                    {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -25f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -25f, 0f) } } },
-                    {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 25f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 25f, 0f) } } },
-                    {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-20f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-55f, 0f, 0f) } } },
-                    {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(40f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(10f, 0f, 0f) } } }
+                    {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -45f, 0f) } } },
+                    {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 45f, 0f) } } },
+                    {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-30f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-105f, 0f, 0f) } } },
+                    {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(90f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(30f, 0f, 0f) } } }
             };
 
             _DIAGNOSIS_ROT_MAX = new Dictionary<int, Dictionary<string, Vector3>>
             {
                 {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -45f, 0f) } } },
                 {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 45f, 0f) } } },
-                {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-40f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-105f, 0f, 0f) } } },
+                {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-30f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-105f, 0f, 0f) } } },
                 {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(90f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(30f, 0f, 0f) } } }
             };
 
