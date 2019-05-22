@@ -152,8 +152,9 @@ public class BodyScale : UtilComponent {
 
     public void SetTransformTarget(int index)
     {
-        shoulder.localRotation = Quaternion.Euler(shoulder.localRotation.y, shoulder.localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[index]);
-        targetRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index], targetRoot.localRotation.y, targetRoot.localRotation.z);
+        back.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT]);
+        shoulder.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
+        //targetRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index], targetRoot.localRotation.y, targetRoot.localRotation.z);
         hand.rotation = Quaternion.identity;
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];
@@ -178,7 +179,8 @@ public class BodyScale : UtilComponent {
     /// <param name="index"></param>
     public void SetCloseTarget(int index)
     {
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[index] = DEFINE_APP.BODY_SCALE.GOAL_DIC[index] - 2f;
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT] = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[index][DEFINE_APP.BODY_SCALE.BACK_ROT]/20f);
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] - (DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 20f);
         SetTransformTarget(index);
     }
 

@@ -49,7 +49,7 @@ public class HandController: UtilComponent {
         }else if(controller == OVRInput.Controller.LTouch)
         {
             leftHand.HapticsHands();
-        }else if(controller == OVRInput.Controller.All)
+        }else if(controller == OVRInput.Controller.Touch)
         {
             rightHand.HapticsHands();
             leftHand.HapticsHands();

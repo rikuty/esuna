@@ -34,10 +34,12 @@ public class MeasureController : UtilComponent {
     /// 左腕の位置のTransform
     /// </summary>
     public Transform leftHandTr;
-    /// <summary>
-    /// Bullet親のTransform
-    /// </summary>
+    ///// <summary>
+    ///// Bullet親のTransform
+    ///// </summary>
     //public Transform objBulletRoot;
+    //public GameObject objBulletOriginal;
+
 
 
     public GameObject objUI;
@@ -46,14 +48,13 @@ public class MeasureController : UtilComponent {
     public Text txtRotateTitle;
     public Text txtRotateDetail;
 
-    //public GameObject objBulletOriginal;
 
     public Collider rightHandCollider;
     public Collider leftHandCollider;
 
     public MeasureComponent[] measureComponents;
-    public MeasureComponent measureStartRightComponent;
-    public MeasureComponent measureStartLeftComponent;
+    public MeasureStartComponent measureStartRightComponent;
+    public MeasureStartComponent measureStartLeftComponent;
     public OvrAvatar ovrAvatar;
 
     [SerializeField] private AudioSource audioSourceVoice;
@@ -72,9 +73,10 @@ public class MeasureController : UtilComponent {
     DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
 
     /// <summary>
-    /// 回旋・屈曲・伸展の現在測定している方向
+    /// 回旋・屈曲・伸展の現在測定している方向 DEFINEのDIAGNOSIS_DIRECTのIndex
     /// </summary>
-    int currentRotateNumber = 1;
+    int currentDiagnosisDirectsIndex = 0;
+    int currentIndex { get { return DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS[currentDiagnosisDirectsIndex]; } }
 
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextTitle = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
    {
@@ -255,10 +257,13 @@ public class MeasureController : UtilComponent {
         GameObject objLeft = Instantiate(ovrAvatar.trackedComponents["hand_left"].gameObject, measureStartLeftComponent.trRootObj.transform);
         objLeft.transform.localPosition = Vector3.zero;
         objLeft.transform.localRotation = Quaternion.identity;
-        //SetActive(objLeft, false);
+        measureStartLeftComponent.SetActiveBullet(false);
+
         GameObject objRight = Instantiate(ovrAvatar.trackedComponents["hand_right"].gameObject, measureStartRightComponent.trRootObj.transform);
         objRight.transform.localPosition = Vector3.zero;
         objRight.transform.localRotation = Quaternion.identity;
+        measureStartRightComponent.SetActiveBullet(false);
+
         //SetActive(objRight, false);
 
         PreparingDirection();
@@ -268,10 +273,12 @@ public class MeasureController : UtilComponent {
 
     void PreparingDirection()
     {
-        for (int i = 0; i < directRotateTrs.Length; i++)
-        {
-            directRotateTrs[i].localRotation = Quaternion.Euler(new Vector3(directRotateTrs[i].localRotation.x, directRotateTrs[i].localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
-        }
+        //for (int i = 0; i < directRotateTrs.Length; i++)
+        //{
+        //    directRotateTrs[i].localRotation = Quaternion.Euler(new Vector3(directRotateTrs[i].localRotation.x, directRotateTrs[i].localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
+        //}
+
+        shoulderTr.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[currentIndex - 1]];
 
         StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
 
@@ -280,19 +287,18 @@ public class MeasureController : UtilComponent {
 
     IEnumerator CoroutineInstantiateBullets(Action callback = null)
     {
-        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
         {
-            yield return new WaitForSeconds(0.1f);
-
-            measureComponents[i].Init(Hit, DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR[i], (DEFINE_APP.BODY_SCALE.HAND_POS_R.z + DEFINE_APP.BODY_SCALE.HAND_POS_L.z)/2, DEFINE_APP.HAND_TARGET[currentRotateNumber - 1]);
+            measureComponents[i].Init(currentIndex, (float)(i+1)/(float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
             measureComponents[i].SetActiveBullet(true);
             measureComponents[i].ColliderEnabled(false);
+
+            yield return new WaitForSeconds(0.1f);
         }
         PreparedDirection();
 
-        measureStartLeftComponent.Init(HitStartMeasure, 0, DEFINE_APP.BODY_SCALE.HAND_POS_L.z, "L", Bullet.CollisionEnum.STAY, 0.3f);
-
-        measureStartRightComponent.Init(HitStartMeasure, 0, DEFINE_APP.BODY_SCALE.HAND_POS_R.z, "R", Bullet.CollisionEnum.STAY, 0.3f);
+        measureStartLeftComponent.Init(currentIndex, OVRInput.Controller.LTouch, HitStartMeasure, Bullet.CollisionEnum.STAY, 0.3f);
+        measureStartRightComponent.Init(currentIndex, OVRInput.Controller.RTouch, HitStartMeasure, Bullet.CollisionEnum.STAY, 0.3f);
 
     }
 
@@ -308,16 +314,17 @@ public class MeasureController : UtilComponent {
 
         hitDeltaTime = 0f;
         directionStatus = DirectionEnum.MEASURING;
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber - 1] = (float)measureComponent.rot;
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = measureComponent.trBackRoot.localRotation.eulerAngles;
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = measureComponent.trSholderRoot.localRotation.eulerAngles;
 
     }
 
 
-    void HitStartMeasure(MeasureComponent measureComponent)
+    void HitStartMeasure(MeasureStartComponent measureComponent)
     {
-        if(DEFINE_APP.HAND_TARGET[currentRotateNumber - 1] == "L" || DEFINE_APP.HAND_TARGET[currentRotateNumber - 1] == "R")
+        if(DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.LTouch || DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.RTouch)
         {
-            if(DEFINE_APP.HAND_TARGET[currentRotateNumber - 1] == measureComponent.strhand)
+            if(DEFINE_APP.HAND_TARGET[currentIndex - 1] == measureComponent.controller)
             {
                 directionStatus = DirectionEnum.PREPARED;
             }
@@ -326,16 +333,16 @@ public class MeasureController : UtilComponent {
         {
             if (directionStatus == DirectionEnum.PREPARNG)
             {
-                if (measureComponent.strhand == "R")
+                if (measureComponent.controller == OVRInput.Controller.RTouch)
                 {
                     directionStatus = DirectionEnum.RIGHT;
-                }else if(measureComponent.strhand == "L")
+                }else if(measureComponent.controller == OVRInput.Controller.LTouch)
                 {
                     directionStatus = DirectionEnum.LEFT;
                 }
             }
-            if ((directionStatus == DirectionEnum.LEFT && measureComponent.strhand == "R")
-                || (directionStatus == DirectionEnum.RIGHT && measureComponent.strhand == "L"))
+            if ((directionStatus == DirectionEnum.LEFT && measureComponent.controller == OVRInput.Controller.RTouch)
+                || (directionStatus == DirectionEnum.RIGHT && measureComponent.controller == OVRInput.Controller.LTouch))
             {
                 directionStatus = DirectionEnum.PREPARED;
             }
@@ -343,7 +350,7 @@ public class MeasureController : UtilComponent {
 
         if(directionStatus == DirectionEnum.PREPARED)
         {
-            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
             {
                 measureComponents[i].ColliderEnabled(true);
             }
@@ -356,7 +363,7 @@ public class MeasureController : UtilComponent {
     /// <param name="isActive"></param>
     void SetActiveBullets(bool isActive)
     {
-        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
         {
             measureComponents[i].SetActiveBullet(isActive);
         }
@@ -370,9 +377,7 @@ public class MeasureController : UtilComponent {
         {
 
 
-            DEFINE_APP.BODY_SCALE.GOAL_DIC[currentRotateNumber] = maxAngle;
-
-            if(currentRotateNumber == 8)
+            if(currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
@@ -381,7 +386,7 @@ public class MeasureController : UtilComponent {
                 return;
             }
 
-            currentRotateNumber++;
+            currentDiagnosisDirectsIndex++;
             directionStatus = DirectionEnum.NONE;
             rightHandCollider.enabled = false;
             leftHandCollider.enabled = false;
@@ -397,7 +402,7 @@ public class MeasureController : UtilComponent {
         {
             directionStatus = DirectionEnum.WAITING;
             // 測定器具のコライダーセット
-            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_ANCHOR.Length; i++)
+            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
             {
                 measureComponents[i].ColliderEnabled(true);
             }
@@ -409,23 +414,23 @@ public class MeasureController : UtilComponent {
         {
             directionStatus = DirectionEnum.PREPARNG;
 
-            string result = DEFINE_APP.HAND_TARGET[currentRotateNumber-1];
+            OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
 
-            if (result == "R")
+            if (result == OVRInput.Controller.RTouch)
             {
                 rightHandCollider.enabled = true;
                 leftHandCollider.enabled = false;
                 controller = OVRInput.Controller.RTouch;
                 measureStartRightComponent.SetActiveBullet(true);
             }
-            else if (result == "L")
+            else if (result == OVRInput.Controller.LTouch)
             {
                 leftHandCollider.enabled = true;
                 rightHandCollider.enabled = false;
                 controller = OVRInput.Controller.LTouch;
                 measureStartLeftComponent.SetActiveBullet(true);
             }
-            else if (result == "C")
+            else if (result == OVRInput.Controller.Touch)
             {
                 rightHandCollider.enabled = true;
                 leftHandCollider.enabled = true;
@@ -437,43 +442,45 @@ public class MeasureController : UtilComponent {
     }
 
 
-    void CallbackFromComponent(Collider collider)
-    {
-        if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
+    // 手の位置から角度を推定するときに使用。
+    //void CallbackFromComponent(Collider collider)
+    //{
+    //    if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
 
-        Vector3 diff = collider.transform.position - shoulderTr.position;
+    //    Vector3 diff = collider.transform.position - shoulderTr.position;
 
 
-        float angle = GetAngle(diff);
-        //SetLabel(txtRotateTitle, angle.ToString());
+    //    float angle = GetAngle(diff);
+    //    //SetLabel(txtRotateTitle, angle.ToString());
         
-        if(angle > maxAngle)
-        {
-            maxAngle = angle;
-        }
-    }
+    //    if(angle > maxAngle)
+    //    {
+    //        maxAngle = angle;
+    //    }
+    //}
 
 
-    float GetAngle(Vector3 diff)
-    {
-        Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
+    //float GetAngle(Vector3 diff)
+    //{
+    //    Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
 
-        float selectedAxis;
-        switch (currentRotateNumber)
-        {
-            case 1:
-            case 2:
-                selectedAxis = axis.y;
-                break;
-            default:
-                selectedAxis = axis.x;
-                break;
-        }
+    //    float selectedAxis;
+    //    switch (currentIndex)
+    //    {
+    //        case 1:
+    //        case 2:
+    //            selectedAxis = axis.y;
+    //            break;
+    //        default:
+    //            selectedAxis = axis.x;
+    //            break;
+    //    }
 
-        float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentRotateNumber] < 0 ? -1 : 1);
+    //    //float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentIndex] < 0 ? -1 : 1);
 
-        return angle;
-    }
+    //    //return angle;
+    //    return 0f;
+    //}
 
 
     void UpdateFinish()
@@ -508,8 +515,8 @@ public class MeasureController : UtilComponent {
 
         SetActive(txtRotateTitle, currentStatus == DIAGNOSIS_STATUS_ENUM.DIRECT);
         SetActive(txtRotateDetail, currentStatus == DIAGNOSIS_STATUS_ENUM.DIRECT);
-        SetLabel(txtRotateTitle, rotateNumberTitle[currentRotateNumber]);
-        SetLabel(txtRotateDetail, rotateNumberDetail[currentRotateNumber]);
+        SetLabel(txtRotateTitle, rotateNumberTitle[currentIndex]);
+        SetLabel(txtRotateDetail, rotateNumberDetail[currentIndex]);
     }
 
 

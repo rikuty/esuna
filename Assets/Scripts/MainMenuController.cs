@@ -42,6 +42,11 @@ public class MainMenuController : UtilComponent
 
     private GameData gameData;
 
+    private void Awake()
+    {
+        
+    }
+
     void Start()
     {
 

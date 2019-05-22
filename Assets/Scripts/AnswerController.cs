@@ -26,13 +26,6 @@ public class AnswerController : UtilComponent
 
     HandController handController;
 
-    string[] handTarget {
-        get
-        {
-            return DEFINE_APP.HAND_TARGET;
-        }
-    }
-
 
     List<int> tutorialTargets = new List<int> { 1, 5, 7 };
 
@@ -136,17 +129,16 @@ public class AnswerController : UtilComponent
         bodyScale.SetTransformTarget(targetNumber);
         bodyScale.SetDisplay(targetNumber);
 
-
-        string result = handTarget[targetNumber - 1];
+        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[targetNumber - 1];
 
         GameObject[] objs = new GameObject[2];
-        if (result == "R")
+        if (result == OVRInput.Controller.RTouch)
         {
             objs[0] = rightHand;
-        }else if (result == "L")
+        }else if (result == OVRInput.Controller.LTouch)
         {
             objs[1] = leftHand;
-        }else if (result == "C")
+        }else if (result == OVRInput.Controller.Touch)
         {
             objs[0] = rightHand;
             objs[1] = leftHand;
@@ -156,20 +148,20 @@ public class AnswerController : UtilComponent
 
         SetActiveNest(true);
 
-        if (result == "R")
+        if (result == OVRInput.Controller.RTouch)
         {
-            handController.SetCanTouchController(OVRInput.Controller.RTouch);
-            handController.PlayHaptics(OVRInput.Controller.RTouch);
+            handController.SetCanTouchController(result);
+            handController.PlayHaptics(result);
 
         }
-        else if (result == "L")
+        else if (result == OVRInput.Controller.LTouch)
         {
-            handController.SetCanTouchController(OVRInput.Controller.LTouch);
-            handController.PlayHaptics(OVRInput.Controller.LTouch);
+            handController.SetCanTouchController(result);
+            handController.PlayHaptics(result);
         }
-        else if (result == "C")
+        else if (result == OVRInput.Controller.Touch)
         {
-            handController.SetCanTouchController(OVRInput.Controller.All);
+            handController.SetCanTouchController(result);
             handController.PlayHaptics(OVRInput.Controller.LTouch);
             handController.PlayHaptics(OVRInput.Controller.RTouch);
         }
