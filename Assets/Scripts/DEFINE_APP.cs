@@ -245,6 +245,17 @@ public partial class DEFINE_APP {//ApplictionDefine
     }
 
     /// <summary>
+    /// NRSの保存場所
+    /// </summary>
+    public static int NRS_PRE;
+
+    /// <summary>
+    /// NRSの保存場所
+    /// </summary>
+    public static int NRS_POST;
+
+
+    /// <summary>
     /// 測定開始してから次のボールに触れないために次に移動する時間。
     /// </summary>
     public static float DIAGNOSIS_WAIT_TIME = 3f;

@@ -57,6 +57,10 @@ public class MeasureController : UtilComponent {
     public MeasureStartComponent measureStartLeftComponent;
     public OvrAvatar ovrAvatar;
 
+    public NRSComponent[] nrsComponents;
+    public GameObject objNRS;
+
+
     [SerializeField] private AudioSource audioSourceVoice;
     [SerializeField] private List<AudioClip> voiceList; 
 
@@ -66,8 +70,10 @@ public class MeasureController : UtilComponent {
         BASE, //初期位置設定
         SHOULDER_ARM, //肩の高さ&腕の長さ設定
         DIRECT, //８方向
+        NRS_PRE, //NRS前
         FINISH, //測定終了
-        END //  測定終了待ち
+        END, //  測定終了待ち
+        NRS_POST //NRS後
     }
 
     DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
@@ -84,6 +90,7 @@ public class MeasureController : UtilComponent {
        {DIAGNOSIS_STATUS_ENUM.BASE,"身体の情報を取り込みます" },
        { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "肩の高さ&腕長さ測定" },
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "さあ身体を動かしてみましょう！" },
+       { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "さあ身体を動かしてみましょう！" },
        { DIAGNOSIS_STATUS_ENUM.FINISH, "情報を取り込みました！" }
    };
 
@@ -93,6 +100,7 @@ public class MeasureController : UtilComponent {
        { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態で背中を伸ばし、前を真っすぐ見て、ボタンをどれか押してください。" },
        { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背中を伸ばした状態のまま、両腕を前方に真っすぐ伸ばし、ボタンをどれか押してください。" },
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
+       { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "" },
        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。ボタンをどれか押してください。" }
    };
 
@@ -376,13 +384,19 @@ public class MeasureController : UtilComponent {
         if (directionStatus == DirectionEnum.MEASURING && CheckHandTriggerButtonDown())
         {
 
-
+            // 全部の方向が終わった時
             if(currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
-                currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
+                currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_PRE;
+                InitNRSComponents();
                 ShowUI(false);
-                //SetActive(backTr, false);
+
+                for (int i = 0; i < directRotateTrs.Length; i++)
+                {
+                    SetActive(directRotateTrs[i], false);
+                }
+
                 return;
             }
 
@@ -442,45 +456,36 @@ public class MeasureController : UtilComponent {
     }
 
 
-    // 手の位置から角度を推定するときに使用。
-    //void CallbackFromComponent(Collider collider)
-    //{
-    //    if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
+    void InitNRSComponents()
+    {
+        SetActive(objNRS, true);
 
-    //    Vector3 diff = collider.transform.position - shoulderTr.position;
-
-
-    //    float angle = GetAngle(diff);
-    //    //SetLabel(txtRotateTitle, angle.ToString());
-        
-    //    if(angle > maxAngle)
-    //    {
-    //        maxAngle = angle;
-    //    }
-    //}
+        for (int i = 0; i < nrsComponents.Length; i++)
+        {
+            nrsComponents[i].Init(i, HitNRSComponent);
+            nrsComponents[i].SetActiveBullet(true);
+        }
+    }
 
 
-    //float GetAngle(Vector3 diff)
-    //{
-    //    Vector3 axis = Vector3.Cross(shoulderTr.forward, diff);
+    void HitNRSComponent(NRSComponent nrsComponent)
+    {
+        DEFINE_APP.NRS_PRE = nrsComponent.num;
+        for (int i = 0; i < nrsComponents.Length; i++)
+        {
+            nrsComponents[i].ColliderEnabled(false);
+        }
+        StartCoroutine("CoroutineFinishNRSPre");
+    }
 
-    //    float selectedAxis;
-    //    switch (currentIndex)
-    //    {
-    //        case 1:
-    //        case 2:
-    //            selectedAxis = axis.y;
-    //            break;
-    //        default:
-    //            selectedAxis = axis.x;
-    //            break;
-    //    }
 
-    //    //float angle = Vector3.Angle(shoulderTr.forward, diff) * (selectedAxis * DEFINE_APP.BODY_SCALE.ARM_ROT_SIGN[currentIndex] < 0 ? -1 : 1);
+    IEnumerator CoroutineFinishNRSPre()
+    {
+        yield return new WaitForSeconds(1f);
+        SetActive(objNRS, false);
+        currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
+    }
 
-    //    //return angle;
-    //    return 0f;
-    //}
 
 
     void UpdateFinish()
@@ -519,16 +524,4 @@ public class MeasureController : UtilComponent {
         SetLabel(txtRotateDetail, rotateNumberDetail[currentIndex]);
     }
 
-
-    bool CheckPushButton()
-    {
-        bool result = false;
-        result |= OVRInput.GetDown(OVRInput.RawButton.A);
-        result |= OVRInput.GetDown(OVRInput.RawButton.B);
-        result |= OVRInput.GetDown(OVRInput.RawButton.X);
-        result |= OVRInput.GetDown(OVRInput.RawButton.Y);
-        result |= OVRInput.GetDown(OVRInput.RawButton.B);
-        result |= OVRInput.GetDown(OVRInput.RawButton.A);
-        return result;
-    }
 }
