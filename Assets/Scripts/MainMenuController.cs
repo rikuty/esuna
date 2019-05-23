@@ -118,13 +118,12 @@ public class MainMenuController : UtilComponent
     {
         //measureController.StartDiagnosis();
         //ApiSetUserData();
-        //Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
 
         //　ロード画面UIをアクティブにする
-		this.slider.gameObject.SetActive(true);
- 
+		//this.slider.gameObject.SetActive(true);
 		//　コルーチンを開始
-		StartCoroutine("LoadData");
+		//StartCoroutine("LoadData");
     }
 
     public void LoadMain()
@@ -137,13 +136,12 @@ public class MainMenuController : UtilComponent
         SetActive(objWarpEffect, true);
 
         yield return new WaitForSeconds(5.0f);
-        //Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
 
         //　ロード画面UIをアクティブにする
-		this.slider.gameObject.SetActive(true);
- 
+		//this.slider.gameObject.SetActive(true);
 		//　コルーチンを開始
-		StartCoroutine("LoadData");
+		//StartCoroutine("LoadData");
     }
 
     private void FinishDiagnosis()
