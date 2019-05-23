@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -41,6 +42,12 @@ public class MainMenuController : UtilComponent
     public GameObject objWarpEffect;
 
     private GameData gameData;
+
+    
+	//　読み込み率を表示するスライダー
+	[SerializeField] private Slider slider;
+	//　非同期動作で使用するAsyncOperation
+	private AsyncOperation async;
 
     private void Awake()
     {
@@ -111,8 +118,13 @@ public class MainMenuController : UtilComponent
     {
         //measureController.StartDiagnosis();
         //ApiSetUserData();
-        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+        //Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
 
+        //　ロード画面UIをアクティブにする
+		this.slider.gameObject.SetActive(true);
+ 
+		//　コルーチンを開始
+		StartCoroutine("LoadData");
     }
 
     public void LoadMain()
@@ -125,8 +137,13 @@ public class MainMenuController : UtilComponent
         SetActive(objWarpEffect, true);
 
         yield return new WaitForSeconds(5.0f);
-        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+        //Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
 
+        //　ロード画面UIをアクティブにする
+		this.slider.gameObject.SetActive(true);
+ 
+		//　コルーチンを開始
+		StartCoroutine("LoadData");
     }
 
     private void FinishDiagnosis()
@@ -155,4 +172,16 @@ public class MainMenuController : UtilComponent
 
         StartCoroutine(HttpPost(url, dic));
     }
+
+    IEnumerator LoadData() {
+		// シーンの読み込みをする
+		async = SceneManager.LoadSceneAsync("Game");
+ 
+		//　読み込みが終わるまで進捗状況をスライダーの値に反映させる
+		while(!async.isDone) {
+			var progressVal = Mathf.Clamp01(async.progress / 0.9f);
+			slider.value = progressVal;
+			yield return null;
+		}
+	}
 }
