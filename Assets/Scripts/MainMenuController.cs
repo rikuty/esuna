@@ -117,10 +117,16 @@ public class MainMenuController : UtilComponent
 
     public void LoadMain()
     {
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        StartCoroutine("CoroutineLoad");
+    }
+
+    IEnumerator CoroutineLoad()
+    {
         SetActive(objWarpEffect, true);
-        //ApiSetUserData();
+
+        yield return new WaitForSeconds(5.0f);
         Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+
     }
 
     private void FinishDiagnosis()
