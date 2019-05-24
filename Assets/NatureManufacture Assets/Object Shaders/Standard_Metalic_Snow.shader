@@ -107,7 +107,7 @@ Shader "NatureManufacture Shaders/Standard Shaders/Standard Metalic Snow"
 		uniform sampler2D _MetalicRAmbientOcclusionGSmoothnessA;
 		uniform float _MetallicPower;
 		uniform sampler2D _SnowMetalicRAmbientOcclusionGSmothnessA;
-		//uniform float _SnowMetallicPower;
+		uniform float _SnowMetallicPower;
 		uniform float _SmoothnessPower;
 		uniform float _SnowSmoothnessPower;
 		uniform float _AmbientOcclusionPower;
