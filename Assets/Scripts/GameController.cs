@@ -68,7 +68,14 @@ public class GameController : UtilComponent {
     [SerializeField] private AudioSource audioSourceVoice;
     [SerializeField] private List<AudioClip> tutorialVoiceList;
 
+    private void Awake()
+    {
+        context.currentStatus = DEFINE_APP.STATUS_ENUM.PREPARE;
+        StartCoroutine("PrepareCoroutine");
 
+        Cache.Initialize();
+    }
+    
     private void Start()
     {
         if (SceneManager.GetSceneAt(0).name == "Game")

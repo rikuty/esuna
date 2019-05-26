@@ -69,6 +69,7 @@ public class MainMenuController : UtilComponent
 
     public void Init()
     {
+         Cache.Initialize();
 
         // ユーザーデーター取得　※消しちゃダメ
         //StartCoroutine(ConnectAPI("http://18.179.32.33/sample/GetUserData.php", GetUserData));
