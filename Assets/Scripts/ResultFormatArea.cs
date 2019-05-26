@@ -36,8 +36,6 @@ public class ResultFormatArea : UtilComponent {
     [SerializeField] private WMG_Series graph2_3;
     [SerializeField] private WMG_Series graph3_1;
     [SerializeField] private WMG_Series graph5_1;
-        
-    private UserData userData;
 
     void Awake () {
         StartCoroutine(ConnectAPI("http://dev.rikuty.net/api/GetFormatData.php", GetUserData));
@@ -52,7 +50,8 @@ public class ResultFormatArea : UtilComponent {
         if(val.Length == 1){
             Debug.Log("アクティブなユーザーが設定されていません。");
         } else {
-            userData = JsonConvert.DeserializeObject<UserData>(val);
+            UserData userData = JsonConvert.DeserializeObject<UserData>(val);
+			Cache.user.userData = userData;
 
             // first data
             MeasureData firstData = userData.measure[1];
@@ -72,8 +71,9 @@ public class ResultFormatArea : UtilComponent {
     }
 
     private void SettingGraph(){
-        
-        // first data
+
+		// first data
+		UserData userData = Cache.user.userData;
         MeasureData firstData = userData.measure[1];
 
         graph1.SetGraph1ValueList(firstData.AppraisalValues());

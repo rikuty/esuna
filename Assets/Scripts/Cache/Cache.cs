@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public static partial class Cache
 {
@@ -12,7 +10,7 @@ public static partial class Cache
 
 	public static User user;
 
-	public static void Prepare()
+	public static void Initialize()
 	{
 		cacheHash = new Dictionary<CacheGroup, CacheBase> {
 			{ CacheGroup.User, user = new User() }
