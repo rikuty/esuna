@@ -120,7 +120,7 @@ public class MeasureController : UtilComponent {
 
     Dictionary<int, string> rotateNumberDetail = new Dictionary<int, string>
    {
-       { 1, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください"},
+       { 1, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
        { 2, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
        { 3, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
        { 4, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
@@ -130,6 +130,17 @@ public class MeasureController : UtilComponent {
        { 8, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" }
    };
 
+    Dictionary<int, Vector3> rotateNumberAxis = new Dictionary<int, Vector3>
+    {
+        { 1, Vector3.up },
+        { 2, Vector3.up },
+        { 3, new Vector3(-1f, 1f, 0f).normalized },
+        { 4, Vector3.left },
+        { 5, new Vector3( 1f, 1f, 0f).normalized },
+        { 6, new Vector3( 1f, 1f, 0f).normalized },
+        { 7, Vector3.left },
+        { 8, new Vector3(-1f, 1f, 0f).normalized }
+    };
 
     Action callbackFinish;
 
@@ -322,9 +333,20 @@ public class MeasureController : UtilComponent {
 
         hitDeltaTime = 0f;
         directionStatus = DirectionEnum.MEASURING;
+
+        float angle;
+        Vector3 axis;
+
+        string log = "";
+
+        measureComponent.trBackRoot.localRotation.ToAngleAxis(out angle, out axis);
+        log += angle;
+        measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
+        log += ", " + angle;
+        Debug.LogError(log);
+
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = measureComponent.trBackRoot.localRotation.eulerAngles;
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = measureComponent.trSholderRoot.localRotation.eulerAngles;
-
     }
 
 
