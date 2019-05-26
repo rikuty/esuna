@@ -115,11 +115,11 @@ public class MainMenuController : UtilComponent
         if(val.Length == 1){
             Debug.Log("アクティブなユーザーが設定されていません。");
         } else {
-            UserData userData = JsonConvert.DeserializeObject<UserData>(val);
+           	Cache.user.userData = JsonConvert.DeserializeObject<UserData>(val);
             //Debug.Log("userId : "+userData.user_id);
             //Debug.Log("name : " + userData.user_name);
-            SetLabel(this.txtID, userData.user_id);
-            SetLabel(this.txtName, userData.user_name);
+            SetLabel(this.txtID, Cache.user.userData.user_id);
+            SetLabel(this.txtName, Cache.user.userData.user_name);
         }
     }
 
