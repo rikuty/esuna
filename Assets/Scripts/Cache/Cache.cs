@@ -8,10 +8,17 @@ public static partial class Cache
 
 	private static Dictionary<CacheGroup, CacheBase> cacheHash;
 
-	public static User user;
+    private static bool isInitialized = false;
+
+    public static User user;
 
 	public static void Initialize()
 	{
+        if (isInitialized) {
+            return;
+        }
+        isInitialized = true;
+
 		cacheHash = new Dictionary<CacheGroup, CacheBase> {
 			{ CacheGroup.User, user = new User() }
 		};

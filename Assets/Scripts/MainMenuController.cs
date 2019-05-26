@@ -51,7 +51,7 @@ public class MainMenuController : UtilComponent
 
     private void Awake()
     {
-        
+        Cache.Initialize();
     }
 
     void Start()
