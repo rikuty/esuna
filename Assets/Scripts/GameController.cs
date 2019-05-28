@@ -63,6 +63,7 @@ public class GameController : UtilComponent {
     //[SerializeField] private Text z;
 
     [SerializeField] private ResultModalPresenter resultModalPresenter;
+    
 
 
     private void Awake()
@@ -147,6 +148,7 @@ public class GameController : UtilComponent {
 
         }
     }
+
 
     private IEnumerator SetCountDown(){
         //Debug.Log("CountDown");

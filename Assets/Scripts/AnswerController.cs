@@ -26,6 +26,8 @@ public class AnswerController : UtilComponent
 
     HandController handController;
 
+    [SerializeField] CoinController coinController;
+
 
     List<int> tutorialTargets = new List<int> { 1, 5, 7 };
 
@@ -46,6 +48,14 @@ public class AnswerController : UtilComponent
         this.context = context;
         this.handController = handController;
         bodyScale.SetTransformBodyAndBullet();
+        coinController.Init(CallbackHitCoin, context);
+    }
+
+
+
+    private void CallbackHitCoin()
+    {
+
     }
 
 
@@ -128,6 +138,7 @@ public class AnswerController : UtilComponent
         
         bodyScale.SetTransformTarget(targetNumber);
         bodyScale.SetDisplay(targetNumber);
+        coinController.Reset(targetNumber);
 
         OVRInput.Controller result = DEFINE_APP.HAND_TARGET[targetNumber - 1];
 
