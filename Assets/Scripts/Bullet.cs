@@ -6,7 +6,7 @@ using System;
 public class Bullet : UtilComponent {
 
 
-    Action<OVRGrabberBothHands> callbackCollision;
+    Action<Collider> callbackCollision;
     Collider colliderBullet;
 
     public enum CollisionEnum
@@ -23,7 +23,7 @@ public class Bullet : UtilComponent {
     {
     }
 
-    public void Init(Action<OVRGrabberBothHands> callbackCollision, CollisionEnum collisionStatus = CollisionEnum.ENTER, float stayTime = 0.3f)
+    public void Init(Action<Collider> callbackCollision, CollisionEnum collisionStatus = CollisionEnum.ENTER, float stayTime = 0.3f)
     {
         this.callbackCollision = callbackCollision;
         this.collisionStatus = collisionStatus;
@@ -47,28 +47,22 @@ public class Bullet : UtilComponent {
     {
         if (collisionStatus != CollisionEnum.ENTER) return;
 
-
-        OVRGrabberBothHands bothHands = collider.GetComponent<OVRGrabberBothHands>();
-        if (bothHands != null)
-        {
-            this.callbackCollision(bothHands);
-        }
+        if (this.callbackCollision == null) return;
+        this.callbackCollision(collider);
     }
 
 
     void OnTriggerStay(Collider collider)
     {
         if (collisionStatus != CollisionEnum.STAY) return;
+        if (this.callbackCollision == null) return;
 
 
         stayDeltaTime += Time.deltaTime;
         if (stayDeltaTime < stayTime) return;
 
-        OVRGrabberBothHands bothHands = collider.GetComponent<OVRGrabberBothHands>();
-        if (bothHands != null)
-        {
-            this.callbackCollision(bothHands);
-        }
+
+        this.callbackCollision(collider);
     }
 
 
@@ -81,29 +75,22 @@ public class Bullet : UtilComponent {
     void OnCollisionEnter(Collision collision)
     {
         if (collisionStatus != CollisionEnum.ENTER) return;
+        if (this.callbackCollision == null) return;
 
-
-        OVRGrabberBothHands bothHands = collision.collider.GetComponent<OVRGrabberBothHands>();
-        if (bothHands != null)
-        {
-            this.callbackCollision(bothHands);
-        }
+        this.callbackCollision(collision.collider);
     }
 
 
     void OnCollisionStay(Collision collision)
     {
         if (collisionStatus != CollisionEnum.STAY) return;
+        if (this.callbackCollision == null) return;
 
 
         stayDeltaTime += Time.deltaTime;
         if (stayDeltaTime < stayTime) return;
 
-        OVRGrabberBothHands bothHands = collision.collider.GetComponent<OVRGrabberBothHands>();
-        if (bothHands != null)
-        {
-            this.callbackCollision(bothHands);
-        }
+        this.callbackCollision(collision.collider);
     }
 
 

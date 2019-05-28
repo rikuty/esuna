@@ -83,11 +83,11 @@ public class GameController : UtilComponent {
     // Use this for initialization
     private void Start () {
 
-        SetActive(this.objStart, false);
-        SetActive(this.objCountDown, false);
-        SetActive(this.objPlay, false);
-        SetActive(this.objResult, false);
-        SetActive(this.objNestAndEgg, false);
+        //SetActive(this.objStart, false);
+        //SetActive(this.objCountDown, false);
+        //SetActive(this.objPlay, false);
+        //SetActive(this.objResult, false);
+        //SetActive(this.objNestAndEgg, false);
         audioSourceGame.Stop();
         audioSourceForest.Play();
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class MeasureComponent : UtilComponent {
+public class CoinComponent : UtilComponent {
 
 
-    Action<MeasureComponent> callbackCollision;
+    Action<CoinComponent> callbackCollision;
 
     public Transform trBackRoot;
     public Transform trSholderRoot;
@@ -32,7 +32,7 @@ public class MeasureComponent : UtilComponent {
     /// <param name="measureIndex">測定方向のうち、Maxのどれくらいの可動域率かの数値</param>
     /// <param name="collisionStatus"></param>
     /// <param name="stayTime"></param>
-    public void Init(int directIndex, float measureRate, Action<MeasureComponent> callbackCollision, Bullet.CollisionEnum collisionStatus = Bullet.CollisionEnum.ENTER, float stayTime = 0.3f)
+    public void Init(int directIndex, float measureRate, Action<CoinComponent> callbackCollision, Bullet.CollisionEnum collisionStatus = Bullet.CollisionEnum.ENTER, float stayTime = 0.3f)
     {
         this.callbackCollision = callbackCollision;
         this.controller = DEFINE_APP.HAND_TARGET[directIndex-1];
@@ -78,37 +78,13 @@ public class MeasureComponent : UtilComponent {
 
     void CallbackFromBullet(Collider collider)
     {
-        OVRGrabberBothHands bothHands = collider.GetComponent<OVRGrabberBothHands>();
-        if (bothHands == null) return;
 
-        bool result = false;
-        result |= (bothHands.m_controller == OVRInput.Controller.RTouch && controller == OVRInput.Controller.RTouch);
-        result |= (bothHands.m_controller == OVRInput.Controller.LTouch && controller == OVRInput.Controller.LTouch);
+        Egg egg = collider.GetComponent<Egg>();
+        if (egg == null) return;
 
-        if(controller == OVRInput.Controller.Touch)
-        {
-            if(bothHands.m_controller == OVRInput.Controller.LTouch)
-            {
-                isLeftTouch = true;
-            }
-            else if (bothHands.m_controller == OVRInput.Controller.RTouch)
-            {
-                isRightTouch = true;
-            }
+        this.callbackCollision(this);
 
-            if(isLeftTouch && isRightTouch)
-            {
-                result = true;
-            }
-        }
-
-        if (result)
-        {
-            this.callbackCollision(this);
-
-            SetActive(objBullet, false);
-            SetActive(objEffect, true);
-        }
-
+        SetActive(objBullet, false);
+        SetActive(objEffect, true);
     }
 }

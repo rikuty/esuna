@@ -227,7 +227,7 @@ public class MeasureController : UtilComponent {
             DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
             playerBaseTr.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
             DEFINE_APP.BODY_SCALE.HEAD_POS = centerEyeTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-            backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
+            //backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
 
@@ -247,7 +247,7 @@ public class MeasureController : UtilComponent {
             DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
             DEFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
 
-            shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
+            //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
         
 
@@ -286,7 +286,7 @@ public class MeasureController : UtilComponent {
         //    directRotateTrs[i].localRotation = Quaternion.Euler(new Vector3(directRotateTrs[i].localRotation.x, directRotateTrs[i].localRotation.y, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[currentRotateNumber]));
         //}
 
-        shoulderTr.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[currentIndex - 1]];
+        //shoulderTr.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[currentIndex - 1]];
 
         StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
 

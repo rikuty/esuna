@@ -55,8 +55,11 @@ public class NRSComponent : UtilComponent {
         }
     }
 
-    void CallbackFromBullet(OVRGrabberBothHands bothHands)
+    void CallbackFromBullet(Collider collider)
     {
+        OVRGrabberBothHands bothHands = collider.GetComponent<OVRGrabberBothHands>();
+        if (bothHands == null) return;
+
         this.callbackCollision(this);
 
         SetActive(objBullet, false);

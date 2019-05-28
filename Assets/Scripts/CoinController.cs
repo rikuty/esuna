@@ -12,13 +12,15 @@ public class CoinController : UtilComponent {
     public GameObject objRootCoinSystem;
 
 
-    public MeasureComponent[] measureComponents;
+    public CoinComponent[] coinComponents;
     public MeasureStartComponent measureStartRightComponent;
     public MeasureStartComponent measureStartLeftComponent;
     public OvrAvatar ovrAvatar;
 
 
     private Action callbackHitCoin;
+
+    public AnswerController answerController;
 
 
 
@@ -56,7 +58,23 @@ public class CoinController : UtilComponent {
     {
         this.context = context;
         this.callbackHitCoin = callbackHitCoin;
+
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+        {
+            coinComponents[i].Init(currentIndex, (float)(i + 1) / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
+            coinComponents[i].SetActiveBullet(false);
+            coinComponents[i].ColliderEnabled(false);
+        }
+
+        StartCoroutine("CoroutineInit");
+    }
+
+
+    IEnumerator CoroutineInit()
+    {
+        yield return new WaitForSeconds(2f);
         InitDirection();
+
     }
 
 
@@ -74,12 +92,15 @@ public class CoinController : UtilComponent {
         GameObject objLeft = Instantiate(ovrAvatar.trackedComponents["hand_left"].gameObject, measureStartLeftComponent.trRootObj.transform);
         objLeft.transform.localPosition = Vector3.zero;
         objLeft.transform.localRotation = Quaternion.identity;
-        measureStartLeftComponent.SetActiveBullet(false);
+        SetActive(objLeft.transform.GetChild(0), true);
+        //measureStartLeftComponent.SetActiveBullet(false);
 
         GameObject objRight = Instantiate(ovrAvatar.trackedComponents["hand_right"].gameObject, measureStartRightComponent.trRootObj.transform);
         objRight.transform.localPosition = Vector3.zero;
         objRight.transform.localRotation = Quaternion.identity;
-        measureStartRightComponent.SetActiveBullet(false);
+        SetActive(objRight.transform.GetChild(0), true);
+        //measureStartRightComponent.SetActiveBullet(false);
+
     }
 
 
@@ -87,7 +108,47 @@ public class CoinController : UtilComponent {
     void PreparingDirection()
     {
 
-        StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
+        StartCoroutine("CoroutineInstantiateBullets");
+
+    }
+
+
+    int count;
+    IEnumerator CoroutineInstantiateBullets()
+    {
+        Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
+        Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
+
+        int rotateBack = (int)(Mathf.Abs(backRot.x) + Mathf.Abs(backRot.y) + Mathf.Abs(backRot.z));
+        int inRotateBack = 360 - rotateBack;
+        int result1 = (rotateBack > inRotateBack) ? inRotateBack : rotateBack;
+
+        int rotateShoulder = (int)(Mathf.Abs(shoulderRot.x) + Mathf.Abs(shoulderRot.y) + Mathf.Abs(shoulderRot.z));
+        int inRotateShoulder = 360 - rotateShoulder;
+        int result2 = (rotateShoulder > inRotateShoulder) ? inRotateShoulder : rotateShoulder;
+
+        count = ((result1+result2) / DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-3;
+
+        for (int i = 0; i < count; i++)
+        {
+            coinComponents[i].Init(currentIndex, (float)(i+1)/(float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
+            coinComponents[i].SetActiveBullet(true);
+            coinComponents[i].ColliderEnabled(false);
+
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        measureStartLeftComponent.Init(currentIndex, OVRInput.Controller.LTouch, HitStartMeasure);
+        measureStartRightComponent.Init(currentIndex, OVRInput.Controller.RTouch, HitStartMeasure);
+
+        PreparedDirection();
+
+
+    }
+
+
+    void PreparedDirection()
+    {
         directionStatus = DirectionEnum.STANDBY;
 
         OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
@@ -105,39 +166,10 @@ public class CoinController : UtilComponent {
             measureStartLeftComponent.SetActiveBullet(true);
             measureStartRightComponent.SetActiveBullet(true);
         }
-
     }
 
 
-    IEnumerator CoroutineInstantiateBullets(Action callback = null)
-    {
-        Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
-        Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
-        int count = ((int)(backRot.x + backRot.y + backRot.z + shoulderRot.x + shoulderRot.y + shoulderRot.z) / 10);
-
-        for (int i = 0; i < count; i++)
-        {
-            measureComponents[i].Init(currentIndex, (float)(i+1)/(float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
-            measureComponents[i].SetActiveBullet(true);
-            measureComponents[i].ColliderEnabled(false);
-
-            yield return new WaitForSeconds(0.1f);
-        }
-        PreparedDirection();
-
-        measureStartLeftComponent.Init(currentIndex, OVRInput.Controller.LTouch, HitStartMeasure);
-        measureStartRightComponent.Init(currentIndex, OVRInput.Controller.RTouch, HitStartMeasure);
-
-    }
-
-
-    void PreparedDirection()
-    {
-        directionStatus = DirectionEnum.STANDBY;
-    }
-
-
-    void Hit(MeasureComponent measureComponent)
+    void Hit(CoinComponent coinComponent)
     {
 
         hitDeltaTime = 0f;
@@ -178,9 +210,10 @@ public class CoinController : UtilComponent {
 
         if(directionStatus == DirectionEnum.PREPARED)
         {
-            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+            for (int i = 0; i < count; i++)
             {
-                measureComponents[i].ColliderEnabled(true);
+                coinComponents[i].ColliderEnabled(true);
+                answerController.SetActiveCurrentEgg(true);
             }
         }
     }
@@ -193,7 +226,7 @@ public class CoinController : UtilComponent {
     {
         for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
         {
-            measureComponents[i].SetActiveBullet(isActive);
+            coinComponents[i].SetActiveBullet(isActive);
         }
     }
 
@@ -212,9 +245,9 @@ public class CoinController : UtilComponent {
         {
             directionStatus = DirectionEnum.WAITING;
             // 測定器具のコライダーセット
-            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+            for (int i = 0; i < count; i++)
             {
-                measureComponents[i].ColliderEnabled(true);
+                coinComponents[i].ColliderEnabled(true);
             }
 
         }

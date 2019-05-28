@@ -61,8 +61,9 @@ public class AnswerController : UtilComponent
 
     void CallbackFromEggAnswer(Egg egg)
     {
-        if (egg.touchNest != null)
-        {
+        //再度やらないのでコメントアウト
+        //if (egg.touchNest != null)
+        //{
             switch (egg.answerType)
             {
                 case DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL:
@@ -80,11 +81,11 @@ public class AnswerController : UtilComponent
                     InstantiateNewEgg(egg.answerType);
                     break;
             }
-            return;
-        }
+        //    return;
+        //}
 
 
-        InstantiateNewEgg(egg.answerType,true);
+        //InstantiateNewEgg(egg.answerType,true);
 
     }
 
@@ -107,7 +108,8 @@ public class AnswerController : UtilComponent
         //}
 
         GameObject obj = Instantiate(Resources.Load<GameObject>(DEFINE_PREFAB.EGG), playEggParent);
-        obj.SetActive(true);
+        SetActive(obj, replay);
+
         currentEgg = obj.GetComponent<Egg>();
         //if(preNum > 0)
         //{
@@ -138,8 +140,10 @@ public class AnswerController : UtilComponent
         
         bodyScale.SetTransformTarget(targetNumber);
         bodyScale.SetDisplay(targetNumber);
-        coinController.Reset(targetNumber);
-
+        if (!replay)
+        {
+            coinController.Reset(targetNumber);
+        }
         OVRInput.Controller result = DEFINE_APP.HAND_TARGET[targetNumber - 1];
 
         GameObject[] objs = new GameObject[2];
@@ -249,5 +253,15 @@ public class AnswerController : UtilComponent
         SetActive(rightHand, false);
 
         nest.SetActiveNest(active);
+    }
+
+
+    public void SetActiveCurrentEgg(bool isActive)
+    {
+        if (currentEgg != null)
+        {
+            SetActive(currentEgg.gameObject, isActive);
+
+        }
     }
 }

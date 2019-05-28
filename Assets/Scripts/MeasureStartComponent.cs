@@ -8,6 +8,8 @@ public class MeasureStartComponent : UtilComponent {
 
     Action<MeasureStartComponent> callbackCollision;
 
+    public Transform trBackRoot;
+
     public Transform trSholderRoot;
 
     public Transform trArmLength;
@@ -36,8 +38,13 @@ public class MeasureStartComponent : UtilComponent {
         this.callbackCollision = callbackCollision;
         this.controller = controller;
 
-        trSholderRoot.localRotation = Quaternion.Euler(0f,0f,DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);
+
+        trBackRoot.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
+        trSholderRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[controller];
+        trSholderRoot.localRotation = Quaternion.Euler(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);
         trArmLength.localPosition = DEFINE_APP.HAND_POS_DIC[controller];
+
+
         bullet.Init(CallbackFromBullet, collisionStatus, stayTime);
 
         Reset();
@@ -69,8 +76,12 @@ public class MeasureStartComponent : UtilComponent {
         }
     }
 
-    void CallbackFromBullet(OVRGrabberBothHands bothHands)
+    void CallbackFromBullet(Collider collider)
     {
+
+        OVRGrabberBothHands bothHands = collider.GetComponent<OVRGrabberBothHands>();
+        if (bothHands == null) return;
+
         bool result = false;
         result |= (bothHands.m_controller == OVRInput.Controller.RTouch && controller == OVRInput.Controller.RTouch);
         result |= (bothHands.m_controller == OVRInput.Controller.LTouch && controller == OVRInput.Controller.LTouch);
