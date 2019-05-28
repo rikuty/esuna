@@ -4,6 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+using System.IO;
 public class MeasureController : UtilComponent {
 
     /// <summary>
@@ -60,6 +61,7 @@ public class MeasureController : UtilComponent {
     public NRSComponent[] nrsComponents;
     public GameObject objNRS;
 
+    public RenderTexture RenderTextureRef;
 
     [SerializeField] private AudioSource audioSourceVoice;
     [SerializeField] private List<AudioClip> voiceList; 
@@ -191,6 +193,25 @@ public class MeasureController : UtilComponent {
 
 
 
+    void SavePng()
+    {
+        //Debug.Log("SavePng");
+        Texture2D tex = new Texture2D(RenderTextureRef.width, RenderTextureRef.height, TextureFormat.RGB24, false);
+        RenderTexture.active = RenderTextureRef;
+        tex.ReadPixels(new Rect(0, 0, RenderTextureRef.width, RenderTextureRef.height), 0, 0);
+        tex.Apply();
+
+        // Encode texture into PNG
+        byte[] bytes = tex.EncodeToPNG();
+        Destroy(tex);
+
+        //Write to a file in the project folder
+        //Debug.Log(Application.dataPath);
+        //File.WriteAllBytes(Application.dataPath + "/Resources/ResultSheet.png", bytes);
+        File.WriteAllBytes(Application.persistentDataPath + "/image/ResultSheet.png", bytes);
+
+    }
+
 
     // Update is called once per frame
     void Update () {
@@ -230,6 +251,7 @@ public class MeasureController : UtilComponent {
             backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
+            SavePng();
 
             StartCoroutine(CoroutineWaitNextStep());
         }
