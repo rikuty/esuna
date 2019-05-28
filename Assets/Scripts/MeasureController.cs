@@ -269,7 +269,7 @@ public class MeasureController : UtilComponent {
     private void pd_PrintPage(object sender,System.Drawing.Printing.PrintPageEventArgs e)
     {
         //画像を読み込む
-        System.Drawing.Image img = System.Drawing.Image.FromFile(Application.persistentDataPath + "/ResultSheet.png");
+        System.Drawing.Image img = System.Drawing.Image.FromFile(Application.persistentDataPath + "/test.jpg");
         //画像を描画する
         e.Graphics.DrawImage(img, e.MarginBounds);
         //次のページがないことを通知する
