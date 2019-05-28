@@ -10,8 +10,6 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-using System.Drawing;
-
 public class MainMenuController : UtilComponent
 {
 
@@ -111,29 +109,7 @@ public class MainMenuController : UtilComponent
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
-        //if (Input.GetKeyDown(KeyCode.Space)) { SetActive(objWarpEffect, true); }
-        if (Input.GetKeyDown(KeyCode.Space)) { //PrintDocumentオブジェクトの作成
-            System.Drawing.Printing.PrintDocument pd =
-                new System.Drawing.Printing.PrintDocument();
-
-            //PrintPageイベントハンドラの追加
-            pd.PrintPage +=
-                new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
-            //印刷を開始する
-            pd.Print();
-            }
-    }
-
-    private void pd_PrintPage(object sender,System.Drawing.Printing.PrintPageEventArgs e)
-    {
-        //画像を読み込む
-        System.Drawing.Image img = System.Drawing.Image.FromFile(Application.dataPath + "/Resources/Images/sample_360.jpg");
-        //画像を描画する
-        e.Graphics.DrawImage(img, e.MarginBounds);
-        //次のページがないことを通知する
-        e.HasMorePages = false;
-        //後始末をする
-        img.Dispose();
+        if (Input.GetKeyDown(KeyCode.Space)) { SetActive(objWarpEffect, true); }
     }
 
     private void FinishPushButton()

@@ -5,6 +5,8 @@ using System;
 using UnityEngine.UI;
 
 using System.IO;
+
+using System.Drawing;
 public class MeasureController : UtilComponent {
 
     /// <summary>
@@ -251,12 +253,30 @@ public class MeasureController : UtilComponent {
             backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
-            SavePng();
+
+            System.Drawing.Printing.PrintDocument pd =
+                new System.Drawing.Printing.PrintDocument();
+
+            //PrintPageイベントハンドラの追加
+            pd.PrintPage +=
+                new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+            //印刷を開始する
+            pd.Print();
 
             StartCoroutine(CoroutineWaitNextStep());
         }
     }
-
+    private void pd_PrintPage(object sender,System.Drawing.Printing.PrintPageEventArgs e)
+    {
+        //画像を読み込む
+        System.Drawing.Image img = System.Drawing.Image.FromFile(Application.persistentDataPath + "/ResultSheet.png");
+        //画像を描画する
+        e.Graphics.DrawImage(img, e.MarginBounds);
+        //次のページがないことを通知する
+        e.HasMorePages = false;
+        //後始末をする
+        img.Dispose();
+    }
 
     void UpdateShoulderArm()
     {
