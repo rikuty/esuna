@@ -208,7 +208,7 @@ public class MeasureController : UtilComponent {
         //Write to a file in the project folder
         //Debug.Log(Application.dataPath);
         //File.WriteAllBytes(Application.dataPath + "/Resources/ResultSheet.png", bytes);
-        File.WriteAllBytes(Application.persistentDataPath + "/image/ResultSheet.png", bytes);
+        File.WriteAllBytes(Application.persistentDataPath + "/ResultSheet.png", bytes);
 
     }
 
