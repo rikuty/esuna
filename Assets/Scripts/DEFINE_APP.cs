@@ -53,6 +53,13 @@ public partial class DEFINE_APP {//ApplictionDefine
     }
 
 
+    public static Vector3 ANSWERING_COLLIDER_SIZE = new Vector3(0.20f, 0.20f, 0.20f);
+    public static Vector3 NORMAL_COLLIDER_SIZE = new Vector3(0.05f, 0.10f, 0.18f);
+
+    public static Vector3 ANSWERING_GRIP = new Vector3(-0.06f, -0.03f, 0f);
+    public static Vector3 NORMAL_GRIP_R = new Vector3(-0.02f, 0f, 0f);
+
+
     /// <summary>
     /// R=右手、L=左手、C=両手
     /// </summary>
@@ -181,10 +188,24 @@ public partial class DEFINE_APP {//ApplictionDefine
             _GOAL_DIC.Add(8, new Dictionary<string, Vector3> { { BACK_ROT, GOAL_DIC[2][BACK_ROT] + GOAL_DIC[7][BACK_ROT] }, { SHOULDER_ROT, GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT] } });
 
             _DIAGNOSIS_ROT_MAX.Add(3, new Dictionary<string, Vector3>{ { BACK_ROT, DIAGNOSIS_ROT_MAX[1][BACK_ROT]+ DIAGNOSIS_ROT_MAX[4][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[1][SHOULDER_ROT]+DIAGNOSIS_ROT_MAX[4][SHOULDER_ROT] } });
-            _DIAGNOSIS_ROT_MAX.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, DIAGNOSIS_ROT_MAX[2][BACK_ROT] + DIAGNOSIS_ROT_MAX[4][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[1][SHOULDER_ROT] + DIAGNOSIS_ROT_MAX[4][SHOULDER_ROT] } });
+            _DIAGNOSIS_ROT_MAX.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, DIAGNOSIS_ROT_MAX[2][BACK_ROT] + DIAGNOSIS_ROT_MAX[4][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[2][SHOULDER_ROT] + DIAGNOSIS_ROT_MAX[4][SHOULDER_ROT] } });
             _DIAGNOSIS_ROT_MAX.Add(6, new Dictionary<string, Vector3>{ { BACK_ROT, DIAGNOSIS_ROT_MAX[1][BACK_ROT]+ DIAGNOSIS_ROT_MAX[7][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[1][SHOULDER_ROT]+DIAGNOSIS_ROT_MAX[7][SHOULDER_ROT] } });
             _DIAGNOSIS_ROT_MAX.Add(8, new Dictionary<string, Vector3>{ { BACK_ROT, DIAGNOSIS_ROT_MAX[2][BACK_ROT]+ DIAGNOSIS_ROT_MAX[7][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[2][SHOULDER_ROT]+DIAGNOSIS_ROT_MAX[7][SHOULDER_ROT] } });
         }
+
+
+        public static void SetDefineDiagonal()
+        {
+            _GOAL_DIC[3][BACK_ROT] = GOAL_DIC[1][BACK_ROT] + GOAL_DIC[4][BACK_ROT];
+            _GOAL_DIC[3][SHOULDER_ROT] = GOAL_DIC[1][SHOULDER_ROT] + GOAL_DIC[4][SHOULDER_ROT];
+            _GOAL_DIC[5][BACK_ROT] = GOAL_DIC[2][BACK_ROT] + GOAL_DIC[4][BACK_ROT];
+            _GOAL_DIC[5][SHOULDER_ROT] = GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[4][SHOULDER_ROT];
+            _GOAL_DIC[6][BACK_ROT] = GOAL_DIC[1][BACK_ROT] + GOAL_DIC[7][BACK_ROT];
+            _GOAL_DIC[6][SHOULDER_ROT] = GOAL_DIC[1][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT];
+            _GOAL_DIC[8][BACK_ROT] = GOAL_DIC[2][BACK_ROT] + GOAL_DIC[7][BACK_ROT];
+            _GOAL_DIC[8][SHOULDER_ROT] = GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT];
+        }
+
 
 
         /// <summary>

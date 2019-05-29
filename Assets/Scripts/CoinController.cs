@@ -59,12 +59,6 @@ public class CoinController : UtilComponent {
         this.context = context;
         this.callbackHitCoin = callbackHitCoin;
 
-        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
-        {
-            coinComponents[i].Init(currentIndex, (float)(i + 1) / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
-            coinComponents[i].SetActiveBullet(false);
-            coinComponents[i].ColliderEnabled(false);
-        }
 
         StartCoroutine("CoroutineInit");
     }
@@ -72,9 +66,20 @@ public class CoinController : UtilComponent {
 
     IEnumerator CoroutineInit()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.5f);
         InitDirection();
 
+    }
+
+
+    public void Reset()
+    {
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+        {
+            coinComponents[i].Init(currentIndex, (float)(i + 1) / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
+            coinComponents[i].SetActiveBullet(false);
+            coinComponents[i].ColliderEnabled(false);
+        }
     }
 
 
@@ -82,6 +87,14 @@ public class CoinController : UtilComponent {
     {
         currentIndex = index;
         this.directionStatus = DirectionEnum.START;
+
+        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+        {
+            coinComponents[i].Init(currentIndex, (float)(i + 1) / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
+            coinComponents[i].SetActiveBullet(false);
+            coinComponents[i].ColliderEnabled(false);
+        }
+
         PreparingDirection();
     }
 
@@ -107,6 +120,7 @@ public class CoinController : UtilComponent {
 
     void PreparingDirection()
     {
+        directionStatus = DirectionEnum.STANDBY;
 
         StartCoroutine("CoroutineInstantiateBullets");
 
@@ -119,15 +133,60 @@ public class CoinController : UtilComponent {
         Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
         Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
 
-        int rotateBack = (int)(Mathf.Abs(backRot.x) + Mathf.Abs(backRot.y) + Mathf.Abs(backRot.z));
-        int inRotateBack = 360 - rotateBack;
-        int result1 = (rotateBack > inRotateBack) ? inRotateBack : rotateBack;
+        int rotateXBack = (int)(Mathf.Abs(backRot.x));
+        int inRotateXBack = 360 - rotateXBack;
+        int resultXBack = (rotateXBack > inRotateXBack) ? inRotateXBack : rotateXBack;
 
-        int rotateShoulder = (int)(Mathf.Abs(shoulderRot.x) + Mathf.Abs(shoulderRot.y) + Mathf.Abs(shoulderRot.z));
-        int inRotateShoulder = 360 - rotateShoulder;
-        int result2 = (rotateShoulder > inRotateShoulder) ? inRotateShoulder : rotateShoulder;
+        int rotateXShoulder = (int)(Mathf.Abs(shoulderRot.x));
+        int inRotateXShoulder = 360 - rotateXShoulder;
+        int resultXShoulder = (rotateXShoulder > inRotateXShoulder) ? inRotateXShoulder : rotateXShoulder;
 
-        count = ((result1+result2) / DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-3;
+        int rotateYBack = (int)(Mathf.Abs(backRot.y));
+        int inRotateYBack = 360 - rotateYBack;
+        int resultYBack = (rotateYBack > inRotateYBack) ? inRotateYBack : rotateYBack;
+
+        int rotateYShoulder = (int)(Mathf.Abs(shoulderRot.y));
+        int inRotateYShoulder = 360 - rotateYShoulder;
+        int resultYShoulder = (rotateYShoulder > inRotateYShoulder) ? inRotateYShoulder : rotateYShoulder;
+
+        int rotateZBack = (int)(Mathf.Abs(backRot.z));
+        int inRotatezZBack = 360 - rotateZBack;
+        int resultZBack = (rotateZBack > inRotatezZBack) ? inRotatezZBack : rotateZBack;
+
+        int rotateZShoulder = (int)(Mathf.Abs(shoulderRot.z));
+        int inRotateZShoulder = 360 - rotateZShoulder;
+        int resultZShoulder = (rotateZShoulder > inRotateZShoulder) ? inRotateZShoulder : rotateZShoulder;
+
+
+        Vector3 ROT_MAX_BACK = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
+        Vector3 ROT_MAX_SHOL = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
+
+        int rotateXBackMax = (int)(Mathf.Abs(ROT_MAX_BACK.x));
+        int inRotateXBackMax = 360 - rotateXBackMax;
+        int resultXBackMax = (rotateXBackMax > inRotateXBackMax) ? inRotateXBackMax : rotateXBackMax;
+
+        int rotateXShoulderMax = (int)(Mathf.Abs(ROT_MAX_SHOL.x));
+        int inRotateXShoulderMax = 360 - rotateXShoulderMax;
+        int resultXShoulderMax = (rotateXShoulderMax > inRotateXShoulderMax) ? inRotateXShoulderMax : rotateXShoulderMax;
+
+        int rotateYBackMax = (int)(Mathf.Abs(ROT_MAX_BACK.y));
+        int inRotateYBackMax = 360 - rotateYBackMax;
+        int resultYBackMax = (rotateYBackMax > inRotateYBackMax) ? inRotateYBackMax : rotateYBackMax;
+
+        int rotateYShoulderMax = (int)(Mathf.Abs(ROT_MAX_SHOL.y));
+        int inRotateYShoulderMax = 360 - rotateYShoulderMax;
+        int resultYShoulderMax = (rotateYShoulderMax > inRotateYShoulderMax) ? inRotateYShoulderMax : rotateYShoulderMax;
+
+        int rotateZBackMax = (int)(Mathf.Abs(ROT_MAX_BACK.z));
+        int inRotatezZBackMax = 360 - rotateZBackMax;
+        int resultZBackMax = (rotateZBackMax > inRotatezZBackMax) ? inRotatezZBackMax : rotateZBackMax;
+
+        int rotateZShoulderMax = (int)(Mathf.Abs(ROT_MAX_SHOL.z));
+        int inRotateZShoulderMax = 360 - rotateZShoulderMax;
+        int resultZShoulderMax = (rotateZShoulderMax > inRotateZShoulderMax) ? inRotateZShoulderMax : rotateZShoulderMax;
+
+
+        count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-2;
 
         for (int i = 0; i < count; i++)
         {
@@ -149,7 +208,6 @@ public class CoinController : UtilComponent {
 
     void PreparedDirection()
     {
-        directionStatus = DirectionEnum.STANDBY;
 
         OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
 
@@ -213,8 +271,9 @@ public class CoinController : UtilComponent {
             for (int i = 0; i < count; i++)
             {
                 coinComponents[i].ColliderEnabled(true);
-                answerController.SetActiveCurrentEgg(true);
             }
+            answerController.SetActiveCurrentEgg(true);
+
         }
     }
 
@@ -236,7 +295,6 @@ public class CoinController : UtilComponent {
         // ボタン押下、最大角度確定処理
         if (preIsAnswering && !context.isAnswering)
         {
-            directionStatus = DirectionEnum.NONE;
             SetActiveBullets(false);
         }
 

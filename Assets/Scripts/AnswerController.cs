@@ -20,7 +20,6 @@ public class AnswerController : UtilComponent
     [SerializeField] Transform resultEggParent;
 
     [SerializeField] Egg currentEgg;
-    [SerializeField] Nest resultNest;
 
     [SerializeField] BodyScale bodyScale;
 
@@ -55,6 +54,13 @@ public class AnswerController : UtilComponent
 
     private void CallbackHitCoin()
     {
+
+    }
+
+
+    public void ResetCoinController()
+    {
+        coinController.Reset();
 
     }
 

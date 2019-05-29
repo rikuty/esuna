@@ -7,8 +7,8 @@ public class HandController: UtilComponent {
     [SerializeField] OVRGrabberBothHands rightHand;
     [SerializeField] OVRGrabberBothHands leftHand;
 
-    [SerializeField] MeshCollider rightHandCollider;
-    [SerializeField] MeshCollider leftHandCollider;
+    [SerializeField] BoxCollider rightHandCollider;
+    [SerializeField] BoxCollider leftHandCollider;
 
     [SerializeField] OvrAvatar ovrAvatar;
 
@@ -80,6 +80,10 @@ public class HandController: UtilComponent {
             leftHand.isGrabbableTriggerEnter = false;
             rightHand.isGrab = false;
             leftHand.isGrab = false;
+
+            rightHandCollider.size = DEFINE_APP.NORMAL_COLLIDER_SIZE;
+            leftHandCollider.size = DEFINE_APP.NORMAL_COLLIDER_SIZE;
+            rightHand.m_gripTransform.localPosition = DEFINE_APP.NORMAL_GRIP_R;
         }
 
         bool canGrabbable = false;
@@ -122,6 +126,10 @@ public class HandController: UtilComponent {
         {
             context.isAnswering = true;
 
+            rightHandCollider.size = DEFINE_APP.ANSWERING_COLLIDER_SIZE;
+            leftHandCollider.size = DEFINE_APP.ANSWERING_COLLIDER_SIZE;
+
+
             if (controller == OVRInput.Controller.RTouch)
             {
                 rightHand.isGrab = true;
@@ -133,6 +141,8 @@ public class HandController: UtilComponent {
             else if(controller == OVRInput.Controller.Touch)
             {
                 rightHand.isGrab = true;
+                rightHand.m_gripTransform.localPosition = DEFINE_APP.ANSWERING_GRIP;
+
             }
             //rightHand.isGrabbableTriggerEnter = false;
             //leftHand.isGrabbableTriggerEnter = false;
@@ -152,6 +162,11 @@ public class HandController: UtilComponent {
             callbackRelease();
             unableGrab = true;
             StartCoroutine(CorouineUnableGrab());
+
+            rightHandCollider.size = DEFINE_APP.NORMAL_COLLIDER_SIZE;
+            leftHandCollider.size = DEFINE_APP.NORMAL_COLLIDER_SIZE;
+            rightHand.m_gripTransform.localPosition = DEFINE_APP.NORMAL_GRIP_R;
+
         }
     }
 

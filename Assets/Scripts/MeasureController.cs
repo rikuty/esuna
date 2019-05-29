@@ -397,6 +397,9 @@ public class MeasureController : UtilComponent {
                     SetActive(directRotateTrs[i], false);
                 }
 
+                //斜め方向を決定
+                DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
+
                 return;
             }
 

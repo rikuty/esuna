@@ -46,7 +46,7 @@ public class OVRGrabberBothHands :  MonoBehaviour
     // Child/attached transforms of the grabber, indicating where to snap held objects to (if you snap them).
     // Also used for ranking grab targets in case of multiple candidates.
     [SerializeField]
-    protected Transform m_gripTransform = null;
+    public Transform m_gripTransform = null;
     // Child/attached Colliders to detect candidate grabbable objects.
     [SerializeField]
     protected Collider[] m_grabVolumes = null;
