@@ -366,9 +366,9 @@ public class UtilComponent : MonoBehaviour {
 
     #region OVR
 
-    public static bool CheckHandTriggerButtonDown()
+    public static bool CheckThumbstickDown()
     {
-        return CheckOVRInputGetDown(new OVRInput.RawButton[] { OVRInput.RawButton.LHandTrigger, OVRInput.RawButton.RHandTrigger });
+        return CheckOVRInputGetDown(new OVRInput.RawButton[] { OVRInput.RawButton.LThumbstick, OVRInput.RawButton.RThumbstick });
     }
 
     public static bool CheckOVRInputGetDown(OVRInput.RawButton[] rawButtons)

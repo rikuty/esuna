@@ -82,9 +82,9 @@ public class CoinComponent : UtilComponent {
         Egg egg = collider.GetComponent<Egg>();
         if (egg == null) return;
 
-        this.callbackCollision(this);
-
         SetActive(objBullet, false);
         SetActive(objEffect, true);
+
+        this.callbackCollision(this);
     }
 }

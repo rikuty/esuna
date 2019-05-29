@@ -45,8 +45,6 @@ public class MeasureController : UtilComponent {
     public GameObject objUI;
     public Text txtTitle;
     public Text txtDetail;
-    public Text txtRotateTitle;
-    public Text txtRotateDetail;
 
 
     public Collider rightHandCollider;
@@ -66,7 +64,8 @@ public class MeasureController : UtilComponent {
 
     enum DIAGNOSIS_STATUS_ENUM
     {
-        PREPARE, //初期状態
+        START, //初期状態
+        PREPARING,
         BASE, //初期位置設定
         SHOULDER_ARM, //肩の高さ&腕の長さ設定
         DIRECT, //８方向
@@ -76,7 +75,7 @@ public class MeasureController : UtilComponent {
         NRS_POST //NRS後
     }
 
-    DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
+    DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.START;
 
     /// <summary>
     /// 回旋・屈曲・伸展の現在測定している方向 DEFINEのDIAGNOSIS_DIRECTのIndex
@@ -84,50 +83,71 @@ public class MeasureController : UtilComponent {
     int currentDiagnosisDirectsIndex = 0;
     int currentIndex { get { return DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS[currentDiagnosisDirectsIndex]; } }
 
+    int currentNRSIndex = 1;
+
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextTitle = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
    {
-       { DIAGNOSIS_STATUS_ENUM.PREPARE, "準備中です" },
-       {DIAGNOSIS_STATUS_ENUM.BASE,"身体の情報を取り込みます" },
-       { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "肩の高さ&腕長さ測定" },
-       { DIAGNOSIS_STATUS_ENUM.DIRECT, "さあ身体を動かしてみましょう！" },
-       { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "さあ身体を動かしてみましょう！" },
-       { DIAGNOSIS_STATUS_ENUM.FINISH, "情報を取り込みました！" }
+       { DIAGNOSIS_STATUS_ENUM.START, "準備中" },
+       { DIAGNOSIS_STATUS_ENUM.PREPARING, "測定を開始" },
+       {DIAGNOSIS_STATUS_ENUM.BASE,"体の向き＆座高測定" },
+       { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "肩の高さ＆腕長さ測定" },
+       { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
+       { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "" },
+       { DIAGNOSIS_STATUS_ENUM.FINISH, "測定終了" },
+       { DIAGNOSIS_STATUS_ENUM.END, "測定終了" }
    };
 
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextDetail = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
    {
-       { DIAGNOSIS_STATUS_ENUM.PREPARE, "リラックスしてお待ちください。" },
-       { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態で背中を伸ばし、前を真っすぐ見て、ボタンをどれか押してください。" },
-       { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背中を伸ばした状態のまま、両腕を前方に真っすぐ伸ばし、ボタンをどれか押してください。" },
+       { DIAGNOSIS_STATUS_ENUM.START, "リラックスしてお待ちください。" },
+       { DIAGNOSIS_STATUS_ENUM.PREPARING, "測定を開始します。\nコントローラーのボタンをどれか押してください。" },
+       { DIAGNOSIS_STATUS_ENUM.BASE, "椅子の背もたれにもたれない状態になってください。\n背筋を伸ばし、前を真っすぐ見てください。\nカウントを開始します。" },
+       { DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM, "背中を伸ばした状態のまま、両腕を前方に真っすぐ伸ばしてください。\nカウントを開始します。" },
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
        { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "" },
-       { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。ボタンをどれか押してください。" }
+       { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。トレーニング場所へ移動します。" },
+       { DIAGNOSIS_STATUS_ENUM.END, "測定が終了しました。トレーニング場所へ移動します。" }
    };
 
 
-    Dictionary<int, string> rotateNumberTitle = new Dictionary<int, string>
+    Dictionary<int, string> directTitle = new Dictionary<int, string>
    {
-       { 1, "体を左側に回す" },
-       { 2, "体を右側に回す" },
-       { 3, "体を左側に回して後ろに反る"},
-       { 4, "体を後ろに反る" },
-       { 5, "体を右に回して後ろに反る"},
-       { 6, "体を左に回して前に倒す" },
-       { 7, "体を前に倒す" },
-       { 8, "体を右に回して前に倒す" },
+       { 1, "右回旋" },
+       { 2, "左回旋" },
+       { 3, ""},
+       { 4, "伸展" },
+       { 5, ""},
+       { 6, "" },
+       { 7, "屈曲" },
+       { 8, "" },
    };
 
 
-    Dictionary<int, string> rotateNumberDetail = new Dictionary<int, string>
+    Dictionary<int, string> directDetail = new Dictionary<int, string>
    {
-       { 1, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください"},
-       { 2, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
-       { 3, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
-       { 4, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
-       { 5, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
-       { 6, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
-       { 7, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" },
-       { 8, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください" }
+       { 1, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。"},
+       { 2, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。" },
+       { 3, "" },
+       { 4, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。" },
+       { 5, "" },
+       { 6, "" },
+       { 7, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。" },
+       { 8, "" }
+   };
+
+    Dictionary<int, string> NRSTitle = new Dictionary<int, string>
+   {
+       { 1, "安静時痛" },
+       { 2, "運動時痛" },
+       { 3, "運動恐怖"},
+   };
+
+
+    Dictionary<int, string> NRSDetail = new Dictionary<int, string>
+   {
+       { 1, "現在、安静にしているときの痛みを０～１０で表してください。\n該当するボールに触れてください。"},
+       { 2, "現在、運動したときの痛みを０～１０で表してください。\n該当するボールに触れてください。" },
+       { 3, "体を動かそうとしたとき、どれくらいその動作が怖いと思うかを０～１０で表してください。\n該当するボールに触れてください。" },
    };
 
 
@@ -168,7 +188,7 @@ public class MeasureController : UtilComponent {
     public void Init(Action callbackFinish)
     {
         this.callbackFinish = callbackFinish;
-        currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARE;
+        currentStatus = DIAGNOSIS_STATUS_ENUM.START;
         isWaitingStartDiagnosis = true;
 
         //SetActive(backTr, false);
@@ -181,7 +201,7 @@ public class MeasureController : UtilComponent {
         ShowUI(true);
         isWaitingStartDiagnosis = true;
         StartCoroutine(CoroutineWaitNextStep());
-        currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
+        currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARING;
 
         // ここからはTriggerを使う。
         //rightHandTr.GetComponent<MeshCollider>().isTrigger = true;
@@ -199,6 +219,9 @@ public class MeasureController : UtilComponent {
 
         switch (currentStatus)
         {
+            case DIAGNOSIS_STATUS_ENUM.PREPARING:
+                UpdatePreparing();
+                break;
             case DIAGNOSIS_STATUS_ENUM.BASE:
                 UpdateBase();
                 break;
@@ -214,10 +237,21 @@ public class MeasureController : UtilComponent {
         }
 	}
 
-    
+
+    void UpdatePreparing()
+    {
+        if (OVRInput.GetDown(OVRInput.Button.Any))
+        {
+            currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
+            ShowUI(true);
+        }
+
+    }
+
+
     void UpdateBase()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.Any))
+        if (CheckThumbstickDown())
         {
             isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
@@ -238,7 +272,7 @@ public class MeasureController : UtilComponent {
 
     void UpdateShoulderArm()
     {
-        if (OVRInput.GetDown(OVRInput.RawButton.Any))
+        if (CheckThumbstickDown())
         {
             isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
@@ -397,16 +431,18 @@ public class MeasureController : UtilComponent {
      void UpdateDirection()
     {
         // ボタン押下、最大角度確定処理
-        if (directionStatus == DirectionEnum.MEASURING && CheckHandTriggerButtonDown())
+        if (directionStatus == DirectionEnum.MEASURING && CheckThumbstickDown())
         {
 
             // 全部の方向が終わった時
             if(currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
-                currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_PRE;
-                InitNRSComponents();
+
                 ShowUI(false);
+                currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_PRE;
+                currentNRSIndex = 0;
+                InitNRSComponents();
 
                 for (int i = 0; i < directRotateTrs.Length; i++)
                 {
@@ -477,24 +513,42 @@ public class MeasureController : UtilComponent {
 
     void InitNRSComponents()
     {
+        currentNRSIndex++;
         SetActive(objNRS, true);
+        ShowUI(true);
 
         for (int i = 0; i < nrsComponents.Length; i++)
         {
             nrsComponents[i].Init(i, HitNRSComponent);
             nrsComponents[i].SetActiveBullet(true);
+            nrsComponents[i].ColliderEnabled(true);
         }
     }
 
 
     void HitNRSComponent(NRSComponent nrsComponent)
     {
-        DEFINE_APP.NRS_PRE = nrsComponent.num;
+        DEFINE_APP.NRS_PRE[currentNRSIndex] = nrsComponent.num;
         for (int i = 0; i < nrsComponents.Length; i++)
         {
             nrsComponents[i].ColliderEnabled(false);
         }
-        StartCoroutine("CoroutineFinishNRSPre");
+
+        if(currentNRSIndex >= 3)
+        {
+            StartCoroutine("CoroutineFinishNRSPre");
+        }
+        else
+        {
+            StartCoroutine("CoroutineNextNRS");
+        }
+    }
+
+    IEnumerator CoroutineNextNRS()
+    {
+        yield return new WaitForSeconds(1f);
+        InitNRSComponents();
+
     }
 
 
@@ -520,10 +574,8 @@ public class MeasureController : UtilComponent {
     {
         yield return new WaitForSeconds(3.0f);
         isWaitingStartDiagnosis = false;
-        if(currentStatus != DIAGNOSIS_STATUS_ENUM.END)
-        {
-	        ShowUI(true);
-        }
+	    ShowUI(true);
+        
         if(callback != null)
         {
             callback();
@@ -537,10 +589,19 @@ public class MeasureController : UtilComponent {
         SetLabel(txtTitle, statusTextTitle[currentStatus]);
         SetLabel(txtDetail, statusTextDetail[currentStatus]);
 
-        SetActive(txtRotateTitle, currentStatus == DIAGNOSIS_STATUS_ENUM.DIRECT);
-        SetActive(txtRotateDetail, currentStatus == DIAGNOSIS_STATUS_ENUM.DIRECT);
-        SetLabel(txtRotateTitle, rotateNumberTitle[currentIndex]);
-        SetLabel(txtRotateDetail, rotateNumberDetail[currentIndex]);
+        switch (currentStatus)
+        {
+            case DIAGNOSIS_STATUS_ENUM.DIRECT:
+                SetLabel(txtTitle, directTitle[currentIndex]);
+                SetLabel(txtDetail, directDetail[currentIndex]);
+                break;
+            case DIAGNOSIS_STATUS_ENUM.NRS_PRE:
+                SetLabel(txtTitle, NRSTitle[currentNRSIndex]);
+                SetLabel(txtDetail, NRSDetail[currentNRSIndex]);
+                break;
+            default:
+                break;
+        }
     }
 
 }
