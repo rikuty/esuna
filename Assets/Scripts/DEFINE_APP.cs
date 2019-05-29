@@ -252,6 +252,19 @@ public partial class DEFINE_APP {//ApplictionDefine
         };
 
 
+        public static Dictionary<int, Vector3> NEST_ROT = new Dictionary<int, Vector3>()
+        {
+            {1, new Vector3(0f, 0f, -90f)},
+            {2,new Vector3(0f, 0f, 90f)},
+            {3,new Vector3(0f, 0f, -135f)},
+            {4,new Vector3(0f, 0f, 180f)},
+            {5,new Vector3(0f, 0f, 135f)},
+            {6,new Vector3(-60f, 20f, 0f)},
+            {7,new Vector3(-60f, 0f, 0f)},
+            {8,new Vector3(-60f, -20f, 0f)}
+        };
+
+
         //public static Dictionary<int, int> ARM_ROT_SIGN = new Dictionary<int, int>()
         //{
         //    {1,-1},
