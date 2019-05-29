@@ -188,9 +188,9 @@ public class CoinController : UtilComponent {
 
         count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-2;
 
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count-1; i++)
         {
-            coinComponents[i].Init(currentIndex, (float)(i+1)/(float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
+            coinComponents[i].Init(currentIndex, (float)(i+1)/(float)count, Hit);
             coinComponents[i].SetActiveBullet(true);
             coinComponents[i].ColliderEnabled(false);
 

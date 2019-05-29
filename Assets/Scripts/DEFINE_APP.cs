@@ -168,42 +168,42 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
             _GOAL_DIC = new Dictionary<int, Dictionary<string, Vector3>>()
             {
-                    {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -45f, 0f) } } },
-                    {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 45f, 0f) } } },
-                    {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-30f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-105f, 0f, 0f) } } },
-                    {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(90f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(30f, 0f, 0f) } } }
+                    {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -55f, 0f) } } },
+                    {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 55f, 0f) } } },
+                    {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-20f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-80f, 0f, 0f) } } },
+                    {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(80f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(30f, 0f, 0f) } } }
             };
 
             _DIAGNOSIS_ROT_MAX = new Dictionary<int, Dictionary<string, Vector3>>
             {
-                {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -45f, 0f) } } },
-                {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 45f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 45f, 0f) } } },
-                {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-30f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-105f, 0f, 0f) } } },
-                {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(90f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(30f, 0f, 0f) } } }
+                {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -55f, 0f) } } },
+                {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 55f, 0f) } } },
+                {4, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(-20f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(-80f, 0f, 0f) } } },
+                {7, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(80f, 0f, 0f) }, { SHOULDER_ROT, new Vector3(30f, 0f, 0f) } } }
             };
 
-            _GOAL_DIC.Add(3, new Dictionary<string, Vector3> { { BACK_ROT, GOAL_DIC[1][BACK_ROT] + GOAL_DIC[4][BACK_ROT] }, { SHOULDER_ROT, GOAL_DIC[1][SHOULDER_ROT] + GOAL_DIC[4][SHOULDER_ROT] } });
-            _GOAL_DIC.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, GOAL_DIC[2][BACK_ROT] + GOAL_DIC[4][BACK_ROT] }, { SHOULDER_ROT, GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[4][SHOULDER_ROT] } });
-            _GOAL_DIC.Add(6, new Dictionary<string, Vector3> { { BACK_ROT, GOAL_DIC[1][BACK_ROT] + GOAL_DIC[7][BACK_ROT] }, { SHOULDER_ROT, GOAL_DIC[1][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT] } });
-            _GOAL_DIC.Add(8, new Dictionary<string, Vector3> { { BACK_ROT, GOAL_DIC[2][BACK_ROT] + GOAL_DIC[7][BACK_ROT] }, { SHOULDER_ROT, GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT] } });
+            _GOAL_DIC.Add(3, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[1][SHOULDER_ROT].y, 0f) } });
+            _GOAL_DIC.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[2][SHOULDER_ROT].y, 0f) } });
+            _GOAL_DIC.Add(6, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[1][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
+            _GOAL_DIC.Add(8, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
 
-            _DIAGNOSIS_ROT_MAX.Add(3, new Dictionary<string, Vector3>{ { BACK_ROT, DIAGNOSIS_ROT_MAX[1][BACK_ROT]+ DIAGNOSIS_ROT_MAX[4][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[1][SHOULDER_ROT]+DIAGNOSIS_ROT_MAX[4][SHOULDER_ROT] } });
-            _DIAGNOSIS_ROT_MAX.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, DIAGNOSIS_ROT_MAX[2][BACK_ROT] + DIAGNOSIS_ROT_MAX[4][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[2][SHOULDER_ROT] + DIAGNOSIS_ROT_MAX[4][SHOULDER_ROT] } });
-            _DIAGNOSIS_ROT_MAX.Add(6, new Dictionary<string, Vector3>{ { BACK_ROT, DIAGNOSIS_ROT_MAX[1][BACK_ROT]+ DIAGNOSIS_ROT_MAX[7][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[1][SHOULDER_ROT]+DIAGNOSIS_ROT_MAX[7][SHOULDER_ROT] } });
-            _DIAGNOSIS_ROT_MAX.Add(8, new Dictionary<string, Vector3>{ { BACK_ROT, DIAGNOSIS_ROT_MAX[2][BACK_ROT]+ DIAGNOSIS_ROT_MAX[7][BACK_ROT] }, { SHOULDER_ROT, DIAGNOSIS_ROT_MAX[2][SHOULDER_ROT]+DIAGNOSIS_ROT_MAX[7][SHOULDER_ROT] } });
+            DIAGNOSIS_ROT_MAX.Add(3, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[1][SHOULDER_ROT].y, 0f) } });
+            DIAGNOSIS_ROT_MAX.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[2][SHOULDER_ROT].y, 0f) } });
+            DIAGNOSIS_ROT_MAX.Add(6, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[1][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
+            DIAGNOSIS_ROT_MAX.Add(8, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
         }
 
 
         public static void SetDefineDiagonal()
         {
-            _GOAL_DIC[3][BACK_ROT] = GOAL_DIC[1][BACK_ROT] + GOAL_DIC[4][BACK_ROT];
-            _GOAL_DIC[3][SHOULDER_ROT] = GOAL_DIC[1][SHOULDER_ROT] + GOAL_DIC[4][SHOULDER_ROT];
-            _GOAL_DIC[5][BACK_ROT] = GOAL_DIC[2][BACK_ROT] + GOAL_DIC[4][BACK_ROT];
-            _GOAL_DIC[5][SHOULDER_ROT] = GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[4][SHOULDER_ROT];
-            _GOAL_DIC[6][BACK_ROT] = GOAL_DIC[1][BACK_ROT] + GOAL_DIC[7][BACK_ROT];
-            _GOAL_DIC[6][SHOULDER_ROT] = GOAL_DIC[1][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT];
-            _GOAL_DIC[8][BACK_ROT] = GOAL_DIC[2][BACK_ROT] + GOAL_DIC[7][BACK_ROT];
-            _GOAL_DIC[8][SHOULDER_ROT] = GOAL_DIC[2][SHOULDER_ROT] + GOAL_DIC[7][SHOULDER_ROT];
+            _GOAL_DIC[3][BACK_ROT] = new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f);
+            _GOAL_DIC[3][SHOULDER_ROT] = new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[1][SHOULDER_ROT].y, 0f);
+            _GOAL_DIC[5][BACK_ROT] = new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f);
+            _GOAL_DIC[5][SHOULDER_ROT] = new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[2][SHOULDER_ROT].y, 0f);
+            _GOAL_DIC[6][BACK_ROT] = new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[1][BACK_ROT].y, 0f);
+            _GOAL_DIC[6][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
+            _GOAL_DIC[8][BACK_ROT] = new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f);
+            _GOAL_DIC[8][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
         }
 
 

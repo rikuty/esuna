@@ -322,8 +322,24 @@ public class MeasureController : UtilComponent {
 
         hitDeltaTime = 0f;
         directionStatus = DirectionEnum.MEASURING;
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = measureComponent.trBackRoot.localRotation.eulerAngles;
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = measureComponent.trSholderRoot.localRotation.eulerAngles;
+
+        Vector3 backRot = measureComponent.trBackRoot.localRotation.eulerAngles;
+        Vector3 shoulderRot = measureComponent.trSholderRoot.localRotation.eulerAngles;
+
+        float resultXBack = (backRot.x >= 180f) ? backRot.x -360f : backRot.x;
+
+        float resultXShoulder = (shoulderRot.x >= 180f) ? shoulderRot.x -360f : shoulderRot.x;
+
+        float resultYBack = (backRot.y >= 180f) ? backRot.y -360f : backRot.y;
+
+        float resultYShoulder = (shoulderRot.y >= 180f) ? shoulderRot.y-360f : shoulderRot.y;
+
+        float resultZBack = (backRot.z >= 180f) ? backRot.z-360f : backRot.z;
+
+        float resultZShoulder = (shoulderRot.z >= 180f) ? shoulderRot.z-360f : shoulderRot.z;
+
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
+        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
 
     }
 
