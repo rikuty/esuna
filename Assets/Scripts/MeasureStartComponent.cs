@@ -40,9 +40,40 @@ public class MeasureStartComponent : UtilComponent {
 
 
         trBackRoot.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
-        trSholderRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[controller];
+        trSholderRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[directIndex-1]];
         trSholderRoot.localRotation = Quaternion.Euler(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);
         trArmLength.localPosition = DEFINE_APP.HAND_POS_DIC[controller];
+
+        switch (directIndex)
+        {
+            case 4:
+                if (controller == OVRInput.Controller.LTouch)
+                {
+                    trRootObj.localPosition = DEFINE_APP.LEFT_HAND_MEASURE_POS_4;
+                    trRootObj.localRotation = Quaternion.Euler(DEFINE_APP.LEFT_HAND_MEASURE_ROT_4);
+                }else if(controller == OVRInput.Controller.RTouch)
+                {
+                    trRootObj.localPosition = DEFINE_APP.RIGHT_HAND_MEASURE_POS_4;
+                    trRootObj.localRotation = Quaternion.Euler(DEFINE_APP.RIGHT_HAND_MEASURE_ROT_4);
+                }
+                break;
+            case 7:
+                if (controller == OVRInput.Controller.LTouch)
+                {
+                    trRootObj.localPosition = DEFINE_APP.LEFT_HAND_MEASURE_POS_7;
+                    trRootObj.localRotation = Quaternion.Euler(DEFINE_APP.LEFT_HAND_MEASURE_ROT_7);
+                }
+                else if (controller == OVRInput.Controller.RTouch)
+                {
+                    trRootObj.localPosition = DEFINE_APP.RIGHT_HAND_MEASURE_POS_7;
+                    trRootObj.localRotation = Quaternion.Euler(DEFINE_APP.RIGHT_HAND_MEASURE_ROT_7);
+                }
+                break;
+            default:
+                trRootObj.localPosition = DEFINE_APP.HAND_MEASURE_POS_NOR;
+                trRootObj.localRotation = Quaternion.Euler(DEFINE_APP.HAND_MEASURE_ROT_NOR);
+                break;
+        }
 
 
         bullet.Init(CallbackFromBullet, collisionStatus, stayTime);

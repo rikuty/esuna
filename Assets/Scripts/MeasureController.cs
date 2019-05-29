@@ -305,8 +305,8 @@ public class MeasureController : UtilComponent {
         }
         PreparedDirection();
 
-        measureStartLeftComponent.Init(currentIndex, OVRInput.Controller.LTouch, HitStartMeasure, Bullet.CollisionEnum.STAY, 0.3f);
-        measureStartRightComponent.Init(currentIndex, OVRInput.Controller.RTouch, HitStartMeasure, Bullet.CollisionEnum.STAY, 0.3f);
+        measureStartLeftComponent.Init(currentIndex, OVRInput.Controller.LTouch, HitStartMeasure);
+        measureStartRightComponent.Init(currentIndex, OVRInput.Controller.RTouch, HitStartMeasure);
 
     }
 
