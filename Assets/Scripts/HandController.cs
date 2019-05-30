@@ -157,7 +157,7 @@ public class HandController: UtilComponent {
         wasAnswering = context.isAnswering;
 
 
-        if (canGrabbable && OVRInput.GetDown(OVRInput.Button.Any) && !unableGrab)
+        if (canGrabbable && CheckThumbstickDown() && !unableGrab)
         {
             callbackRelease();
             unableGrab = true;

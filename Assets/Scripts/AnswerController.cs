@@ -90,6 +90,22 @@ public class AnswerController : UtilComponent
         //    return;
         //}
 
+        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[targetNumber - 1];
+
+        if (result == OVRInput.Controller.RTouch)
+        {
+            handController.PlayHaptics(result);
+
+        }
+        else if (result == OVRInput.Controller.LTouch)
+        {
+            handController.PlayHaptics(result);
+        }
+        else if (result == OVRInput.Controller.Touch)
+        {
+            handController.PlayHaptics(OVRInput.Controller.Touch);
+        }
+
 
         //InstantiateNewEgg(egg.answerType,true);
 

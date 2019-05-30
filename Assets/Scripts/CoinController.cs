@@ -19,8 +19,10 @@ public class CoinController : UtilComponent {
 
 
     private Action callbackHitCoin;
-
+    
     public AnswerController answerController;
+
+    public HandController handController;
 
 
 
@@ -235,12 +237,18 @@ public class CoinController : UtilComponent {
         context.AddGamePoint();
         callbackHitCoin();
 
+        handController.PlayHaptics(coinComponent.controller);
+
+
     }
 
 
     void HitStartMeasure(MeasureStartComponent measureComponent)
     {
-        if(DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.LTouch || DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.RTouch)
+        handController.PlayHaptics(measureComponent.controller);
+
+
+        if (DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.LTouch || DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.RTouch)
         {
             if(DEFINE_APP.HAND_TARGET[currentIndex - 1] == measureComponent.controller)
             {
@@ -275,6 +283,7 @@ public class CoinController : UtilComponent {
             answerController.SetActiveCurrentEgg(true);
 
         }
+
     }
 
     /// <summary>

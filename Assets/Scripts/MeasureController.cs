@@ -50,6 +50,9 @@ public class MeasureController : UtilComponent {
     public Collider rightHandCollider;
     public Collider leftHandCollider;
 
+    public HandController handController;
+
+
     public MeasureComponent[] measureComponents;
     public MeasureStartComponent measureStartRightComponent;
     public MeasureStartComponent measureStartLeftComponent;
@@ -375,12 +378,31 @@ public class MeasureController : UtilComponent {
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
 
+
+        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
+
+        if (result == OVRInput.Controller.RTouch)
+        {
+            handController.PlayHaptics(result);
+
+        }
+        else if (result == OVRInput.Controller.LTouch)
+        {
+            handController.PlayHaptics(result);
+        }
+        else if (result == OVRInput.Controller.Touch)
+        {
+            handController.PlayHaptics(OVRInput.Controller.Touch);
+        }
+
     }
 
 
     void HitStartMeasure(MeasureStartComponent measureComponent)
     {
-        if(DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.LTouch || DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.RTouch)
+        handController.PlayHaptics(measureComponent.controller);
+
+        if (DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.LTouch || DEFINE_APP.HAND_TARGET[currentIndex - 1] == OVRInput.Controller.RTouch)
         {
             if(DEFINE_APP.HAND_TARGET[currentIndex - 1] == measureComponent.controller)
             {
@@ -541,6 +563,22 @@ public class MeasureController : UtilComponent {
         else
         {
             StartCoroutine("CoroutineNextNRS");
+        }
+
+        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
+
+        if (result == OVRInput.Controller.RTouch)
+        {
+            handController.PlayHaptics(result);
+
+        }
+        else if (result == OVRInput.Controller.LTouch)
+        {
+            handController.PlayHaptics(result);
+        }
+        else if (result == OVRInput.Controller.Touch)
+        {
+            handController.PlayHaptics(OVRInput.Controller.Touch);
         }
     }
 
