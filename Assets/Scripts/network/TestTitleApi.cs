@@ -2,15 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class TestApi : UtilComponent {
+public class TestTitleApi : UtilComponent {
     // Use this for initialization
     void Start () {
-        // POSTする対象のURL
+        // サーバへPOSTするデータを設定 
         string url = "http://dev.rikuty.net/api/SetUserData.php";
 
-        // サーバへPOSTするデータを設定 
         Dictionary<string, string> dic = new Dictionary<string, string>();
-		
         dic.Add("user_id", "1");
         dic.Add("max_rom_measure_1", "44");
         dic.Add("max_rom_measure_2", "44");

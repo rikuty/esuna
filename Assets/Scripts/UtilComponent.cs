@@ -5,6 +5,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.IO;
+using UnityEngine.Networking;
 
 public class UtilComponent : MonoBehaviour {
 
@@ -530,7 +532,55 @@ public class UtilComponent : MonoBehaviour {
             Debug.Log("HttpPost OK: " + www.text);
         }
     }
+	protected IEnumerator HttpPost(string url, Dictionary<string, string> post, string filePath, string fileName)
+    {
+        WWWForm form = new WWWForm();
+        foreach (KeyValuePair<string, string> post_arg in post)
+        {
+        	//Debug.Log(post_arg.Key+", "+post_arg.Value);
+        	form.AddField(post_arg.Key, post_arg.Value);
+        }
 
+		// 画像も追加
+		byte[] byteImg = File.ReadAllBytes (filePath+fileName);
+		form.AddBinaryData ("file", byteImg, fileName, "image/png");
+
+        WWW www = new WWW(url, form);
+
+        yield return StartCoroutine(CheckTimeOut(www, 10f));
+
+        if (www.error != null)
+        {
+            Debug.Log("HttpPost NG: " + www.error);
+        }
+        else if (www.isDone)
+        {
+            Debug.Log("HttpPost OK: " + www.text);
+        }
+    }
+/* 
+	IEnumerator UploadFile(string url, string filePath, string fileName) {
+        //string fileName = "hoge.jpg";
+        //string filePath = Application.dataPath + "/" + fileName;
+        // 画像ファイルをbyte配列に格納
+        byte[] byteImg = File.ReadAllBytes (filePath);
+
+        // formにバイナリデータを追加
+        WWWForm form = new WWWForm ();
+        form.AddBinaryData ("file", byteImg, fileName, "image/png");
+        // HTTPリクエストを送る
+        UnityWebRequest request = UnityWebRequest.Post (url, form);
+        yield return request.Send ();
+
+        if (request.isError) {
+            // POSTに失敗した場合，エラーログを出力
+            Debug.Log (request.error);
+        } else {
+            // POSTに成功した場合，レスポンスコードを出力
+            Debug.Log (request.responseCode);
+        }
+    }
+*/
     // HTTPリクエストのタイムアウト処理
     IEnumerator CheckTimeOut(WWW www, float timeout)
     {
