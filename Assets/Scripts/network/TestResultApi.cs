@@ -43,10 +43,10 @@ public class TestResultApi : UtilComponent {
         dic.Add("rom_value", "33");
         dic.Add("point_value", "33");
 		
-        //string filePath = Application.dataPath + "/Resources/";
-        //string fileName = "ResultSheet.png";
-        //StartCoroutine(HttpPost(url, dic, filePath, fileName));
-        
+        // string filePath = Application.dataPath + "/Resources/";
+        // string fileName = "ResultSheet.png";
+        // StartCoroutine(HttpPost(url, dic, filePath, fileName));
+
         StartCoroutine(HttpPost(url, dic));
     }
 }
