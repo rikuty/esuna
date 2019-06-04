@@ -4,6 +4,9 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
+using System.IO;
+
+using System.Drawing;
 public class MeasureController : UtilComponent {
 
     /// <summary>
@@ -61,6 +64,7 @@ public class MeasureController : UtilComponent {
     public NRSComponent[] nrsComponents;
     public GameObject objNRS;
 
+    public RenderTexture RenderTextureRef;
 
     [SerializeField] private AudioSource audioSourceVoice;
     [SerializeField] private List<AudioClip> voiceList; 
@@ -214,6 +218,25 @@ public class MeasureController : UtilComponent {
 
 
 
+    void SavePng()
+    {
+        //Debug.Log("SavePng");
+        Texture2D tex = new Texture2D(RenderTextureRef.width, RenderTextureRef.height, TextureFormat.RGB24, false);
+        RenderTexture.active = RenderTextureRef;
+        tex.ReadPixels(new Rect(0, 0, RenderTextureRef.width, RenderTextureRef.height), 0, 0);
+        tex.Apply();
+
+        // Encode texture into PNG
+        byte[] bytes = tex.EncodeToPNG();
+        Destroy(tex);
+
+        //Write to a file in the project folder
+        //Debug.Log(Application.dataPath);
+        //File.WriteAllBytes(Application.dataPath + "/Resources/ResultSheet.png", bytes);
+        File.WriteAllBytes(Application.persistentDataPath + "/ResultSheet.png", bytes);
+
+    }
+
 
     // Update is called once per frame
     void Update () {
@@ -268,10 +291,29 @@ public class MeasureController : UtilComponent {
 
             ShowUI(false);
 
+            System.Drawing.Printing.PrintDocument pd =
+                new System.Drawing.Printing.PrintDocument();
+
+            //PrintPageイベントハンドラの追加
+            pd.PrintPage +=
+                new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+            //印刷を開始する
+            pd.Print();
+
             StartCoroutine(CoroutineWaitNextStep());
         }
     }
-
+    private void pd_PrintPage(object sender,System.Drawing.Printing.PrintPageEventArgs e)
+    {
+        //画像を読み込む
+        System.Drawing.Image img = System.Drawing.Image.FromFile(Application.persistentDataPath + "/test.jpg");
+        //画像を描画する
+        e.Graphics.DrawImage(img, e.MarginBounds);
+        //次のページがないことを通知する
+        e.HasMorePages = false;
+        //後始末をする
+        img.Dispose();
+    }
 
     void UpdateShoulderArm()
     {

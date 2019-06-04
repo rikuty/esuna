@@ -10,7 +10,6 @@ using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-
 public class MainMenuController : UtilComponent
 {
 
@@ -112,7 +111,6 @@ public class MainMenuController : UtilComponent
         //if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
         if (Input.GetKeyDown(KeyCode.Space)) { SetActive(objWarpEffect, true); }
     }
-
 
     private void FinishPushButton()
     {
