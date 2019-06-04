@@ -61,7 +61,7 @@ public class ResultFormatArea : UtilComponent {
             SetLabel(this.txtUserId, userData.user_id);
 
             SetLabel(this.txtUserName, userData.user_name);
-            SetLabel(this.txtUserAge, userData.age);
+            SetLabel(this.txtUserAge, userData.age+"歳");
             SetLabel(this.txtUserHeight, userData.height+"cm");
             
             SetLabel(this.txtPoint, firstData.point);
