@@ -13,6 +13,9 @@ using Newtonsoft.Json.Serialization;
 public class MainMenuController : UtilComponent
 {
 
+    public GameObject objTitle;
+    public GameObject objGame;
+
     private enum MENU_STATUS_ENUM
     {
         PREPARE,
@@ -48,12 +51,9 @@ public class MainMenuController : UtilComponent
 	//　非同期動作で使用するAsyncOperation
 	private AsyncOperation async;
 
-    private void Awake()
-    {
-        
-    }
 
-    void Start()
+
+    public void Init()
     {
 
         // ユーザーデーター取得　※消しちゃダメ
@@ -133,13 +133,14 @@ public class MainMenuController : UtilComponent
     {
         SetActive(objWarpEffect, true);
 
-        yield return new WaitForSeconds(5.0f);
-        Camera.main.GetComponent<SceenFade>().LoadSceenWithFade("Game");
+        yield return new WaitForSeconds(7.0f);
+
+        GetSceneManagerLocal().MoveToGameScene();
 
         //　ロード画面UIをアクティブにする
-		//this.slider.gameObject.SetActive(true);
-		//　コルーチンを開始
-		//StartCoroutine("LoadData");
+        //this.slider.gameObject.SetActive(true);
+        //　コルーチンを開始
+        //StartCoroutine("LoadData");
     }
 
     private void FinishDiagnosis()

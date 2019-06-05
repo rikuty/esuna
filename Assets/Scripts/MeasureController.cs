@@ -186,14 +186,11 @@ public class MeasureController : UtilComponent {
     OVRInput.Controller controller;
 
 
-	// Use this for initialization
-	void Start () {
-        SetActive(objUI, true);
-	}
-
 
     public void Init(Action callbackFinish)
     {
+        SetActive(objUI, true);
+
         this.callbackFinish = callbackFinish;
         currentStatus = DIAGNOSIS_STATUS_ENUM.START;
         isWaitingStartDiagnosis = true;
@@ -291,14 +288,14 @@ public class MeasureController : UtilComponent {
 
             ShowUI(false);
 
-            System.Drawing.Printing.PrintDocument pd =
-                new System.Drawing.Printing.PrintDocument();
+            //System.Drawing.Printing.PrintDocument pd =
+            //    new System.Drawing.Printing.PrintDocument();
 
-            //PrintPageイベントハンドラの追加
-            pd.PrintPage +=
-                new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
-            //印刷を開始する
-            pd.Print();
+            ////PrintPageイベントハンドラの追加
+            //pd.PrintPage +=
+            //    new System.Drawing.Printing.PrintPageEventHandler(pd_PrintPage);
+            ////印刷を開始する
+            //pd.Print();
 
             StartCoroutine(CoroutineWaitNextStep());
         }

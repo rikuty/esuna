@@ -66,28 +66,10 @@ public class GameController : UtilComponent {
     
 
 
-    private void Awake()
+    public void Init()
     {
         context.currentStatus = DEFINE_APP.STATUS_ENUM.PREPARE;
-        StartCoroutine("PrepareCoroutine");
-    }
 
-    IEnumerator PrepareCoroutine()
-    {
-        yield return new WaitForSeconds(0.0f);
-        //yield return new WaitForSeconds(3.0f);
-        //context.currentStatus = DEFINE_APP.STATUS_ENUM.START;
-        //SetActive(this.objStart, true);
-    }
-
-    // Use this for initialization
-    private void Start () {
-
-        //SetActive(this.objStart, false);
-        //SetActive(this.objCountDown, false);
-        //SetActive(this.objPlay, false);
-        //SetActive(this.objResult, false);
-        //SetActive(this.objNestAndEgg, false);
         audioSourceGame.Stop();
         audioSourceForest.Play();
 
@@ -95,29 +77,19 @@ public class GameController : UtilComponent {
         answerController.Init(CallbackFromAnswerControllers, context, handController);
         handController.Init(CallbackFromHandRelease, CallbackFromHandGrabbing, context);
 
-        //panelButtonComponent.Init(()　=> 
-        //{
+
         this.answerController.InstantiateNewEgg(DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL);
-            context.currentStatus = DEFINE_APP.STATUS_ENUM.TUTORIAL;
-            answerController.SetGravity(false);
-            SetActive(this.objStart, false);
-            SetActive(this.objTutorial, true);
-            SetActive(this.objNestAndEgg, true);
-        //});
-
-
-        //this.context.Init();
-
-        //this.gazeButtonInput.Init(this.context);
-
-
-        //resultModalPresenter = ResourceLoader.Instance.Create<ResultModalPresenter>("Prefabs/ResultModal", trResult, false);
+        context.currentStatus = DEFINE_APP.STATUS_ENUM.TUTORIAL;
+        answerController.SetGravity(false);
+        SetActive(this.objStart, false);
+        SetActive(this.objTutorial, true);
+        SetActive(this.objNestAndEgg, true);
 
         if (this.audioSourceGame != null)
         {
             this.audioSourceGame.Play();
         }
-	}
+    }
 
     private void CallbackFromHandRelease()
     {
@@ -145,7 +117,7 @@ public class GameController : UtilComponent {
                 this.context.AddGamePoint();
                 break;
             case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
-                Reload();
+                BackToTitle();
                 break;
 
         }
@@ -284,7 +256,7 @@ public class GameController : UtilComponent {
 
         this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
 
-        //StartCoroutine(ResultCoroutine());
+        StartCoroutine(ResultCoroutine());
     }
 
     private void UpdateShowResult(){
@@ -293,15 +265,15 @@ public class GameController : UtilComponent {
 
     IEnumerator ResultCoroutine()
     {
-        yield return new WaitForSeconds(10.0f);
+        yield return new WaitForSeconds(7.0f);
 
-        Reload();
+        BackToTitle();
     }
 
 
-    public void Reload()
+    public void BackToTitle()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        GetSceneManagerLocal().MoveToTitleScene();
     }
 
 

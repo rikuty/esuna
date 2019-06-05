@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class UtilComponent : MonoBehaviour {
@@ -364,6 +365,14 @@ public class UtilComponent : MonoBehaviour {
 			tr.pivot = vec;
 		}
 	}
+
+
+    public static SceneManagerLocal GetSceneManagerLocal()
+    {
+        GameObject[] objs = SceneManager.GetSceneByName("SceneManage").GetRootGameObjects();
+        return objs[0].GetComponent<SceneManagerLocal>();
+
+    }
 
 
     #region OVR
