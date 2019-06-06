@@ -131,11 +131,22 @@ public class MainMenuController : UtilComponent
 
     IEnumerator CoroutineLoad()
     {
+        Debug.LogError("CoroutineLoad1");
+
         SetActive(objWarpEffect, true);
+
+        Debug.LogError("CoroutineLoad2");
+
 
         yield return new WaitForSeconds(7.0f);
 
+        Debug.LogError(GetSceneManagerLocal().ToString());
+
+
         GetSceneManagerLocal().MoveToGameScene();
+
+        Debug.LogError("CoroutineLoad3");
+
 
         //　ロード画面UIをアクティブにする
         //this.slider.gameObject.SetActive(true);

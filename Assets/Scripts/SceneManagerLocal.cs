@@ -32,6 +32,8 @@ public class SceneManagerLocal : UtilComponent
 
     private void Update()
     {
+        if (objsGameScene == null || objsTitleScene == null) return;
+
         if (!isInit && objsGameScene.Length > 0 && objsTitleScene.Length > 0)
         {
             isInit = true;
