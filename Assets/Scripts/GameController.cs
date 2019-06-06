@@ -8,8 +8,9 @@ using UnityEngine.Events;
 
 public class GameController : UtilComponent {
 
+    public GameObject objDirectionalLight;
 
-	//public CountDownComponent cdCountDown;
+    //public CountDownComponent cdCountDown;
 
     private Context _context;
     public Context context{
@@ -63,7 +64,16 @@ public class GameController : UtilComponent {
     //[SerializeField] private Text z;
 
     [SerializeField] private ResultModalPresenter resultModalPresenter;
-    
+
+
+    private void Start()
+    {
+        if (SceneManager.GetSceneAt(0).name == "Game")
+        {
+            SetActive(objDirectionalLight, true);
+            Init();
+        }
+    }
 
 
     public void Init()

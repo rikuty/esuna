@@ -13,8 +13,7 @@ using Newtonsoft.Json.Serialization;
 public class MainMenuController : UtilComponent
 {
 
-    public GameObject objTitle;
-    public GameObject objGame;
+    public GameObject objDirectionalLight;
 
     private enum MENU_STATUS_ENUM
     {
@@ -51,6 +50,15 @@ public class MainMenuController : UtilComponent
 	//　非同期動作で使用するAsyncOperation
 	private AsyncOperation async;
 
+
+    private void Start()
+    {
+        if(SceneManager.GetSceneAt(0).name == "Title")
+        {
+            SetActive(objDirectionalLight, true);
+            Init();
+        }
+    }
 
 
     public void Init()
