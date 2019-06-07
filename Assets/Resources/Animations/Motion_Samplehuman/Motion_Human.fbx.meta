@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f29416d7c275df143858658485b9e674
+guid: 96d39140f1768c847ac72298f7a2d009
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
@@ -151,10 +151,15 @@ ModelImporter:
     400144: //RootNode
     2100000: Sample_Human
     4300000: MHuman
-    7400000: BothHand
+    7400000: Take 001
     9500000: //RootNode
     13700000: //RootNode
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Sample_Human
+    second: {fileID: 2100000, guid: e0e112223632096489a39afa77a7e3e6, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
