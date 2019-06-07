@@ -25,6 +25,8 @@ public class MainMenuController : UtilComponent
 
     private MENU_STATUS_ENUM currentStatus = MENU_STATUS_ENUM.PREPARE;
 
+    public GameObject objUI;
+
     private string userID;
     private string userName;
     private DateTime dateTime;
@@ -44,11 +46,15 @@ public class MainMenuController : UtilComponent
 
     private GameData gameData;
 
+    public GameObject objResult;
+
     
 	//　読み込み率を表示するスライダー
 	[SerializeField] private Slider slider;
 	//　非同期動作で使用するAsyncOperation
 	private AsyncOperation async;
+
+    public ResultFormatArea resultFormatArea;
 
 
     private void Start()
@@ -87,6 +93,9 @@ public class MainMenuController : UtilComponent
         currentStatus = MENU_STATUS_ENUM.WAIT;
 
         StartCoroutine("WaitStartCoroutine");
+
+        SetActive(objUI, true);
+        SetActive(objResult, false);
 
     }
 
@@ -139,21 +148,14 @@ public class MainMenuController : UtilComponent
 
     IEnumerator CoroutineLoad()
     {
-        Debug.LogError("CoroutineLoad1");
 
         SetActive(objWarpEffect, true);
 
-        Debug.LogError("CoroutineLoad2");
+        yield return new WaitForSeconds(8.0f);
 
-
-        yield return new WaitForSeconds(7.0f);
-
-        Debug.LogError(GetSceneManagerLocal().ToString());
-
-
+        SetActive(objWarpEffect, false);
         GetSceneManagerLocal().MoveToGameScene();
 
-        Debug.LogError("CoroutineLoad3");
 
 
         //　ロード画面UIをアクティブにする
@@ -189,15 +191,24 @@ public class MainMenuController : UtilComponent
         StartCoroutine(HttpPost(url, dic));
     }
 
-    IEnumerator LoadData() {
-		// シーンの読み込みをする
-		async = SceneManager.LoadSceneAsync("Game");
+
+    public void ShowResult()
+    {
+        SetActive(objUI, false);
+        SetActive(objResult, true);
+
+        resultFormatArea.Init();
+    }
+
+ //   IEnumerator LoadData() {
+	//	// シーンの読み込みをする
+	//	async = SceneManager.LoadSceneAsync("Game");
  
-		//　読み込みが終わるまで進捗状況をスライダーの値に反映させる
-		while(!async.isDone) {
-			var progressVal = Mathf.Clamp01(async.progress / 0.9f);
-			slider.value = progressVal;
-			yield return null;
-		}
-	}
+	//	//　読み込みが終わるまで進捗状況をスライダーの値に反映させる
+	//	while(!async.isDone) {
+	//		var progressVal = Mathf.Clamp01(async.progress / 0.9f);
+	//		slider.value = progressVal;
+	//		yield return null;
+	//	}
+	//}
 }

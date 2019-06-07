@@ -90,10 +90,7 @@ public class HandController: UtilComponent {
         canGrabbable |= rightHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.RTouch;
         canGrabbable |= leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.LTouch;
         canGrabbable |= rightHand.isGrabbableTriggerEnter && leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.Touch;
-        if(rightHand.isGrabbableTriggerEnter && leftHand.isGrabbableTriggerEnter && controller == OVRInput.Controller.Touch)
-        {
-            Debug.Log("aaa");
-        }
+ 
 
         //bool canGrabber = false;
 

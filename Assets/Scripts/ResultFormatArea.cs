@@ -39,7 +39,7 @@ public class ResultFormatArea : UtilComponent {
         
     private UserData userData;
 
-    void Awake () {
+    public void Init () {
         StartCoroutine(ConnectAPI("http://dev.rikuty.net/api/GetFormatData.php", GetUserData));
     }
 

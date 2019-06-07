@@ -179,9 +179,6 @@ public class GameController : UtilComponent {
             case DEFINE_APP.STATUS_ENUM.FINISH:
                 this.UpdateFinish();
                 break;
-            case DEFINE_APP.STATUS_ENUM.SHOW_RESLUT:
-                this.UpdateShowResult();
-                break;
 		}
 	}
 	
@@ -241,6 +238,9 @@ public class GameController : UtilComponent {
     private void ShowFinish() {
         this.finishComponent.Init(this.ShowFinishCallback);
         SetActive(this.finishComponent.gameObject, true);
+
+        GetSceneManagerLocal().MoveToTitleSceneResult();
+
     }
 
     private void ShowFinishCallback() {
@@ -269,13 +269,10 @@ public class GameController : UtilComponent {
         StartCoroutine(ResultCoroutine());
     }
 
-    private void UpdateShowResult(){
-        
-    }
 
     IEnumerator ResultCoroutine()
     {
-        yield return new WaitForSeconds(7.0f);
+        yield return new WaitForSeconds(3.0f);
 
         BackToTitle();
     }

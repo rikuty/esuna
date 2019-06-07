@@ -78,4 +78,15 @@ public class SceneManagerLocal : UtilComponent
             mainMenuController.Init();
         }
     }
+
+
+    public void MoveToTitleSceneResult()
+    {
+        if (objsTitleScene.Length > 0)
+        {
+            SetActive(objsTitleScene, true);
+            SetActive(objsGameScene, false);
+            mainMenuController.ShowResult();
+        }
+    }
 }

@@ -369,7 +369,9 @@ public class UtilComponent : MonoBehaviour {
 
     public static SceneManagerLocal GetSceneManagerLocal()
     {
-        GameObject[] objs = SceneManager.GetSceneByName("SceneManage").GetRootGameObjects();
+        Scene sceneManage = SceneManager.GetSceneByName("SceneManage");
+
+        GameObject[] objs = sceneManage.GetRootGameObjects();
         return objs[0].GetComponent<SceneManagerLocal>();
 
     }
