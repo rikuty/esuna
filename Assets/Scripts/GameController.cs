@@ -65,6 +65,9 @@ public class GameController : UtilComponent {
 
     [SerializeField] private ResultModalPresenter resultModalPresenter;
 
+    [SerializeField] private AudioSource audioSourceVoice;
+    [SerializeField] private List<AudioClip> tutorialVoiceList;
+
 
     private void Start()
     {
@@ -99,6 +102,9 @@ public class GameController : UtilComponent {
         {
             this.audioSourceGame.Play();
         }
+
+        audioSourceVoice.clip = tutorialVoiceList[0];
+        audioSourceVoice.Play();
     }
 
     private void CallbackFromHandRelease()
@@ -148,6 +154,9 @@ public class GameController : UtilComponent {
         SetActive(this.objNestAndEgg, false);
         SetActive(this.objPlay, false);
         SetActive(this.objResult, false);
+
+        audioSourceVoice.clip = tutorialVoiceList[1];
+        audioSourceVoice.Play();
     }
 
     // Update is called once per frame

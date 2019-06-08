@@ -102,7 +102,7 @@ public class MainMenuController : UtilComponent
 
     IEnumerator WaitStartCoroutine()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(5.0f);
         measureController.StartDiagnosis();
     }
 

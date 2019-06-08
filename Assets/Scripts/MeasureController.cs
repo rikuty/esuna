@@ -67,19 +67,22 @@ public class MeasureController : UtilComponent {
     public RenderTexture RenderTextureRef;
 
     [SerializeField] private AudioSource audioSourceVoice;
-    [SerializeField] private List<AudioClip> voiceList; 
+    [SerializeField] private List<AudioClip> diganosisVoiceList;
+    [SerializeField] private List<AudioClip> directVoiceList;
+    [SerializeField] private List<AudioClip> nrsVoiceList;
+    [SerializeField] private AudioClip backVoice;
 
     enum DIAGNOSIS_STATUS_ENUM
     {
-        START, //初期状態
-        PREPARING,
-        BASE, //初期位置設定
-        SHOULDER_ARM, //肩の高さ&腕の長さ設定
-        DIRECT, //８方向
-        NRS_PRE, //NRS前
-        FINISH, //測定終了
-        END, //  測定終了待ち
-        NRS_POST //NRS後
+        START = -1, //初期状態
+        PREPARING = 0,
+        BASE = 1,//初期位置設定
+        SHOULDER_ARM = 2, //肩の高さ&腕の長さ設定
+        DIRECT = 4, //８方向
+        NRS_PRE = 5, //NRS前
+        FINISH = 3, //測定終了
+        END = 6, //  測定終了待ち
+        NRS_POST = 7 //NRS後
     }
 
     DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.START;
@@ -206,6 +209,8 @@ public class MeasureController : UtilComponent {
         isWaitingStartDiagnosis = true;
         StartCoroutine(CoroutineWaitNextStep());
         currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARING;
+        audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+        audioSourceVoice.Play();
 
         // ここからはTriggerを使う。
         //rightHandTr.GetComponent<MeshCollider>().isTrigger = true;
@@ -267,14 +272,40 @@ public class MeasureController : UtilComponent {
         {
             currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
             ShowUI(true);
+            audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+            audioSourceVoice.Play();
+            StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
+
         }
 
+    }
+
+
+    private IEnumerator FinishVoicePreparing(float clipLength)
+    {
+        if (currentStatus == DIAGNOSIS_STATUS_ENUM.BASE)
+        {
+            yield return new WaitForSeconds(clipLength);
+
+            audioSourceVoice.clip = backVoice;
+            audioSourceVoice.Play();
+            NextBase();
+        }
     }
 
 
     void UpdateBase()
     {
         if (CheckThumbstickDown())
+        {
+            NextBase();
+        }
+    }
+
+
+    void NextBase()
+    {
+        if (currentStatus == DIAGNOSIS_STATUS_ENUM.BASE)
         {
             isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
@@ -288,6 +319,10 @@ public class MeasureController : UtilComponent {
 
             ShowUI(false);
 
+            audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+            audioSourceVoice.Play();
+            StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
+
             //System.Drawing.Printing.PrintDocument pd =
             //    new System.Drawing.Printing.PrintDocument();
 
@@ -300,6 +335,22 @@ public class MeasureController : UtilComponent {
             StartCoroutine(CoroutineWaitNextStep());
         }
     }
+
+
+        private IEnumerator FinishVoiceBase(float clipLength)
+    {
+        if (currentStatus == DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM) {
+            yield return new WaitForSeconds(clipLength);
+
+            audioSourceVoice.clip = backVoice;
+            audioSourceVoice.Play();
+
+            yield return new WaitForSeconds(audioSourceVoice.clip.length);
+
+            NextShoulderArm();
+        }
+    }
+
     private void pd_PrintPage(object sender,System.Drawing.Printing.PrintPageEventArgs e)
     {
         //画像を読み込む
@@ -316,6 +367,15 @@ public class MeasureController : UtilComponent {
     {
         if (CheckThumbstickDown())
         {
+            NextShoulderArm();
+        }
+    }
+
+
+    void NextShoulderArm()
+    {
+        if (currentStatus == DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM)
+        {
             isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
@@ -325,7 +385,7 @@ public class MeasureController : UtilComponent {
 
             //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
-        
+
 
             ShowUI(false);
 
@@ -363,6 +423,9 @@ public class MeasureController : UtilComponent {
         //}
 
         //shoulderTr.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[currentIndex - 1]];
+
+        audioSourceVoice.clip = directVoiceList[currentDiagnosisDirectsIndex];
+        audioSourceVoice.Play();
 
         StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
 
@@ -491,8 +554,13 @@ public class MeasureController : UtilComponent {
 
      void UpdateDirection()
     {
+        if(directionStatus == DirectionEnum.MEASURING)
+        {
+            hitDeltaTime += Time.deltaTime;
+        }
+
         // ボタン押下、最大角度確定処理
-        if (directionStatus == DirectionEnum.MEASURING && CheckThumbstickDown())
+        if (directionStatus == DirectionEnum.MEASURING && (CheckThumbstickDown() || hitDeltaTime > 2f))
         {
 
             // 全部の方向が終わった時
@@ -574,6 +642,9 @@ public class MeasureController : UtilComponent {
 
     void InitNRSComponents()
     {
+        audioSourceVoice.clip = nrsVoiceList[currentNRSIndex];
+        audioSourceVoice.Play();
+
         currentNRSIndex++;
         SetActive(objNRS, true);
         ShowUI(true);
@@ -634,6 +705,8 @@ public class MeasureController : UtilComponent {
         yield return new WaitForSeconds(1f);
         SetActive(objNRS, false);
         currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
+        audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+        audioSourceVoice.Play();
     }
 
 
@@ -643,13 +716,14 @@ public class MeasureController : UtilComponent {
         this.currentStatus = DIAGNOSIS_STATUS_ENUM.END;
         StartCoroutine(CoroutineWaitNextStep());
         callbackFinish();
+
     }
 
 
 
     IEnumerator CoroutineWaitNextStep(Action callback = null)
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.0f);
         isWaitingStartDiagnosis = false;
 	    ShowUI(true);
         
