@@ -132,6 +132,8 @@ public class CoinController : UtilComponent {
     int count;
     IEnumerator CoroutineInstantiateBullets()
     {
+		// TODO:　いったんコメントアウト
+		/*
         Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
         Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
 
@@ -189,8 +191,10 @@ public class CoinController : UtilComponent {
 
 
         count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-1;
+		*/
+		count = 9;
 
-        for (int i = 0; i < count-1; i++)
+		for (int i = 0; i < count-1; i++)
         {
             coinComponents[i].Init(currentIndex, (float)(i+1)/(float)count, Hit);
             coinComponents[i].SetActiveBullet(true);

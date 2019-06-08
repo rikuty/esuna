@@ -160,18 +160,6 @@ public class MeasureController : UtilComponent {
        { 3, "体を動かそうとしたとき、どれくらいその動作が怖いと思うかを０～１０で表してください。\n該当するボールに触れてください。" },
    };
 
-    Dictionary<int, Vector3> rotateNumberAxis = new Dictionary<int, Vector3>
-    {
-        { 1, Vector3.up },
-        { 2, Vector3.up },
-        { 3, new Vector3(-1f, 1f, 0f).normalized },
-        { 4, Vector3.left },
-        { 5, new Vector3( 1f, 1f, 0f).normalized },
-        { 6, new Vector3( 1f, 1f, 0f).normalized },
-        { 7, Vector3.left },
-        { 8, new Vector3(-1f, 1f, 0f).normalized }
-    };
-
     Action callbackFinish;
 
     bool isWaitingStartDiagnosis = false;
@@ -209,12 +197,13 @@ public class MeasureController : UtilComponent {
         currentStatus = DIAGNOSIS_STATUS_ENUM.START;
         isWaitingStartDiagnosis = true;
 
-        //SetActive(backTr, false);
+		//SetActive(backTr, false);
 
-    }
+		Cache.user.calibrationData = new CalibrationData();
+	}
 
 
-    public void StartDiagnosis()
+	public void StartDiagnosis()
     {
         ShowUI(true);
         isWaitingStartDiagnosis = true;
@@ -488,9 +477,10 @@ public class MeasureController : UtilComponent {
 
         float resultZShoulder = (shoulderRot.z >= 180f) ? shoulderRot.z-360f : shoulderRot.z;
 
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
+#if false
+		DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
-
+#endif
 
         OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
 
@@ -508,20 +498,20 @@ public class MeasureController : UtilComponent {
             handController.PlayHaptics(OVRInput.Controller.Touch);
         }
 
-        float angle;
+#region TEMP_ONO
+		float angle;
         Vector3 axis;
 
-        string log = "";
+		string log = "";
 
         measureComponent.trBackRoot.localRotation.ToAngleAxis(out angle, out axis);
         log += angle;
         measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
         log += ", " + angle;
-        Debug.LogError(log);
-
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = measureComponent.trBackRoot.localRotation.eulerAngles;
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = measureComponent.trSholderRoot.localRotation.eulerAngles;
-    }
+		//Debug.LogError(log);
+#endregion
+		Cache.user.calibrationData.maxRomMeasure.Add(this.currentIndex, angle);
+	}
 
 
     void HitStartMeasure(MeasureStartComponent measureComponent)

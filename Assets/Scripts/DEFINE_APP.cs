@@ -179,7 +179,8 @@ public partial class DEFINE_APP {//ApplictionDefine
 
         public static void SetDefine()
         {
-            _GOAL_DIC = new Dictionary<int, Dictionary<string, Vector3>>()
+#if false
+			_GOAL_DIC = new Dictionary<int, Dictionary<string, Vector3>>()
             {
                     {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -55f, 0f) } } },
                     {2, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, 55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, 55f, 0f) } } },
@@ -216,14 +217,16 @@ public partial class DEFINE_APP {//ApplictionDefine
             DIAGNOSIS_ROT_MAX.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[2][SHOULDER_ROT].y, 0f) } });
             DIAGNOSIS_ROT_MAX.Add(6, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[1][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
             DIAGNOSIS_ROT_MAX.Add(8, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
+#endif
 
-            SetDefineCurrentDiagonal();
+			SetDefineCurrentDiagonal();
         }
 
 
         public static void SetDefineDiagonal()
         {
-            _GOAL_DIC[3][BACK_ROT] = new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f);
+#if false
+			_GOAL_DIC[3][BACK_ROT] = new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f);
             _GOAL_DIC[3][SHOULDER_ROT] = new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[1][SHOULDER_ROT].y, 0f);
             _GOAL_DIC[5][BACK_ROT] = new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f);
             _GOAL_DIC[5][SHOULDER_ROT] = new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[2][SHOULDER_ROT].y, 0f);
@@ -231,7 +234,7 @@ public partial class DEFINE_APP {//ApplictionDefine
             _GOAL_DIC[6][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
             _GOAL_DIC[8][BACK_ROT] = new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f);
             _GOAL_DIC[8][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
-
+#endif
             SetDefineCurrentDiagonal();
 
         }
@@ -239,7 +242,8 @@ public partial class DEFINE_APP {//ApplictionDefine
 
         public static void SetDefineCurrentDiagonal()
         {
-            for (int i = 1; i <= _GOAL_DIC.Count; i++)
+#if false
+			for (int i = 1; i <= _GOAL_DIC.Count; i++)
             {
                 Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / 2f);
                 Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 2f);
@@ -263,13 +267,14 @@ public partial class DEFINE_APP {//ApplictionDefine
                 DEFINE_APP.BODY_SCALE._GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
                 DEFINE_APP.BODY_SCALE._GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
             }
+#endif
         }
 
 
-
-        /// <summary>
-        /// 8方向の最大角度を保存。
-        /// </summary>
+		/// <summary>
+		/// 8方向の最大角度を保存。
+		/// </summary>
+#if false
         private static Dictionary<int, Dictionary<string, Vector3>> _GOAL_DIC;
         public static Dictionary<int, Dictionary<string, Vector3>> GOAL_DIC {
             get
@@ -280,39 +285,106 @@ public partial class DEFINE_APP {//ApplictionDefine
                 return _GOAL_DIC;
             }
         }
+#endif
 
-        public static string BACK_ROT = "BACK_ROT";
+		public static string BACK_ROT = "BACK_ROT";
         public static string SHOULDER_ROT = "SHOULDER_ROT";
 
-        private static Dictionary<int, Dictionary<string, Vector3>> _GOAL_CURRENT_DIC;
-        public static Dictionary<int, Dictionary<string, Vector3>> GOAL_CURRENT_DIC
-        {
-            get
-            {
-                if (_GOAL_CURRENT_DIC == null)
-                {
-                    SetDefine();
-                }
-                return _GOAL_CURRENT_DIC;
-            }
-        }
+		/// <summary>
+		/// 体を旋回させる時の回転軸
+		/// 1: 右旋回
+		/// 2: 左旋回
+		/// 3: 右上 or 左下旋回（未使用）
+		/// 4: 伸展
+		/// 5: 左上 or 右下旋回（未使用）
+		/// 6: 左上 or 右下旋回（未使用）
+		/// 7: 屈曲
+		/// 8: 右上 or 左下旋回（未使用）
+		/// </summary>
+		public static readonly Dictionary<int, Vector3> ROT_AXIS = new Dictionary<int, Vector3> {
+
+			{ 1, Vector3.up },
+			{ 2, Vector3.up },
+			{ 3, new Vector3(-1f, 1f, 0f).normalized },
+			{ 4, Vector3.left },
+			{ 5, new Vector3( 1f, 1f, 0f).normalized },
+			{ 6, new Vector3( 1f, 1f, 0f).normalized },
+			{ 7, Vector3.left },
+			{ 8, new Vector3(-1f, 1f, 0f).normalized }
+		};
 
 
-        private static Dictionary<int, Dictionary<string, Vector3>> _DIAGNOSIS_ROT_MAX;
-        public static Dictionary<int, Dictionary<string, Vector3>> DIAGNOSIS_ROT_MAX
-        {
-            get
-            {
-                if (_DIAGNOSIS_ROT_MAX == null)
-                {
-                    SetDefine();
-                }
-                return _DIAGNOSIS_ROT_MAX;
-            }
-        }
+
+		/// <summary>
+		/// 体を旋回させる時、腰と肩それぞれを回転軸に対して何度まで回転できるかの定義
+		/// </summary>
+		public static readonly Dictionary<int, Dictionary<string, float>> DIAGNOSIS_ROT_MAX = new Dictionary<int, Dictionary<string, float>> {
+
+			{ 1, new Dictionary<string, float> { { BACK_ROT, -55f }, { SHOULDER_ROT, -55f } } },
+			{ 2, new Dictionary<string, float> { { BACK_ROT,  55f }, { SHOULDER_ROT,  55f } } },
+			{ 4, new Dictionary<string, float> { { BACK_ROT, -20f }, { SHOULDER_ROT, -80f } } },
+			{ 7, new Dictionary<string, float> { { BACK_ROT,  80f }, { SHOULDER_ROT,  30f } } }
+		};
+		// TODO: ななめ方向（3, 5, 6, 8）を使用する場合は定義を追加してください
+
+		private static Dictionary<int, Dictionary<string, float>> _DIAGNOSIS_ROT_MAX_RATIO = null;
+		/// <summary>
+		/// 体を最大まで旋回させた時、腰と肩それぞれがしめる回転の割合
+		/// </summary>
+		/// <value>The diagnosis rot max ratio.</value>
+		public static Dictionary<int, Dictionary<string, float>> DIAGNOSIS_ROT_MAX_RATIO {
+			get {
+				if (_DIAGNOSIS_ROT_MAX_RATIO == null) {
+					_DIAGNOSIS_ROT_MAX_RATIO = new Dictionary<int, Dictionary<string, float>>();
+
+					foreach (int direction in DIAGNOSIS_ROT_MAX.Keys) {
+						_DIAGNOSIS_ROT_MAX_RATIO.Add(direction, new Dictionary<string, float>());
+
+						float sum = 0f;
+						foreach (KeyValuePair<string, float> kvp in DIAGNOSIS_ROT_MAX[direction]) {
+							sum += kvp.Value;
+						}
+						foreach (KeyValuePair<string, float> kvp in DIAGNOSIS_ROT_MAX[direction]) {
+							_DIAGNOSIS_ROT_MAX_RATIO[direction].Add(kvp.Key, kvp.Value / sum);
+						}
+					}
+				}
+				return _DIAGNOSIS_ROT_MAX_RATIO;
+			}
+		}
+
+		/*
+	private static Dictionary<int, Dictionary<string, Vector3>> _GOAL_CURRENT_DIC;
+	public static Dictionary<int, Dictionary<string, Vector3>> GOAL_CURRENT_DIC
+	{
+		get
+		{
+			if (_GOAL_CURRENT_DIC == null)
+			{
+				SetDefine();
+			}
+			return _GOAL_CURRENT_DIC;
+		}
+	}
 
 
-        public static Dictionary<int, float> SHOULDER_ROT_Z = new Dictionary<int, float>()
+
+	private static Dictionary<int, Dictionary<string, Vector3>> _DIAGNOSIS_ROT_MAX;
+	public static Dictionary<int, Dictionary<string, Vector3>> DIAGNOSIS_ROT_MAX
+	{
+		get
+		{
+			if (_DIAGNOSIS_ROT_MAX == null)
+			{
+				SetDefine();
+			}
+			return _DIAGNOSIS_ROT_MAX;
+		}
+	}
+	*/
+
+
+		public static Dictionary<int, float> SHOULDER_ROT_Z = new Dictionary<int, float>()
         {
             {1,-90f},
             {2,90f},
