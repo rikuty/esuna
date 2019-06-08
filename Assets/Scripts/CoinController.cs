@@ -132,8 +132,8 @@ public class CoinController : UtilComponent {
     int count;
     IEnumerator CoroutineInstantiateBullets()
     {
-        Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
-        Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
+        Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
+        Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
 
         int rotateXBack = (int)(Mathf.Abs(backRot.x));
         int inRotateXBack = 360 - rotateXBack;
@@ -188,7 +188,7 @@ public class CoinController : UtilComponent {
         int resultZShoulderMax = (rotateZShoulderMax > inRotateZShoulderMax) ? inRotateZShoulderMax : rotateZShoulderMax;
 
 
-        count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-2;
+        count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-1;
 
         for (int i = 0; i < count-1; i++)
         {

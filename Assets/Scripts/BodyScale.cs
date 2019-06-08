@@ -152,9 +152,9 @@ public class BodyScale : UtilComponent {
 
     public void SetTransformTarget(int index)
     {
-        back.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT]);
+        back.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT]);
         shoulder.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
-        shoulder.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
+        shoulder.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
         bulletRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]] + DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
         hand.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.NEST_ROT[index]);
 
@@ -178,11 +178,58 @@ public class BodyScale : UtilComponent {
     /// ミスしたときに近づける
     /// </summary>
     /// <param name="index"></param>
-    public void SetCloseTarget(int index)
+    public void SetCloseTarget(int i)
     {
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT] = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[index][DEFINE_APP.BODY_SCALE.BACK_ROT]/20f);
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = DEFINE_APP.BODY_SCALE.GOAL_DIC[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] - (DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 20f);
-        SetTransformTarget(index);
+        Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / 15f);
+        Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 15f);
+
+        Vector3 backRotMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
+        Vector3 shoulderRotMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
+
+
+        float resultXBack = (Mathf.Abs(backRot.x) <= Mathf.Abs(backRotMin.x)) ? backRotMin.x : backRot.x;
+
+        float resultXShoulder = (Mathf.Abs(shoulderRot.x) <= Mathf.Abs(shoulderRotMin.x)) ? shoulderRotMin.x : shoulderRot.x;
+
+        float resultYBack = (Mathf.Abs(backRot.y) <= Mathf.Abs(backRotMin.y)) ? backRotMin.y : backRot.y;
+
+        float resultYShoulder = (Mathf.Abs(shoulderRot.y) <= Mathf.Abs(shoulderRotMin.y)) ? shoulderRotMin.y : shoulderRot.y;
+
+        float resultZBack = (Mathf.Abs(backRot.z) <= Mathf.Abs(backRotMin.z)) ? backRotMin.z : backRot.z;
+
+        float resultZShoulder = (Mathf.Abs(shoulderRot.z) <= Mathf.Abs(shoulderRotMin.z)) ? shoulderRotMin.z : shoulderRot.z;
+
+        DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
+        DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
+    }
+
+    /// <summary>
+    /// 成功したときに遠ざける
+    /// </summary>
+    /// <param name="index"></param>
+    public void SetDistantTarget(int i)
+    {
+        Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] + (DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / 15f);
+        Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] + (DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 15f);
+
+        Vector3 backRotMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
+        Vector3 shoulderRotMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
+
+
+        float resultXBack = (Mathf.Abs(backRot.x) <= Mathf.Abs(backRotMin.x)) ? backRotMin.x : backRot.x;
+
+        float resultXShoulder = (Mathf.Abs(shoulderRot.x) <= Mathf.Abs(shoulderRotMin.x)) ? shoulderRotMin.x : shoulderRot.x;
+
+        float resultYBack = (Mathf.Abs(backRot.y) <= Mathf.Abs(backRotMin.y)) ? backRotMin.y : backRot.y;
+
+        float resultYShoulder = (Mathf.Abs(shoulderRot.y) <= Mathf.Abs(shoulderRotMin.y)) ? shoulderRotMin.y : shoulderRot.y;
+
+        float resultZBack = (Mathf.Abs(backRot.z) <= Mathf.Abs(backRotMin.z)) ? backRotMin.z : backRot.z;
+
+        float resultZShoulder = (Mathf.Abs(shoulderRot.z) <= Mathf.Abs(shoulderRotMin.z)) ? shoulderRotMin.z : shoulderRot.z;
+
+        DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
+        DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
     }
 
 

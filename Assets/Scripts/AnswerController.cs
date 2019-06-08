@@ -67,10 +67,20 @@ public class AnswerController : UtilComponent
 
     void CallbackFromEggAnswer(Egg egg)
     {
+        // 失敗したときに近づける
+        if (egg.touchNest == null) {
+            bodyScale.SetCloseTarget(targetNumber);
+        }
+        // 成功したときに近づける
+        else
+        {
+            bodyScale.SetDistantTarget(targetNumber);
+        }
+
         //再度やらないのでコメントアウト
         //if (egg.touchNest != null)
         //{
-            switch (egg.answerType)
+        switch (egg.answerType)
             {
                 case DEFINE_APP.ANSWER_TYPE_ENUM.TUTORIAL:
                     if(tutorialTargets.Count == 0)
@@ -258,11 +268,6 @@ public class AnswerController : UtilComponent
 
     }
 
-
-    public void SetTransformTarget()
-    {
-        bodyScale.SetCloseTarget(targetNumber);
-    }
 
 
     public void SetActiveNest(bool active)
