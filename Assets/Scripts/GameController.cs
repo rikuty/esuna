@@ -70,9 +70,6 @@ public class GameController : UtilComponent {
 
     private void Awake()
     {
-        context.currentStatus = DEFINE_APP.STATUS_ENUM.PREPARE;
-        StartCoroutine("PrepareCoroutine");
-
         Cache.Initialize();
     }
     
