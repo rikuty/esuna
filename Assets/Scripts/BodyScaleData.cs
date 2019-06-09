@@ -19,7 +19,7 @@ public class BodyScaleData
 
 	public void SetDiagonal()
 	{
-		// 上下左右の旋回の測定後、ななめ方向を補間する
+		// 上下左右の回旋の測定後、ななめ方向を補間する
 
 		/*
 		_GOAL_DIC[3][BACK_ROT] = new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f);
