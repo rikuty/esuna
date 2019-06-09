@@ -9,9 +9,6 @@ public class BodyScaleData
 
 	public BodyScaleData()
 	{
-		this.goalDic = new Dictionary<int, float>();
-		this.goalCurrentDic = new Dictionary<int, Dictionary<string, float>>();
-
 		this.SetDefaultGoalDic();
 		this.SetDiagonal();
 	}
@@ -43,6 +40,8 @@ public class BodyScaleData
 
 	private void SetDefaultGoalDic()
 	{
+		this.goalDic = new Dictionary<int, float>();
+
 		foreach (int direction in DEFINE_APP.BODY_SCALE.ROT_AXIS.Keys) {
 			this.goalDic.Add(direction, 0f);
 		}
@@ -57,6 +56,8 @@ public class BodyScaleData
 
 	private void SetDefaultCurrentDiagonal()
 	{
+		this.goalCurrentDic = new Dictionary<int, Dictionary<string, float>>();
+
 		foreach (int direction in DEFINE_APP.BODY_SCALE.ROT_AXIS.Keys) {
 
 			/*
