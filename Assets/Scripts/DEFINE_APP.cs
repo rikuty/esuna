@@ -311,7 +311,7 @@ public partial class DEFINE_APP {//ApplictionDefine
         public static string SHOULDER_ROT = "SHOULDER_ROT";
 
 		/// <summary>
-		/// 体を旋回させる時の回転軸
+		/// 体を回旋させる時の回転軸
 		/// </summary>
 		public static readonly Dictionary<int, Dictionary<string, Vector3>> ROT_AXIS = new Dictionary<int, Dictionary<string, Vector3>> {
 
@@ -327,7 +327,7 @@ public partial class DEFINE_APP {//ApplictionDefine
 
 
 		/// <summary>
-		/// 体を旋回させる時、腰と肩それぞれを回転軸に対して何度まで回転できるかの定義
+		/// 体を回旋させる時、腰と肩それぞれを回転軸に対して何度まで回転できるかの定義
 		/// </summary>
 		public static readonly Dictionary<int, Dictionary<string, float>> DIAGNOSIS_ROT_MAX = new Dictionary<int, Dictionary<string, float>> {
 
@@ -343,7 +343,7 @@ public partial class DEFINE_APP {//ApplictionDefine
 
 		private static Dictionary<int, Dictionary<string, float>> _DIAGNOSIS_ROT_MAX_RATIO = null;
 		/// <summary>
-		/// 体を最大まで旋回させた時、腰と肩それぞれがしめる回転の割合
+		/// 体を最大まで回旋させた時、腰と肩それぞれがしめる回転の割合
 		/// </summary>
 		/// <value>The diagnosis rot max ratio.</value>
 		public static Dictionary<int, Dictionary<string, float>> DIAGNOSIS_ROT_MAX_RATIO {
