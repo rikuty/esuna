@@ -132,7 +132,6 @@ public class CoinController : UtilComponent {
     int count;
     IEnumerator CoroutineInstantiateBullets()
     {
-		// TODO:　いったんコメントアウト
 		/*
         Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
         Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
@@ -192,7 +191,30 @@ public class CoinController : UtilComponent {
 
         count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-1;
 		*/
-		count = 9;
+
+		float backAngle = Cache.user.goalCurrentRotDic[this.currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
+		float shoulderAngle = Cache.user.goalCurrentRotDic[this.currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
+
+		int rotateBack = (int)Mathf.Abs(backAngle);
+		int inRotateBack = 360 - rotateBack;
+		int resultBack = (rotateBack > inRotateBack) ? inRotateBack : rotateBack;
+
+		int rotateShoulder = (int)Mathf.Abs(shoulderAngle);
+		int inRotateShoulder = 360 - rotateShoulder;
+		int resultShoulder = (rotateShoulder > inRotateShoulder) ? inRotateShoulder : rotateShoulder;
+
+		float backAngleMax = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[this.currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
+		float shoulderAngleMax = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[this.currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
+
+		int rotateBackMax = (int)Mathf.Abs(backAngleMax);
+		int inRotateBackMax = 360 - rotateBackMax;
+		int resultBackMax = (rotateBackMax > inRotateBackMax) ? inRotateBackMax : rotateBackMax;
+
+		int rotateShoulderMax = (int)Mathf.Abs(shoulderAngleMax);
+		int inRotateShoulderMax = 360 - rotateShoulderMax;
+		int resultShoulderMax = (rotateShoulderMax > inRotateShoulderMax) ? inRotateShoulderMax : rotateShoulderMax;
+
+		count = (int)((float)(resultBack + resultShoulder) / (float)(resultBackMax + resultShoulderMax) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[this.currentIndex]) - 1;
 
 		for (int i = 0; i < count-1; i++)
         {

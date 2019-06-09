@@ -510,7 +510,7 @@ public class MeasureController : UtilComponent {
         log += ", " + angle;
 		//Debug.LogError(log);
 #endregion
-		Cache.user.calibrationData.maxRomMeasure.Add(this.currentIndex, angle);
+		Cache.user.calibrationData.maxRomMeasure[this.currentIndex] = angle;
 	}
 
 

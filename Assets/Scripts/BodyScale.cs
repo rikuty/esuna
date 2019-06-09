@@ -152,9 +152,9 @@ public class BodyScale : UtilComponent {
 
     public void SetTransformTarget(int index)
     {
-        back.localRotation = Quaternion.AngleAxis(Cache.user.goalCurrentRotDic[index][DEFINE_APP.BODY_SCALE.BACK_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index]);
+        back.localRotation = Quaternion.AngleAxis(Cache.user.goalCurrentRotDic[index][DEFINE_APP.BODY_SCALE.BACK_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index][DEFINE_APP.BODY_SCALE.BACK_ROT]);
         shoulder.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
-        shoulder.localRotation = Quaternion.AngleAxis(Cache.user.goalCurrentRotDic[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index]);
+        shoulder.localRotation = Quaternion.AngleAxis(Cache.user.goalCurrentRotDic[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
 		bulletRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]] + DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
         hand.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.NEST_ROT[index]);
 
@@ -268,12 +268,24 @@ public class BodyScale : UtilComponent {
     // Use this for initialization
     void Awake() {
 
-		foreach (int direction in DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS) {
+		Cache.user.goalCurrentRotDic = new Dictionary<int, Dictionary<string, float>>();
+
+		foreach (int direction in DEFINE_APP.BODY_SCALE.ROT_AXIS.Keys) {
+
+			float backAngle = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[direction][DEFINE_APP.BODY_SCALE.BACK_ROT] / 2f;
+			float shoulderAngle = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[direction][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 2f;
+
+			float backAngleMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[direction][DEFINE_APP.BODY_SCALE.BACK_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[direction];
+			float shoulderAngleMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[direction][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[direction];
+
+			float resultBack = Mathf.Abs(backAngle) <= Mathf.Abs(backAngleMin) ? backAngleMin : backAngle;
+			float resultShoulder = Mathf.Abs(shoulderAngle) <= Mathf.Abs(shoulderAngleMin) ? shoulderAngleMin : shoulderAngle;
+
 			Cache.user.goalCurrentRotDic.Add(
 				direction,
 				new Dictionary<string, float> {
-					{ DEFINE_APP.BODY_SCALE.BACK_ROT, 0f },
-					{ DEFINE_APP.BODY_SCALE.SHOULDER_ROT, 0f }
+					{ DEFINE_APP.BODY_SCALE.BACK_ROT, resultBack },
+					{ DEFINE_APP.BODY_SCALE.SHOULDER_ROT, resultShoulder }
 				}
 			);
 		}

@@ -292,27 +292,18 @@ public partial class DEFINE_APP {//ApplictionDefine
 
 		/// <summary>
 		/// 体を旋回させる時の回転軸
-		/// 1: 右旋回
-		/// 2: 左旋回
-		/// 3: 右上 or 左下旋回（未使用）
-		/// 4: 伸展
-		/// 5: 左上 or 右下旋回（未使用）
-		/// 6: 左上 or 右下旋回（未使用）
-		/// 7: 屈曲
-		/// 8: 右上 or 左下旋回（未使用）
 		/// </summary>
-		public static readonly Dictionary<int, Vector3> ROT_AXIS = new Dictionary<int, Vector3> {
+		public static readonly Dictionary<int, Dictionary<string, Vector3>> ROT_AXIS = new Dictionary<int, Dictionary<string, Vector3>> {
 
-			{ 1, Vector3.up },
-			{ 2, Vector3.up },
-			{ 3, new Vector3(-1f, 1f, 0f).normalized },
-			{ 4, Vector3.left },
-			{ 5, new Vector3( 1f, 1f, 0f).normalized },
-			{ 6, new Vector3( 1f, 1f, 0f).normalized },
-			{ 7, Vector3.left },
-			{ 8, new Vector3(-1f, 1f, 0f).normalized }
+			{ 1, new Dictionary<string, Vector3> { { BACK_ROT, Vector3.down }, { SHOULDER_ROT, Vector3.down } } },
+			{ 2, new Dictionary<string, Vector3> { { BACK_ROT, Vector3.up }, { SHOULDER_ROT, Vector3.up } } },
+			{ 3, new Dictionary<string, Vector3> { { BACK_ROT, Vector3.down }, { SHOULDER_ROT, new Vector3(-0.550f, -0.785f, 0f/*-0.286f*/) } } },
+			{ 4, new Dictionary<string, Vector3> { { BACK_ROT, Vector3.left }, { SHOULDER_ROT, Vector3.left } } },
+			{ 5, new Dictionary<string, Vector3> { { BACK_ROT, Vector3.up }, { SHOULDER_ROT, new Vector3(-0.550f,  0.785f,  0f/*0.286f*/) } } },
+			{ 6, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0.777f, -0.482f,  0f/*0.405f*/) }, { SHOULDER_ROT, Vector3.right } } },
+			{ 7, new Dictionary<string, Vector3> { { BACK_ROT, Vector3.right }, { SHOULDER_ROT, Vector3.right } } },
+			{ 8, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0.777f,  0.482f, 0f/*-0.405f*/) }, { SHOULDER_ROT, Vector3.right } } }
 		};
-
 
 
 		/// <summary>
@@ -320,12 +311,15 @@ public partial class DEFINE_APP {//ApplictionDefine
 		/// </summary>
 		public static readonly Dictionary<int, Dictionary<string, float>> DIAGNOSIS_ROT_MAX = new Dictionary<int, Dictionary<string, float>> {
 
-			{ 1, new Dictionary<string, float> { { BACK_ROT, -55f }, { SHOULDER_ROT, -55f } } },
-			{ 2, new Dictionary<string, float> { { BACK_ROT,  55f }, { SHOULDER_ROT,  55f } } },
-			{ 4, new Dictionary<string, float> { { BACK_ROT, -20f }, { SHOULDER_ROT, -80f } } },
-			{ 7, new Dictionary<string, float> { { BACK_ROT,  80f }, { SHOULDER_ROT,  30f } } }
+			{ 1, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 55f } } },
+			{ 2, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 55f } } },
+			{ 3, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 67f } } },
+			{ 4, new Dictionary<string, float> { { BACK_ROT, 20f }, { SHOULDER_ROT, 80f } } },
+			{ 5, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 67f } } },
+			{ 6, new Dictionary<string, float> { { BACK_ROT, 94f }, { SHOULDER_ROT, 30f } } },
+			{ 7, new Dictionary<string, float> { { BACK_ROT, 80f }, { SHOULDER_ROT, 30f } } },
+			{ 8, new Dictionary<string, float> { { BACK_ROT, 94f }, { SHOULDER_ROT, 30f } } }
 		};
-		// TODO: ななめ方向（3, 5, 6, 8）を使用する場合は定義を追加してください
 
 		private static Dictionary<int, Dictionary<string, float>> _DIAGNOSIS_ROT_MAX_RATIO = null;
 		/// <summary>
