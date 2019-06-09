@@ -71,6 +71,9 @@ public class GameController : UtilComponent {
     private void Awake()
     {
         Cache.Initialize();
+		if (Cache.user.bodyScaleData == null) {
+			Cache.user.bodyScaleData = new BodyScaleData();
+		}
     }
     
     private void Start()
