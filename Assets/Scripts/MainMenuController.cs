@@ -177,7 +177,7 @@ public class MainMenuController : UtilComponent
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("user_id", "1");
-		foreach (KeyValuePair<int, float> kvp in Cache.user.calibrationData.maxRomMeasure) {
+		foreach (KeyValuePair<int, float> kvp in Cache.user.bodyScaleData.goalDic) {
 			dic.Add(string.Format("max_rom_measure_{0}", kvp.Key), kvp.Value.ToString());
 		}
         dic.Add("pre_rest_pain", "5");

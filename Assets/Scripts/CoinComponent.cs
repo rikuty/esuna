@@ -39,10 +39,10 @@ public class CoinComponent : UtilComponent {
 
         trBackRoot.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 		//Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate).ToString());
-		trBackRoot.localRotation = Quaternion.AngleAxis(Cache.user.goalCurrentRotDic[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate, DEFINE_APP.BODY_SCALE.ROT_AXIS[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT]);
+		trBackRoot.localRotation = Quaternion.AngleAxis(Cache.user.bodyScaleData.goalCurrentDic[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate, DEFINE_APP.BODY_SCALE.ROT_AXIS[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT]);
 		//trBackRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT]*measureRate);
 		trSholderRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[controller];
-		trSholderRoot.localRotation = Quaternion.AngleAxis(Cache.user.goalCurrentRotDic[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate, DEFINE_APP.BODY_SCALE.ROT_AXIS[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
+		trSholderRoot.localRotation = Quaternion.AngleAxis(Cache.user.bodyScaleData.goalCurrentDic[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate, DEFINE_APP.BODY_SCALE.ROT_AXIS[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
 		//trSholderRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]*measureRate);
 		//Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate).ToString());        //Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate).ToString());
 		trArmLength.localRotation = Quaternion.Euler(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);

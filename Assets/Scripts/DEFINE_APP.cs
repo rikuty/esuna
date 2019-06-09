@@ -176,10 +176,9 @@ public partial class DEFINE_APP {//ApplictionDefine
             {8, 9}
         };
 
-
+		/*
         public static void SetDefine()
         {
-#if false
 			_GOAL_DIC = new Dictionary<int, Dictionary<string, Vector3>>()
             {
                     {1, new Dictionary<string, Vector3>{ { BACK_ROT, new Vector3(0f, -55f, 0f) }, { SHOULDER_ROT, new Vector3(0f, -55f, 0f) } } },
@@ -217,7 +216,6 @@ public partial class DEFINE_APP {//ApplictionDefine
             DIAGNOSIS_ROT_MAX.Add(5, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[2][SHOULDER_ROT].y, 0f) } });
             DIAGNOSIS_ROT_MAX.Add(6, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[1][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
             DIAGNOSIS_ROT_MAX.Add(8, new Dictionary<string, Vector3> { { BACK_ROT, new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f) }, { SHOULDER_ROT, new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f) } });
-#endif
 
 			SetDefineCurrentDiagonal();
         }
@@ -225,7 +223,6 @@ public partial class DEFINE_APP {//ApplictionDefine
 
         public static void SetDefineDiagonal()
         {
-#if false
 			_GOAL_DIC[3][BACK_ROT] = new Vector3(0f, GOAL_DIC[1][BACK_ROT].y, 0f);
             _GOAL_DIC[3][SHOULDER_ROT] = new Vector3(GOAL_DIC[4][SHOULDER_ROT].x / 2f, GOAL_DIC[1][SHOULDER_ROT].y, 0f);
             _GOAL_DIC[5][BACK_ROT] = new Vector3(0f, GOAL_DIC[2][BACK_ROT].y, 0f);
@@ -234,7 +231,7 @@ public partial class DEFINE_APP {//ApplictionDefine
             _GOAL_DIC[6][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
             _GOAL_DIC[8][BACK_ROT] = new Vector3(GOAL_DIC[7][BACK_ROT].x, GOAL_DIC[2][BACK_ROT].y, 0f);
             _GOAL_DIC[8][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
-#endif
+
             SetDefineCurrentDiagonal();
 
         }
@@ -242,7 +239,6 @@ public partial class DEFINE_APP {//ApplictionDefine
 
         public static void SetDefineCurrentDiagonal()
         {
-#if false
 			for (int i = 1; i <= _GOAL_DIC.Count; i++)
             {
                 Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / 2f);
@@ -267,14 +263,12 @@ public partial class DEFINE_APP {//ApplictionDefine
                 DEFINE_APP.BODY_SCALE._GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
                 DEFINE_APP.BODY_SCALE._GOAL_CURRENT_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
             }
-#endif
         }
 
 
 		/// <summary>
 		/// 8方向の最大角度を保存。
 		/// </summary>
-#if false
         private static Dictionary<int, Dictionary<string, Vector3>> _GOAL_DIC;
         public static Dictionary<int, Dictionary<string, Vector3>> GOAL_DIC {
             get
@@ -285,7 +279,33 @@ public partial class DEFINE_APP {//ApplictionDefine
                 return _GOAL_DIC;
             }
         }
-#endif
+        
+		private static Dictionary<int, Dictionary<string, Vector3>> _GOAL_CURRENT_DIC;
+		public static Dictionary<int, Dictionary<string, Vector3>> GOAL_CURRENT_DIC
+		{
+			get
+			{
+				if (_GOAL_CURRENT_DIC == null)
+				{
+					SetDefine();
+				}
+				return _GOAL_CURRENT_DIC;
+			}
+		}
+
+		private static Dictionary<int, Dictionary<string, Vector3>> _DIAGNOSIS_ROT_MAX;
+		public static Dictionary<int, Dictionary<string, Vector3>> DIAGNOSIS_ROT_MAX
+		{
+			get
+			{
+				if (_DIAGNOSIS_ROT_MAX == null)
+				{
+					SetDefine();
+				}
+				return _DIAGNOSIS_ROT_MAX;
+			}
+		}
+        */
 
 		public static string BACK_ROT = "BACK_ROT";
         public static string SHOULDER_ROT = "SHOULDER_ROT";
@@ -346,36 +366,6 @@ public partial class DEFINE_APP {//ApplictionDefine
 				return _DIAGNOSIS_ROT_MAX_RATIO;
 			}
 		}
-
-		/*
-	private static Dictionary<int, Dictionary<string, Vector3>> _GOAL_CURRENT_DIC;
-	public static Dictionary<int, Dictionary<string, Vector3>> GOAL_CURRENT_DIC
-	{
-		get
-		{
-			if (_GOAL_CURRENT_DIC == null)
-			{
-				SetDefine();
-			}
-			return _GOAL_CURRENT_DIC;
-		}
-	}
-
-
-
-	private static Dictionary<int, Dictionary<string, Vector3>> _DIAGNOSIS_ROT_MAX;
-	public static Dictionary<int, Dictionary<string, Vector3>> DIAGNOSIS_ROT_MAX
-	{
-		get
-		{
-			if (_DIAGNOSIS_ROT_MAX == null)
-			{
-				SetDefine();
-			}
-			return _DIAGNOSIS_ROT_MAX;
-		}
-	}
-	*/
 
 
 		public static Dictionary<int, float> SHOULDER_ROT_Z = new Dictionary<int, float>()

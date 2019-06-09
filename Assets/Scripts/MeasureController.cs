@@ -199,7 +199,7 @@ public class MeasureController : UtilComponent {
 
 		//SetActive(backTr, false);
 
-		Cache.user.calibrationData = new CalibrationData();
+		Cache.user.bodyScaleData = new BodyScaleData();
 	}
 
 
@@ -462,6 +462,7 @@ public class MeasureController : UtilComponent {
         hitDeltaTime = 0f;
         directionStatus = DirectionEnum.MEASURING;
 
+		/*
         Vector3 backRot = measureComponent.trBackRoot.localRotation.eulerAngles;
         Vector3 shoulderRot = measureComponent.trSholderRoot.localRotation.eulerAngles;
 
@@ -477,12 +478,11 @@ public class MeasureController : UtilComponent {
 
         float resultZShoulder = (shoulderRot.z >= 180f) ? shoulderRot.z-360f : shoulderRot.z;
 
-#if false
 		DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
-#endif
+		*/
 
-        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
+		OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
 
         if (result == OVRInput.Controller.RTouch)
         {
@@ -498,19 +498,16 @@ public class MeasureController : UtilComponent {
             handController.PlayHaptics(OVRInput.Controller.Touch);
         }
 
-#region TEMP_ONO
+		float angleSum = 0f;
 		float angle;
         Vector3 axis;
 
-		string log = "";
-
         measureComponent.trBackRoot.localRotation.ToAngleAxis(out angle, out axis);
-        log += angle;
-        measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
-        log += ", " + angle;
-		//Debug.LogError(log);
-#endregion
-		Cache.user.calibrationData.maxRomMeasure[this.currentIndex] = angle;
+		angleSum += angle;
+		measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
+		angleSum += angle;
+
+		Cache.user.bodyScaleData.goalDic[this.currentIndex] = angle;
 	}
 
 
@@ -592,8 +589,9 @@ public class MeasureController : UtilComponent {
                     SetActive(directRotateTrs[i], false);
                 }
 
-                //斜め方向を決定
-                DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
+				//斜め方向を決定
+				Cache.user.bodyScaleData.SetDiagonal();
+				//DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
 
                 return;
             }

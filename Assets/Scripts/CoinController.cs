@@ -192,8 +192,8 @@ public class CoinController : UtilComponent {
         count =(int)(((float)(resultXBack+resultYBack+resultZBack+resultXShoulder+resultYShoulder+resultZShoulder) / (float)(resultXBackMax + resultYBackMax + resultZBackMax + resultXShoulderMax + resultYShoulderMax + resultZShoulderMax)) * (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex])-1;
 		*/
 
-		float backAngle = Cache.user.goalCurrentRotDic[this.currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
-		float shoulderAngle = Cache.user.goalCurrentRotDic[this.currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
+		float backAngle = Cache.user.bodyScaleData.goalCurrentDic[this.currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT];
+		float shoulderAngle = Cache.user.bodyScaleData.goalCurrentDic[this.currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT];
 
 		int rotateBack = (int)Mathf.Abs(backAngle);
 		int inRotateBack = 360 - rotateBack;

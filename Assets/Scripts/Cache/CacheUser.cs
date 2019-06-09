@@ -4,17 +4,15 @@ public static partial class Cache
 {
 	public class User : CacheBase
 	{
-		public CalibrationData calibrationData;
+		// フロントでのみ使用
+		public BodyScaleData bodyScaleData;
+
 		public UserData userData;
-
-		public Dictionary<int, Dictionary<string, float>> goalCurrentRotDic;
-
 
 		public override void Unload()
 		{
-			this.calibrationData = null;
+			this.bodyScaleData = null;
 			this.userData = null;
-			this.goalCurrentRotDic = null;
 		}
 	}
 }
