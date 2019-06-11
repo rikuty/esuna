@@ -70,7 +70,7 @@ public class MeasureController : UtilComponent {
     public RenderTexture RenderTextureRef;
 
     [SerializeField] private AudioSource audioSourceVoice;
-    [SerializeField] private List<AudioClip> diganosisVoiceList;
+    [SerializeField] private List<AudioClip> diagnosisVoiceList;
     [SerializeField] private List<AudioClip> directVoiceList;
     [SerializeField] private List<AudioClip> nrsVoiceList;
     [SerializeField] private List<AudioClip> dialogVoiceList;
@@ -82,12 +82,12 @@ public class MeasureController : UtilComponent {
         PREPARING = -1,
         BASE = 0,//初期位置設定
         SHOULDER_ARM = 1, //肩の高さ&腕の長さ設定
-        DIRECT = 4, //８方向
-        NRS_PRE = 5, //NRS前
+        DIRECT = 5, //８方向
+        NRS_PRE = 6, //NRS前
         FINISH = 2, //測定終了
-        END = 6, //  測定終了待ち
-        NRS_POST = 7, //NRS後
-        RESULT = 8 //NRS後
+        TRAINING = 7, //  測定終了待ち
+        NRS_POST = 3, //NRS後
+        RESULT = 4 //NRS後
     }
 
     DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.START;
@@ -109,7 +109,9 @@ public class MeasureController : UtilComponent {
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
        { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "" },
        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定終了" },
-       { DIAGNOSIS_STATUS_ENUM.END, "測定終了" }
+       { DIAGNOSIS_STATUS_ENUM.TRAINING, "測定終了" },
+       { DIAGNOSIS_STATUS_ENUM.NRS_POST, "" },
+       { DIAGNOSIS_STATUS_ENUM.RESULT, "" }
    };
 
     Dictionary<DIAGNOSIS_STATUS_ENUM, string> statusTextDetail = new Dictionary<DIAGNOSIS_STATUS_ENUM, string>
@@ -121,7 +123,10 @@ public class MeasureController : UtilComponent {
        { DIAGNOSIS_STATUS_ENUM.DIRECT, "" },
        { DIAGNOSIS_STATUS_ENUM.NRS_PRE, "" },
        { DIAGNOSIS_STATUS_ENUM.FINISH, "測定が終了しました。トレーニング場所へ移動します。" },
-       { DIAGNOSIS_STATUS_ENUM.END, "測定が終了しました。トレーニング場所へ移動します。" }
+       { DIAGNOSIS_STATUS_ENUM.TRAINING, "測定が終了しました。トレーニング場所へ移動します。" },
+       { DIAGNOSIS_STATUS_ENUM.NRS_POST, "" },
+       { DIAGNOSIS_STATUS_ENUM.RESULT, "" },
+
    };
 
 
@@ -140,13 +145,13 @@ public class MeasureController : UtilComponent {
 
     Dictionary<int, string> directDetail = new Dictionary<int, string>
    {
-       { 1, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。"},
-       { 2, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。" },
+       { 1, "右腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番にボールに触れてください。"},
+       { 2, "左腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番にボールに触れてください。" },
        { 3, "" },
-       { 4, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。" },
+       { 4, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番にボールに触れてください。" },
        { 5, "" },
        { 6, "" },
-       { 7, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番に球に触れてください。" },
+       { 7, "両腕を真っすぐ前に伸ばし、手のシルエットの位置に手を置き、腰と腕をひねりながら順番にボールに触れてください。" },
        { 8, "" }
    };
 
@@ -202,6 +207,7 @@ public class MeasureController : UtilComponent {
 
     OVRInput.Controller controller;
 
+    Action callbackShowResult;
 
 
     public void Init(Action callbackFinish)
@@ -287,7 +293,7 @@ public class MeasureController : UtilComponent {
 
         currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
         ShowUI(true);
-        audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+        audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
         audioSourceVoice.Play();
         StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
 
@@ -336,7 +342,7 @@ public class MeasureController : UtilComponent {
 
             ShowUI(false);
 
-            audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+            audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
             audioSourceVoice.Play();
             StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
 
@@ -393,6 +399,7 @@ public class MeasureController : UtilComponent {
     {
         if (currentStatus == DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM)
         {
+            currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
             audioSourceVoice.clip = dialogVoiceList[1];
             audioSourceVoice.Play();
             dialog.Init(CallbackShoulderArmOK, FinishPreparing);
@@ -404,7 +411,6 @@ public class MeasureController : UtilComponent {
     void CallbackShoulderArmOK()
     {
         isWaitingStartDiagnosis = true;
-        currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
         Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
         DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
@@ -448,8 +454,6 @@ public class MeasureController : UtilComponent {
 
         //shoulderTr.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[currentIndex - 1]];
 
-        directionStatus = DirectionEnum.MEASURING;
-
         audioSourceVoice.clip = directVoiceList[currentDiagnosisDirectsIndex];
         audioSourceVoice.Play();
 
@@ -486,6 +490,7 @@ public class MeasureController : UtilComponent {
     {
 
         hitDeltaTime = 0f;
+        directionStatus = DirectionEnum.MEASURING;
 
         Vector3 backRot = measureComponent.trBackRoot.localRotation.eulerAngles;
         Vector3 shoulderRot = measureComponent.trSholderRoot.localRotation.eulerAngles;
@@ -579,6 +584,8 @@ public class MeasureController : UtilComponent {
 
      void UpdateDirection()
     {
+        if (currentStatus != DIAGNOSIS_STATUS_ENUM.DIRECT) return;
+
         if(directionStatus == DirectionEnum.MEASURING)
         {
             hitDeltaTime += Time.deltaTime;
@@ -706,31 +713,29 @@ public class MeasureController : UtilComponent {
         {
             currentNRSIndex = 0;
 
-            audioSourceVoice.clip = dialogVoiceList[3];
-            audioSourceVoice.Play();
-            dialog.Init(CallbackNRSOK, InitNRSComponents);
-            dialog.ShowDialog(dialogDetail[3]);
+            if (currentStatus == DIAGNOSIS_STATUS_ENUM.NRS_PRE)
+            {
+
+                audioSourceVoice.clip = dialogVoiceList[3];
+                audioSourceVoice.Play();
+                dialog.Init(CallbackNRSPreOK, InitNRSComponents);
+                dialog.ShowDialog(dialogDetail[3]);
+            }else if(currentStatus == DIAGNOSIS_STATUS_ENUM.NRS_POST)
+            {
+                audioSourceVoice.clip = diagnosisVoiceList[3];
+                audioSourceVoice.Play();
+                dialog.Init(CallbackNRSPostOK, InitNRSComponents);
+                dialog.ShowDialog(dialogDetail[3]);
+            }
         }
         else
         {
             StartCoroutine("CoroutineNextNRS");
         }
 
-        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
 
-        if (result == OVRInput.Controller.RTouch)
-        {
-            handController.PlayHaptics(result);
-
-        }
-        else if (result == OVRInput.Controller.LTouch)
-        {
-            handController.PlayHaptics(result);
-        }
-        else if (result == OVRInput.Controller.Touch)
-        {
-            handController.PlayHaptics(OVRInput.Controller.Touch);
-        }
+        // 振動
+        handController.PlayHaptics(nrsComponent.controller);
     }
 
     IEnumerator CoroutineNextNRS()
@@ -741,9 +746,15 @@ public class MeasureController : UtilComponent {
     }
 
 
-    void CallbackNRSOK()
+    void CallbackNRSPreOK()
     {
         StartCoroutine("CoroutineFinishNRSPre");
+
+    }
+
+    void CallbackNRSPostOK()
+    {
+        StartCoroutine("CoroutineFinishNRSPost");
 
     }
 
@@ -753,7 +764,7 @@ public class MeasureController : UtilComponent {
         yield return new WaitForSeconds(1f);
         SetActive(objNRS, false);
         currentStatus = DIAGNOSIS_STATUS_ENUM.FINISH;
-        audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+        audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
         audioSourceVoice.Play();
     }
 
@@ -761,16 +772,39 @@ public class MeasureController : UtilComponent {
 
     void UpdateFinish()
     {
-        this.currentStatus = DIAGNOSIS_STATUS_ENUM.END;
+        this.currentStatus = DIAGNOSIS_STATUS_ENUM.TRAINING;
         StartCoroutine(CoroutineWaitNextStep());
         callbackFinish();
 
     }
 
 
-    public void SetAfterTraining()
+
+    public void SetAfterTraining(Action callbackShowResult)
     {
+        this.callbackShowResult = callbackShowResult;
         this.currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_POST;
+        audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
+        audioSourceVoice.Play();
+        StartCoroutine(FinishVoiceAfterTraining(audioSourceVoice.clip.length));
+    }
+
+
+    private IEnumerator FinishVoiceAfterTraining(float clipLength)
+    {
+        yield return new WaitForSeconds(clipLength);
+        InitNRSComponents();
+    }
+
+
+    IEnumerator CoroutineFinishNRSPost()
+    {
+        yield return new WaitForSeconds(1f);
+        SetActive(objNRS, false);
+        currentStatus = DIAGNOSIS_STATUS_ENUM.RESULT;
+        audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
+        audioSourceVoice.Play();
+        callbackShowResult();
     }
 
 
@@ -801,6 +835,7 @@ public class MeasureController : UtilComponent {
                 SetLabel(txtDetail, directDetail[currentIndex]);
                 break;
             case DIAGNOSIS_STATUS_ENUM.NRS_PRE:
+            case DIAGNOSIS_STATUS_ENUM.NRS_POST:
                 SetLabel(txtTitle, NRSTitle[currentNRSIndex]);
                 SetLabel(txtDetail, NRSDetail[currentNRSIndex]);
                 break;

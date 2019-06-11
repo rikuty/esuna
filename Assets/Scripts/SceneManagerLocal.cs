@@ -89,7 +89,7 @@ public class SceneManagerLocal : UtilComponent
         {
             SetActive(objsTitleScene, true);
             SetActive(objsGameScene, false);
-            mainMenuController.ShowResult();
+            mainMenuController.FinishTraining();
         }
     }
 }
