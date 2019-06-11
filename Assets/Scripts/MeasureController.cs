@@ -303,6 +303,9 @@ public class MeasureController : UtilComponent {
 
             audioSourceVoice.clip = backVoice;
             audioSourceVoice.Play();
+
+            yield return new WaitForSeconds(audioSourceVoice.clip.length);
+
             NextBase();
         }
     }
@@ -445,6 +448,8 @@ public class MeasureController : UtilComponent {
 
         //shoulderTr.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[currentIndex - 1]];
 
+        directionStatus = DirectionEnum.MEASURING;
+
         audioSourceVoice.clip = directVoiceList[currentDiagnosisDirectsIndex];
         audioSourceVoice.Play();
 
@@ -481,7 +486,6 @@ public class MeasureController : UtilComponent {
     {
 
         hitDeltaTime = 0f;
-        directionStatus = DirectionEnum.MEASURING;
 
         Vector3 backRot = measureComponent.trBackRoot.localRotation.eulerAngles;
         Vector3 shoulderRot = measureComponent.trSholderRoot.localRotation.eulerAngles;
