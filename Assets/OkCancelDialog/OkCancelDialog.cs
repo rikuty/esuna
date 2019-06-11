@@ -1,24 +1,52 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace OKCANCELDIALOG
 {
-	public class OkCancelDialog : MonoBehaviour
+	public class OkCancelDialog : UtilComponent
 	{
-		public Vector3 StartScale;
-		public Vector3 ShowScale;
-		public float ShowDuration = 1f;
+        [SerializeField] Text txtExplain;
+        [SerializeField] GameObject objNG;
+        [SerializeField] HitDialog hitNG;
+        [SerializeField] HitDialog hitOK;
 
-		void Start()
+        float ShowDuration = 0.3f;
+
+        Action callbackNG;
+        Action callbackOK;
+
+
+        public void Init(Action callbackOK, Action callbackNG=null)
+        {
+            this.callbackNG = callbackNG;
+            this.callbackOK = callbackOK;
+            hitNG.Init();
+            hitOK.Init();
+            SetActive(objNG, callbackNG != null);
+        }
+
+        public void ShowDialog(string text)
 		{
-			transform.localScale = StartScale;
+			txtExplain.text = text;
+			transform.DOScale(Vector3.one, ShowDuration);
 		}
 
-		public void ShowDialog(string text)
-		{
-			transform.Find("Canvas/Panel/Text").GetComponent<Text>().text = text;
-			transform.DOScale(ShowScale, ShowDuration);
-		}
-	}
+
+        public void OK()
+        {
+            callbackOK();
+            transform.DOScale(Vector3.zero, ShowDuration);
+
+        }
+
+
+        public void NG()
+        {
+            callbackNG();
+            transform.DOScale(Vector3.zero, ShowDuration);
+
+        }
+    }
 }

@@ -59,13 +59,13 @@ public partial class DEFINE_APP {//ApplictionDefine
     public static Vector3 ANSWERING_GRIP = new Vector3(-0.06f, -0.03f, 0f);
     public static Vector3 NORMAL_GRIP_R = new Vector3(-0.02f, 0f, 0f);
 
-    public static Vector3 LEFT_HAND_MEASURE_POS_7 = new Vector3(0f, 0.025f, 0.1f);
-    public static Vector3 LEFT_HAND_MEASURE_ROT_7 = new Vector3(-30f, -40f, 0f);
-    public static Vector3 RIGHT_HAND_MEASURE_POS_7 = new Vector3(0f, -0.025f, 0.1f);
-    public static Vector3 RIGHT_HAND_MEASURE_ROT_7 = new Vector3(-30f, 40f, 0f);
+    public static Vector3 LEFT_HAND_MEASURE_POS_7 = new Vector3(0f, -0.05f, 0.1f);
+    public static Vector3 LEFT_HAND_MEASURE_ROT_7 = new Vector3(0f, 0f, 90f);
+    public static Vector3 RIGHT_HAND_MEASURE_POS_7 = new Vector3(0f, -0.05f, 0.1f);
+    public static Vector3 RIGHT_HAND_MEASURE_ROT_7 = new Vector3(0f,0f, -90f);
 
     public static Vector3 LEFT_HAND_MEASURE_POS_4 = new Vector3(0f, 0.05f, 0.1f);
-    public static Vector3 LEFT_HAND_MEASURE_ROT_4 = new Vector3(-10f, 0f, -40f);
+    public static Vector3 LEFT_HAND_MEASURE_ROT_4 = new Vector3(0f, 0f, -40f);
     public static Vector3 RIGHT_HAND_MEASURE_POS_4 = new Vector3(0f, 0.05f, 0.1f);
     public static Vector3 RIGHT_HAND_MEASURE_ROT_4 = new Vector3(-10f, 0f, 40f);
 

@@ -47,6 +47,8 @@ public class SceneManagerLocal : UtilComponent
         {
             Scene sceneGame = SceneManager.GetSceneByName("Game");
             objsGameScene = sceneGame.GetRootGameObjects();
+            if (objsGameScene.Length == 0) return;
+
             gameController = objsGameScene[0].GetComponent<GameController>();
         }
 
@@ -54,6 +56,7 @@ public class SceneManagerLocal : UtilComponent
         {
             Scene sceneTitle = SceneManager.GetSceneByName("Title");
             objsTitleScene = sceneTitle.GetRootGameObjects();
+            if (objsTitleScene.Length == 0) return;
             mainMenuController = objsTitleScene[0].GetComponent<MainMenuController>();
 
         }

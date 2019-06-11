@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 
 using System.IO;
+using OKCANCELDIALOG;
 
 using System.Drawing;
 public class MeasureController : UtilComponent {
@@ -55,6 +56,8 @@ public class MeasureController : UtilComponent {
 
     public HandController handController;
 
+    public OkCancelDialog dialog;
+
 
     public MeasureComponent[] measureComponents;
     public MeasureStartComponent measureStartRightComponent;
@@ -70,19 +73,21 @@ public class MeasureController : UtilComponent {
     [SerializeField] private List<AudioClip> diganosisVoiceList;
     [SerializeField] private List<AudioClip> directVoiceList;
     [SerializeField] private List<AudioClip> nrsVoiceList;
+    [SerializeField] private List<AudioClip> dialogVoiceList;
     [SerializeField] private AudioClip backVoice;
 
     enum DIAGNOSIS_STATUS_ENUM
     {
-        START = -1, //初期状態
-        PREPARING = 0,
-        BASE = 1,//初期位置設定
-        SHOULDER_ARM = 2, //肩の高さ&腕の長さ設定
+        START = -2, //初期状態
+        PREPARING = -1,
+        BASE = 0,//初期位置設定
+        SHOULDER_ARM = 1, //肩の高さ&腕の長さ設定
         DIRECT = 4, //８方向
         NRS_PRE = 5, //NRS前
-        FINISH = 3, //測定終了
+        FINISH = 2, //測定終了
         END = 6, //  測定終了待ち
-        NRS_POST = 7 //NRS後
+        NRS_POST = 7, //NRS後
+        RESULT = 8 //NRS後
     }
 
     DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.START;
@@ -161,6 +166,15 @@ public class MeasureController : UtilComponent {
    };
 
 
+    Dictionary<int, string> dialogDetail = new Dictionary<int, string>
+   {
+       { 0, "測定を開始します。\n前方に出ているウィンドウの決定ボタンを押してください。"},
+       { 1, "身体情報を取り込みました。\n先に進みますか？" },
+       { 2, "可動域を取り込みました。\n先に進みますか？" },
+       { 3, "アンケートに回答しました。。\n先に進みますか？" },
+   };
+
+
     Action callbackFinish;
 
     bool isWaitingStartDiagnosis = false;
@@ -192,7 +206,7 @@ public class MeasureController : UtilComponent {
 
     public void Init(Action callbackFinish)
     {
-        SetActive(objUI, true);
+        SetActive(objUI, false);
 
         this.callbackFinish = callbackFinish;
         currentStatus = DIAGNOSIS_STATUS_ENUM.START;
@@ -200,17 +214,20 @@ public class MeasureController : UtilComponent {
 
         //SetActive(backTr, false);
 
+
     }
 
 
     public void StartDiagnosis()
     {
-        ShowUI(true);
+        ShowUI(false);
         isWaitingStartDiagnosis = true;
-        StartCoroutine(CoroutineWaitNextStep());
         currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARING;
-        audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+
+        audioSourceVoice.clip = dialogVoiceList[0];
         audioSourceVoice.Play();
+        dialog.Init(FinishPreparing);
+        dialog.ShowDialog(dialogDetail[0]);
 
         // ここからはTriggerを使う。
         //rightHandTr.GetComponent<MeshCollider>().isTrigger = true;
@@ -247,9 +264,7 @@ public class MeasureController : UtilComponent {
 
         switch (currentStatus)
         {
-            case DIAGNOSIS_STATUS_ENUM.PREPARING:
-                UpdatePreparing();
-                break;
+
             case DIAGNOSIS_STATUS_ENUM.BASE:
                 UpdateBase();
                 break;
@@ -266,17 +281,16 @@ public class MeasureController : UtilComponent {
 	}
 
 
-    void UpdatePreparing()
-    {
-        if (OVRInput.GetDown(OVRInput.Button.Any))
-        {
-            currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
-            ShowUI(true);
-            audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
-            audioSourceVoice.Play();
-            StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
 
-        }
+    void FinishPreparing()
+    {
+
+        currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
+        ShowUI(true);
+        audioSourceVoice.clip = diganosisVoiceList[(int)currentStatus];
+        audioSourceVoice.Play();
+        StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
+
 
     }
 
@@ -376,23 +390,30 @@ public class MeasureController : UtilComponent {
     {
         if (currentStatus == DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM)
         {
-            isWaitingStartDiagnosis = true;
-            currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
-
-            Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
-            DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
-            DEFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
-
-            //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
-            //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
-
-
-            ShowUI(false);
-
-            StartCoroutine(CoroutineWaitNextStep(InitDirection));
-
-
+            audioSourceVoice.clip = dialogVoiceList[1];
+            audioSourceVoice.Play();
+            dialog.Init(CallbackShoulderArmOK, FinishPreparing);
+            dialog.ShowDialog(dialogDetail[1]);
         }
+    }
+
+
+    void CallbackShoulderArmOK()
+    {
+        isWaitingStartDiagnosis = true;
+        currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
+
+        Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
+        DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+        DEFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+
+        //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
+        //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
+
+
+        ShowUI(false);
+
+        StartCoroutine(CoroutineWaitNextStep(InitDirection));
     }
 
 
@@ -567,19 +588,14 @@ public class MeasureController : UtilComponent {
             if(currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
-
-                ShowUI(false);
+                currentDiagnosisDirectsIndex = 0;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_PRE;
-                currentNRSIndex = 0;
-                InitNRSComponents();
 
-                for (int i = 0; i < directRotateTrs.Length; i++)
-                {
-                    SetActive(directRotateTrs[i], false);
-                }
+                audioSourceVoice.clip = dialogVoiceList[2];
+                audioSourceVoice.Play();
+                dialog.Init(CallbackDirectionOK, PreparingDirection);
+                dialog.ShowDialog(dialogDetail[2]);
 
-                //斜め方向を決定
-                DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
 
                 return;
             }
@@ -640,6 +656,22 @@ public class MeasureController : UtilComponent {
     }
 
 
+    void CallbackDirectionOK()
+    {
+        ShowUI(false);
+        currentNRSIndex = 0;
+        InitNRSComponents();
+
+        for (int i = 0; i < directRotateTrs.Length; i++)
+        {
+            SetActive(directRotateTrs[i], false);
+        }
+
+        //斜め方向を決定
+        DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
+    }
+
+
     void InitNRSComponents()
     {
         audioSourceVoice.clip = nrsVoiceList[currentNRSIndex];
@@ -668,7 +700,12 @@ public class MeasureController : UtilComponent {
 
         if(currentNRSIndex >= 3)
         {
-            StartCoroutine("CoroutineFinishNRSPre");
+            currentNRSIndex = 0;
+
+            audioSourceVoice.clip = dialogVoiceList[3];
+            audioSourceVoice.Play();
+            dialog.Init(CallbackNRSOK, InitNRSComponents);
+            dialog.ShowDialog(dialogDetail[3]);
         }
         else
         {
@@ -700,6 +737,13 @@ public class MeasureController : UtilComponent {
     }
 
 
+    void CallbackNRSOK()
+    {
+        StartCoroutine("CoroutineFinishNRSPre");
+
+    }
+
+
     IEnumerator CoroutineFinishNRSPre()
     {
         yield return new WaitForSeconds(1f);
@@ -717,6 +761,12 @@ public class MeasureController : UtilComponent {
         StartCoroutine(CoroutineWaitNextStep());
         callbackFinish();
 
+    }
+
+
+    public void SetAfterTraining()
+    {
+        this.currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_POST;
     }
 
 

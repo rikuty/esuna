@@ -11,7 +11,7 @@ using UnityEngine;
 
 public class Context
 {
-    public readonly float PLAY_TIME = 60.0f;
+    public readonly float PLAY_TIME = 60f;
 
     public float currentPlayTime { get; private set; }
 

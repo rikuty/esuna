@@ -318,7 +318,10 @@ public class CoinController : UtilComponent {
             }
 
         }
-        preIsAnswering = context.isAnswering;
+        if (context != null)
+        {
+            preIsAnswering = context.isAnswering;
+        }
 
     }
 

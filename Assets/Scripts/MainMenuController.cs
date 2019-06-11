@@ -198,6 +198,7 @@ public class MainMenuController : UtilComponent
         SetActive(objResult, true);
 
         resultFormatArea.Init();
+        measureController.SetAfterTraining();
     }
 
  //   IEnumerator LoadData() {
