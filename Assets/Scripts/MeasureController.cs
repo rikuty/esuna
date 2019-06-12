@@ -307,11 +307,6 @@ public class MeasureController : UtilComponent {
         {
             yield return new WaitForSeconds(clipLength);
 
-            audioSourceVoice.clip = backVoice;
-            audioSourceVoice.Play();
-
-            yield return new WaitForSeconds(audioSourceVoice.clip.length);
-
             NextBase();
         }
     }
@@ -594,9 +589,9 @@ public class MeasureController : UtilComponent {
         // ボタン押下、最大角度確定処理
         if (directionStatus == DirectionEnum.MEASURING && (CheckThumbstickDown() || hitDeltaTime > 2f))
         {
-
+            hitDeltaTime = 0f;
             // 全部の方向が終わった時
-            if(currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
+            if (currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
                 currentDiagnosisDirectsIndex = 0;
