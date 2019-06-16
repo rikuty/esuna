@@ -276,8 +276,9 @@ public class GameController : UtilComponent {
 
         this.context.isAnswering = false;
 
-
         this.context.currentStatus = DEFINE_APP.STATUS_ENUM.SHOW_RESLUT;
+
+        Cache.user.MeasureData.SetMaxRomExercise(Cache.user.BodyScaleData.goalCurrentDic);
 
         StartCoroutine(ResultCoroutine());
     }
@@ -304,39 +305,39 @@ public class GameController : UtilComponent {
         string url = "http://dev.rikuty.net/api/SetResultData.php";
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
-        
-        dic.Add("user_id", "1");
-        dic.Add("max_rom_exercise_1", "44");
-        dic.Add("max_rom_exercise_2", "44");
-        dic.Add("max_rom_exercise_3", "44");
-        dic.Add("max_rom_exercise_4", "44");
-        dic.Add("max_rom_exercise_5", "44");
-        dic.Add("max_rom_exercise_6", "44");
-        dic.Add("max_rom_exercise_7", "44");
-        dic.Add("max_rom_exercise_8", "44");
-        dic.Add("average_max_rom", "40");
-        dic.Add("average_time_1", "10");
-        dic.Add("average_time_2", "10");
-        dic.Add("average_time_3", "10");
-        dic.Add("average_time_4", "10");
-        dic.Add("average_time_5", "10");
-        dic.Add("average_time_6", "10");
-        dic.Add("average_time_7", "10");
-        dic.Add("average_time_8", "10");
-        dic.Add("appraisal_value_1", "3");
-        dic.Add("appraisal_value_2", "3");
-        dic.Add("appraisal_value_3", "3");
-        dic.Add("appraisal_value_4", "3");
-        dic.Add("appraisal_value_5", "3");
-        dic.Add("appraisal_value_6", "3");
-        dic.Add("appraisal_value_7", "3");
-        dic.Add("appraisal_value_8", "3");
-        dic.Add("post_rest_pain", "5");
-        dic.Add("post_move_pain", "5");
-        dic.Add("post_move_fear", "5");
-        dic.Add("point", "6666");
-        dic.Add("rom_value", "33");
-        dic.Add("point_value", "33");
+
+        dic.Add("user_id", Cache.user.UserData.user_id);
+        dic.Add("max_rom_exercise_1", Cache.user.MeasureData.max_rom_exercise_1.ToString());
+        dic.Add("max_rom_exercise_2", Cache.user.MeasureData.max_rom_exercise_2.ToString());
+        dic.Add("max_rom_exercise_3", Cache.user.MeasureData.max_rom_exercise_3.ToString());
+        dic.Add("max_rom_exercise_4", Cache.user.MeasureData.max_rom_exercise_4.ToString());
+        dic.Add("max_rom_exercise_5", Cache.user.MeasureData.max_rom_exercise_5.ToString());
+        dic.Add("max_rom_exercise_6", Cache.user.MeasureData.max_rom_exercise_6.ToString());
+        dic.Add("max_rom_exercise_7", Cache.user.MeasureData.max_rom_exercise_7.ToString());
+        dic.Add("max_rom_exercise_8", Cache.user.MeasureData.max_rom_exercise_8.ToString());
+        dic.Add("average_max_rom", Cache.user.MeasureData.average_max_rom.ToString());
+        dic.Add("average_time_1", Cache.user.MeasureData.average_time_1.ToString());
+        dic.Add("average_time_2", Cache.user.MeasureData.average_time_2.ToString());
+        dic.Add("average_time_3", Cache.user.MeasureData.average_time_3.ToString());
+        dic.Add("average_time_4", Cache.user.MeasureData.average_time_4.ToString());
+        dic.Add("average_time_5", Cache.user.MeasureData.average_time_5.ToString());
+        dic.Add("average_time_6", Cache.user.MeasureData.average_time_6.ToString());
+        dic.Add("average_time_7", Cache.user.MeasureData.average_time_7.ToString());
+        dic.Add("average_time_8", Cache.user.MeasureData.average_time_8.ToString());
+        dic.Add("appraisal_value_1", Cache.user.MeasureData.appraisal_value_1.ToString());
+        dic.Add("appraisal_value_2", Cache.user.MeasureData.appraisal_value_2.ToString());
+        dic.Add("appraisal_value_3", Cache.user.MeasureData.appraisal_value_3.ToString());
+        dic.Add("appraisal_value_4", Cache.user.MeasureData.appraisal_value_4.ToString());
+        dic.Add("appraisal_value_5", Cache.user.MeasureData.appraisal_value_5.ToString());
+        dic.Add("appraisal_value_6", Cache.user.MeasureData.appraisal_value_6.ToString());
+        dic.Add("appraisal_value_7", Cache.user.MeasureData.appraisal_value_7.ToString());
+        dic.Add("appraisal_value_8", Cache.user.MeasureData.appraisal_value_8.ToString());
+        dic.Add("post_rest_pain", Cache.user.MeasureData.post_rest_pain.ToString());
+        dic.Add("post_move_pain", Cache.user.MeasureData.post_move_pain.ToString());
+        dic.Add("post_move_fear", Cache.user.MeasureData.post_move_fear.ToString());
+        dic.Add("point", Cache.user.MeasureData.point.ToString());
+        dic.Add("rom_value", Cache.user.MeasureData.rom_value.ToString());
+        dic.Add("point_value", Cache.user.MeasureData.point_value.ToString());
 
         StartCoroutine(HttpPost(url, dic));
     }
