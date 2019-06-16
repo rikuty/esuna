@@ -112,4 +112,20 @@ public class MeasureData
 		}
 	}
 	#endregion
+
+
+	#region ゲームプレイ時のデータ設定用
+
+	public void SetMaxRomExercise(Dictionary<int, float> goalDic)
+	{
+		this.max_rom_exercise_1 = goalDic.ContainsKey(1) ? goalDic[1] : 0f;
+		this.max_rom_exercise_2 = goalDic.ContainsKey(2) ? goalDic[2] : 0f;
+		this.max_rom_exercise_3 = goalDic.ContainsKey(3) ? goalDic[3] : 0f;
+		this.max_rom_exercise_4 = goalDic.ContainsKey(4) ? goalDic[4] : 0f;
+		this.max_rom_exercise_5 = goalDic.ContainsKey(5) ? goalDic[5] : 0f;
+		this.max_rom_exercise_6 = goalDic.ContainsKey(6) ? goalDic[6] : 0f;
+		this.max_rom_exercise_7 = goalDic.ContainsKey(7) ? goalDic[7] : 0f;
+		this.max_rom_exercise_8 = goalDic.ContainsKey(8) ? goalDic[8] : 0f;
+	}
+	#endregion
 }
