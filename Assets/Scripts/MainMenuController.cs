@@ -177,6 +177,13 @@ public class MainMenuController : UtilComponent
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("user_id", Cache.user.UserData.user_id);
+		dic.Add("sitting_height", Cache.user.UserData.HeadPos.y.ToString());
+		dic.Add("left_hand_x", Cache.user.UserData.left_hand_x.ToString());
+		dic.Add("left_hand_y", Cache.user.UserData.left_hand_y.ToString());
+		dic.Add("left_hand_z", Cache.user.UserData.left_hand_z.ToString());
+		dic.Add("right_hand_x", Cache.user.UserData.right_hand_x.ToString());
+		dic.Add("right_hand_y", Cache.user.UserData.right_hand_y.ToString());
+		dic.Add("right_hand_z", Cache.user.UserData.right_hand_z.ToString());
 		dic.Add("max_rom_measure_1", Cache.user.MeasureData.max_rom_measure_1.ToString());
 		dic.Add("max_rom_measure_2", Cache.user.MeasureData.max_rom_measure_2.ToString());
 		dic.Add("max_rom_measure_3", Cache.user.MeasureData.max_rom_measure_3.ToString());

@@ -6,41 +6,41 @@ public class BodyScaleData
 	public Vector3 playerBasePos;
 	public Vector3 playerBaseRot;
 	public Vector3 backPos = new Vector3(0f, 0.5f, 0f);
-	public Vector3 headPos;
-
-	public Vector3 handPosR = new Vector3( 0.1f, 1.1f, 0.5f);
-	public Vector3 handPosL = new Vector3(-0.1f, 1.1f, 0.5f);
 
 	public Vector3 ShoulderPosR {
 		get {
-			return new Vector3(this.handPosR.x, this.handPosR.y, this.headPos.z) - this.backPos;
+			Vector3 handPosR = Cache.user.UserData.HandPosR;
+			return new Vector3(handPosR.x, handPosR.y, Cache.user.UserData.HeadPos.z) - this.backPos;
 		}
 	}
 	public Vector3 ShoulderPosL {
 		get {
-			return new Vector3(this.handPosL.x, this.handPosL.y, this.headPos.z) - this.backPos;
+			Vector3 handPosL = Cache.user.UserData.HandPosL;
+			return new Vector3(handPosL.x, handPosL.y, Cache.user.UserData.HeadPos.z) - this.backPos;
 		}
 	}
 	public Vector3 ShoulderPosC {
 		get {
-			return new Vector3((this.handPosL.x + this.handPosR.x) / 2f, (this.handPosL.y + this.handPosL.y) / 2f, this.headPos.z) - this.backPos;
+			Vector3 handPosR = Cache.user.UserData.HandPosR;
+			Vector3 handPosL = Cache.user.UserData.HandPosL;
+			return new Vector3((handPosL.x + handPosR.x) / 2f, (handPosL.y + handPosL.y) / 2f, Cache.user.UserData.HeadPos.z) - this.backPos;
 		}
 	}
 
 	public Vector3 HandPosC {
 		get {
-			return (this.handPosL + this.handPosR) / 2f;
+			return (Cache.user.UserData.HandPosL + Cache.user.UserData.HandPosR) / 2f;
 		}
 	}
 
 	public Vector3 HandLocalPosR {
 		get {
-			return this.handPosR - this.ShoulderPosR - this.backPos;
+			return Cache.user.UserData.HandPosR - this.ShoulderPosR - this.backPos;
 		}
 	}
 	public Vector3 HandLocalPosL {
 		get {
-			return this.handPosL - this.ShoulderPosL - this.backPos;
+			return Cache.user.UserData.HandPosL - this.ShoulderPosL - this.backPos;
 		}
 	}
 	public Vector3 HandLocalPosC {

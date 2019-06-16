@@ -72,11 +72,13 @@ public partial class DEFINE_APP {//ApplictionDefine
     public static Vector3 HAND_MEASURE_POS_NOR = new Vector3(0f, 0f, 0.1f);
     public static Vector3 HAND_MEASURE_ROT_NOR = new Vector3(0f, 0f, 0f);
 
+	public static Vector3 DEFAULT_HAND_POS_R = new Vector3(0.1f, 1.1f, 0.5f);
+	public static Vector3 DEFAULT_HAND_POS_L = new Vector3(-0.1f, 1.1f, 0.5f);
 
-    /// <summary>
-    /// R=右手、L=左手、C=両手
-    /// </summary>
-    public static OVRInput.Controller[] HAND_TARGET = new OVRInput.Controller[] { OVRInput.Controller.RTouch, OVRInput.Controller.LTouch, OVRInput.Controller.RTouch, OVRInput.Controller.Touch, OVRInput.Controller.LTouch, OVRInput.Controller.RTouch, OVRInput.Controller.Touch, OVRInput.Controller.LTouch };
+	/// <summary>
+	/// R=右手、L=左手、C=両手
+	/// </summary>
+	public static OVRInput.Controller[] HAND_TARGET = new OVRInput.Controller[] { OVRInput.Controller.RTouch, OVRInput.Controller.LTouch, OVRInput.Controller.RTouch, OVRInput.Controller.Touch, OVRInput.Controller.LTouch, OVRInput.Controller.RTouch, OVRInput.Controller.Touch, OVRInput.Controller.LTouch };
     /*
     public static Dictionary<OVRInput.Controller, Vector3> SHOULDER_POS_DIC = new Dictionary<OVRInput.Controller, Vector3>()
     {

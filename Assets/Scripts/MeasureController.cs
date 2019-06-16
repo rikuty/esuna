@@ -312,7 +312,7 @@ public class MeasureController : UtilComponent {
             playerBaseTr.position = Cache.user.BodyScaleData.playerBasePos;
 			Cache.user.BodyScaleData.playerBaseRot = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
             playerBaseTr.rotation = Quaternion.Euler(Cache.user.BodyScaleData.playerBaseRot);
-			Cache.user.BodyScaleData.headPos = centerEyeTr.position - Cache.user.BodyScaleData.playerBasePos;
+			Cache.user.UserData.HeadPos = centerEyeTr.position - Cache.user.BodyScaleData.playerBasePos;
             //backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
@@ -378,8 +378,8 @@ public class MeasureController : UtilComponent {
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
-			Cache.user.BodyScaleData.handPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
-			Cache.user.BodyScaleData.handPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+			Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+			Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
 
             //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
