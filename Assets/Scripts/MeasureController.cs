@@ -76,6 +76,9 @@ public class MeasureController : UtilComponent {
     [SerializeField] private List<AudioClip> dialogVoiceList;
     [SerializeField] private AudioClip backVoice;
 
+    Coroutine runningCoroutine;
+
+
     enum DIAGNOSIS_STATUS_ENUM
     {
         START = -2, //初期状態
@@ -335,7 +338,7 @@ public class MeasureController : UtilComponent {
 
             audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
             audioSourceVoice.Play();
-            StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
+            runningCoroutine = StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
 
             //System.Drawing.Printing.PrintDocument pd =
             //    new System.Drawing.Printing.PrintDocument();
@@ -359,8 +362,14 @@ public class MeasureController : UtilComponent {
             audioSourceVoice.clip = backVoice;
             audioSourceVoice.Play();
 
-            yield return new WaitForSeconds(audioSourceVoice.clip.length);
+            Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
+            //DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            //EFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+            Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
 
+            yield return new WaitForSeconds(audioSourceVoice.clip.length);
+            runningCoroutine = null;
             NextShoulderArm();
         }
     }
@@ -381,6 +390,16 @@ public class MeasureController : UtilComponent {
     {
         if (CheckThumbstickDown())
         {
+            Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
+            //DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            //EFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+            Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+            if (runningCoroutine != null)
+            {
+                StopCoroutine(runningCoroutine);
+                runningCoroutine = null;
+            }
             NextShoulderArm();
         }
     }
@@ -402,12 +421,13 @@ public class MeasureController : UtilComponent {
     {
         isWaitingStartDiagnosis = true;
 
+        /*
         Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
         //DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
         //EFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
         Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
         Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
-
+        */
         //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
         //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
 
@@ -578,7 +598,7 @@ public class MeasureController : UtilComponent {
     /// <param name="isActive"></param>
     void SetActiveBullets(bool isActive)
     {
-        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+        for (int i = 0; i < measureComponents.Length; i++)
         {
             measureComponents[i].SetActiveBullet(isActive);
         }
@@ -599,15 +619,18 @@ public class MeasureController : UtilComponent {
         {
             hitDeltaTime = 0f;
             // 全部の方向が終わった時
-            if (currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
+            if (currentDiagnosisDirectsIndex >= DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
-                currentDiagnosisDirectsIndex = 0;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_PRE;
 
                 audioSourceVoice.clip = dialogVoiceList[2];
                 audioSourceVoice.Play();
-                dialog.Init(CallbackDirectionOK, PreparingDirection);
+                dialog.Init(CallbackDirectionOK, ()=>
+                {
+                    currentDiagnosisDirectsIndex = 0;
+                    PreparingDirection();
+                });
                 dialog.ShowDialog(dialogDetail[2]);
 
                 return;
