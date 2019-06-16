@@ -77,6 +77,7 @@ public partial class DEFINE_APP {//ApplictionDefine
     /// R=右手、L=左手、C=両手
     /// </summary>
     public static OVRInput.Controller[] HAND_TARGET = new OVRInput.Controller[] { OVRInput.Controller.RTouch, OVRInput.Controller.LTouch, OVRInput.Controller.RTouch, OVRInput.Controller.Touch, OVRInput.Controller.LTouch, OVRInput.Controller.RTouch, OVRInput.Controller.Touch, OVRInput.Controller.LTouch };
+    /*
     public static Dictionary<OVRInput.Controller, Vector3> SHOULDER_POS_DIC = new Dictionary<OVRInput.Controller, Vector3>()
     {
         { OVRInput.Controller.RTouch, BODY_SCALE.SHOULDER_POS_R},
@@ -89,9 +90,11 @@ public partial class DEFINE_APP {//ApplictionDefine
         { OVRInput.Controller.LTouch, BODY_SCALE.HAND_LOCALPOS_L},
         { OVRInput.Controller.Touch, BODY_SCALE.HAND_LOCALPOS_C},
     };
+    */
 
     public static class BODY_SCALE
     {
+		/*
         // WorldPosition ※フロントのみ
         public static Vector3 PLAYER_BASE_POS;
         public static Vector3 PLAYER_BASE_ROT;
@@ -158,6 +161,7 @@ public partial class DEFINE_APP {//ApplictionDefine
                 return (HAND_LOCALPOS_L + HAND_LOCALPOS_R) / 2f;
             }
         }
+		*/
 
 
         public static int[] DIAGNOSIS_DIRECTS = new int[]{1,2,4,7};
@@ -420,8 +424,6 @@ public partial class DEFINE_APP {//ApplictionDefine
         {2, -1 },
         {3, -1 }
     };
-    */
-
 
     public static Dictionary<int, int> NRS_POST = new Dictionary<int, int>()
     {
@@ -429,7 +431,7 @@ public partial class DEFINE_APP {//ApplictionDefine
         {2, -1 },
         {3, -1 }
     };
+    */
 }
 
-	
-	
+

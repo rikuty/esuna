@@ -308,11 +308,11 @@ public class MeasureController : UtilComponent {
             isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
 
-            DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
-            playerBaseTr.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-            DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
-            playerBaseTr.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
-            DEFINE_APP.BODY_SCALE.HEAD_POS = centerEyeTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+            Cache.user.BodyScaleData.playerBasePos = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
+            playerBaseTr.position = Cache.user.BodyScaleData.playerBasePos;
+			Cache.user.BodyScaleData.playerBaseRot = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
+            playerBaseTr.rotation = Quaternion.Euler(Cache.user.BodyScaleData.playerBaseRot);
+			Cache.user.BodyScaleData.headPos = centerEyeTr.position - Cache.user.BodyScaleData.playerBasePos;
             //backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
@@ -378,8 +378,8 @@ public class MeasureController : UtilComponent {
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
 
             Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
-            DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
-            DEFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+			Cache.user.BodyScaleData.handPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+			Cache.user.BodyScaleData.handPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
 
             //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
             //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;

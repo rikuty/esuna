@@ -139,23 +139,26 @@ public class BodyScale : UtilComponent {
 
     public void SetTransformBodyAndBullet(int index = 4)
     {
-
-        playerBase.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-        playerBase.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
-        back.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
-        backHeight.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
-        shoulder.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index-1]];
-        bulletRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index-1]]+ DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index-1]];
-        hand.localPosition =  DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index]];
+		BodyScaleData bodyScaleData = Cache.user.BodyScaleData;
+		//playerBase.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+		//playerBase.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
+		playerBase.position = bodyScaleData.playerBasePos;
+		playerBase.rotation = Quaternion.Euler(bodyScaleData.playerBaseRot);
+        back.localPosition = bodyScaleData.backPos;
+        backHeight.localPosition = bodyScaleData.backPos;
+        shoulder.localPosition = bodyScaleData.ShoulderPosDic[DEFINE_APP.HAND_TARGET[index-1]];
+        bulletRoot.localPosition = bodyScaleData.ShoulderPosDic[DEFINE_APP.HAND_TARGET[index-1]]+ bodyScaleData.HandPosDic[DEFINE_APP.HAND_TARGET[index-1]];
+        hand.localPosition = bodyScaleData.HandPosDic[DEFINE_APP.HAND_TARGET[index]];
     }
 
 
     public void SetTransformTarget(int index)
     {
-        back.localRotation = Quaternion.AngleAxis(Cache.user.BodyScaleData.goalCurrentDic[index][DEFINE_APP.BODY_SCALE.BACK_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index][DEFINE_APP.BODY_SCALE.BACK_ROT]);
-        shoulder.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
-        shoulder.localRotation = Quaternion.AngleAxis(Cache.user.BodyScaleData.goalCurrentDic[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
-		bulletRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]] + DEFINE_APP.HAND_POS_DIC[DEFINE_APP.HAND_TARGET[index - 1]];
+		BodyScaleData bodyScaleData = Cache.user.BodyScaleData;
+		back.localRotation = Quaternion.AngleAxis(bodyScaleData.goalCurrentDic[index][DEFINE_APP.BODY_SCALE.BACK_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index][DEFINE_APP.BODY_SCALE.BACK_ROT]);
+        shoulder.localPosition = bodyScaleData.ShoulderPosDic[DEFINE_APP.HAND_TARGET[index - 1]];
+        shoulder.localRotation = Quaternion.AngleAxis(bodyScaleData.goalCurrentDic[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT], DEFINE_APP.BODY_SCALE.ROT_AXIS[index][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
+		bulletRoot.localPosition = bodyScaleData.ShoulderPosDic[DEFINE_APP.HAND_TARGET[index - 1]] + bodyScaleData.HandPosDic[DEFINE_APP.HAND_TARGET[index - 1]];
         hand.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.NEST_ROT[index]);
 
         //back.localPosition = goalBodyTransformDictionary[index]["back"]["position"];

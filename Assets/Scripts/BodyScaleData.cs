@@ -3,6 +3,92 @@ using UnityEngine;
 
 public class BodyScaleData
 {
+	public Vector3 playerBasePos;
+	public Vector3 playerBaseRot;
+	public Vector3 backPos;
+	public Vector3 headPos;
+
+	public Vector3 handPosR = new Vector3( 0.1f, 1.1f, 0.5f);
+	public Vector3 handPosL = new Vector3(-0.1f, 1.1f, 0.5f);
+
+	public Vector3 ShoulderPosR {
+		get {
+			return new Vector3(this.handPosR.x, this.handPosR.y, this.headPos.z) - this.backPos;
+		}
+	}
+	public Vector3 ShoulderPosL {
+		get {
+			return new Vector3(this.handPosL.x, this.handPosL.y, this.headPos.z) - this.backPos;
+		}
+	}
+	public Vector3 ShoulderPosC {
+		get {
+			return new Vector3((this.handPosL.x + this.handPosR.x) / 2f, (this.handPosL.y + this.handPosL.y) / 2f, this.headPos.z) - this.backPos;
+		}
+	}
+
+	public Vector3 HandPosC {
+		get {
+			return (this.handPosL + this.handPosR) / 2f;
+		}
+	}
+
+	public Vector3 HandLocalPosR {
+		get {
+			return this.handPosR - this.ShoulderPosR - this.backPos;
+		}
+	}
+	public Vector3 HandLocalPosL {
+		get {
+			return this.handPosL - this.ShoulderPosL - this.backPos;
+		}
+	}
+	public Vector3 HandLocalPosC {
+		get {
+			return (this.HandLocalPosL + this.HandLocalPosR) / 2f;
+		}
+	}
+
+
+	private Dictionary<OVRInput.Controller, Vector3> shoulderPosDic = null;
+	public Dictionary<OVRInput.Controller, Vector3> ShoulderPosDic {
+		get {
+			if (this.shoulderPosDic == null) {
+				this.shoulderPosDic = new Dictionary<OVRInput.Controller, Vector3> {
+					{ OVRInput.Controller.RTouch, this.ShoulderPosR },
+					{ OVRInput.Controller.LTouch, this.ShoulderPosL },
+					{ OVRInput.Controller.Touch,  this.ShoulderPosC }
+				};
+			}
+			else {
+				this.shoulderPosDic[OVRInput.Controller.RTouch] = this.ShoulderPosR;
+				this.shoulderPosDic[OVRInput.Controller.LTouch] = this.ShoulderPosL;
+				this.shoulderPosDic[OVRInput.Controller.Touch]  = this.ShoulderPosC;
+			}
+			return this.shoulderPosDic;
+		}
+	}
+
+	private Dictionary<OVRInput.Controller, Vector3> handPosDic = null;
+	public Dictionary<OVRInput.Controller, Vector3> HandPosDic {
+		get {
+			if (this.handPosDic == null) {
+				this.handPosDic = new Dictionary<OVRInput.Controller, Vector3> {
+					{ OVRInput.Controller.RTouch, this.HandLocalPosR },
+					{ OVRInput.Controller.LTouch, this.HandLocalPosL },
+					{ OVRInput.Controller.Touch,  this.HandLocalPosC }
+				};
+			}
+			else {
+				this.handPosDic[OVRInput.Controller.RTouch] = this.HandLocalPosR;
+				this.handPosDic[OVRInput.Controller.LTouch] = this.HandLocalPosL;
+				this.handPosDic[OVRInput.Controller.Touch]  = this.HandLocalPosC;
+			}
+			return this.handPosDic;
+		}
+	}
+
+
 	public Dictionary<int, float> goalDic { get; private set; }
 	public Dictionary<int, Dictionary<string, float>> goalCurrentDic { get; private set; }
 
