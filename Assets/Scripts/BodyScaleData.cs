@@ -5,7 +5,7 @@ public class BodyScaleData
 {
 	public Vector3 playerBasePos;
 	public Vector3 playerBaseRot;
-	public Vector3 backPos;
+	public Vector3 backPos = new Vector3(0f, 0.5f, 0f);
 	public Vector3 headPos;
 
 	public Vector3 handPosR = new Vector3( 0.1f, 1.1f, 0.5f);
