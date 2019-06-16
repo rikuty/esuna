@@ -198,8 +198,6 @@ public class MeasureController : UtilComponent {
         isWaitingStartDiagnosis = true;
 
 		//SetActive(backTr, false);
-
-		Cache.user.bodyScaleData = new BodyScaleData();
 	}
 
 
@@ -507,7 +505,7 @@ public class MeasureController : UtilComponent {
 		measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
 		angleSum += angle;
 
-		Cache.user.bodyScaleData.goalDic[this.currentIndex] = angle;
+		Cache.user.BodyScaleData.goalDic[this.currentIndex] = angle;
 	}
 
 
@@ -590,7 +588,7 @@ public class MeasureController : UtilComponent {
                 }
 
 				//斜め方向を決定
-				Cache.user.bodyScaleData.SetDiagonal();
+				Cache.user.BodyScaleData.SetDiagonal();
 				//DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
 
                 return;
@@ -673,7 +671,7 @@ public class MeasureController : UtilComponent {
     void HitNRSComponent(NRSComponent nrsComponent)
     {
 		//DEFINE_APP.NRS_PRE[currentNRSIndex] = nrsComponent.num;
-		Cache.user.bodyScaleData.preNrsList[currentNRSIndex] = nrsComponent.num;
+		Cache.user.MeasureData.SetPreNrs(currentNRSIndex, nrsComponent.num);
         for (int i = 0; i < nrsComponents.Length; i++)
         {
             nrsComponents[i].ColliderEnabled(false);
@@ -727,6 +725,7 @@ public class MeasureController : UtilComponent {
     void UpdateFinish()
     {
         this.currentStatus = DIAGNOSIS_STATUS_ENUM.END;
+		Cache.user.MeasureData.SetMaxRomMeasure(Cache.user.BodyScaleData.goalDic);
         StartCoroutine(CoroutineWaitNextStep());
         callbackFinish();
 

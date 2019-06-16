@@ -6,12 +6,9 @@ public class BodyScaleData
 	public Dictionary<int, float> goalDic { get; private set; }
 	public Dictionary<int, Dictionary<string, float>> goalCurrentDic { get; private set; }
 
-	public List<int> preNrsList { get; private set; }
-
 
 	public BodyScaleData()
 	{
-		this.preNrsList = new List<int>(DEFINE_APP.BODY_SCALE.NRS_COUNT);
 		this.SetDefaultGoalDic();
 		this.SetDiagonal();
 	}
@@ -32,6 +29,7 @@ public class BodyScaleData
         _GOAL_DIC[8][SHOULDER_ROT] = new Vector3(GOAL_DIC[7][SHOULDER_ROT].x, 0f, 0f);
 		*/
 
+		// TODO: ななめ方向の回転の補間をどうするか？（現状は、例えば左上であれば左と上の回転の平均）
 		this.goalDic[3] = (this.goalDic[1] + this.goalDic[4]) / 2f;
 		this.goalDic[5] = (this.goalDic[2] + this.goalDic[4]) / 2f;
 		this.goalDic[6] = (this.goalDic[1] + this.goalDic[7]) / 2f;
@@ -64,7 +62,7 @@ public class BodyScaleData
 		foreach (int direction in DEFINE_APP.BODY_SCALE.ROT_AXIS.Keys) {
 
 			/*
-			// 測定時の回旋は腰と肩の合計値になっているため、肩と腰それぞれがしめる回転の割合から分解して求める
+			// TODO: 測定時の回旋は腰と肩の合計値になっているため、肩と腰それぞれがしめる回転の割合から分解して求める
 			float backAngle = this.goalDic[direction] * DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX_RATIO[direction][DEFINE_APP.BODY_SCALE.BACK_ROT] / 2f;
 			float shoulderAngle = this.goalDic[direction] * DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX_RATIO[direction][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 2f;
 			*/

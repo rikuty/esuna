@@ -80,4 +80,36 @@ public class MeasureData
 			max_rom_exercise_8.ToString()+"°/"+average_time_8.ToString()+"s"
 		};
 	}
+
+
+
+	#region キャリブレーション時のデータ設定用
+
+	public void SetMaxRomMeasure(Dictionary<int, float> goalDic)
+	{
+		this.max_rom_measure_1 = goalDic.ContainsKey(1) ? goalDic[1] : 0f;
+		this.max_rom_measure_2 = goalDic.ContainsKey(2) ? goalDic[2] : 0f;
+		this.max_rom_measure_3 = goalDic.ContainsKey(3) ? goalDic[3] : 0f;
+		this.max_rom_measure_4 = goalDic.ContainsKey(4) ? goalDic[4] : 0f;
+		this.max_rom_measure_5 = goalDic.ContainsKey(5) ? goalDic[5] : 0f;
+		this.max_rom_measure_6 = goalDic.ContainsKey(6) ? goalDic[6] : 0f;
+		this.max_rom_measure_7 = goalDic.ContainsKey(7) ? goalDic[7] : 0f;
+		this.max_rom_measure_8 = goalDic.ContainsKey(8) ? goalDic[8] : 0f;
+	}
+
+	public void SetPreNrs(int index, int num)
+	{
+		switch (index) {
+		case 1:
+			this.pre_rest_pain = num;
+			break;
+		case 2:
+			this.pre_move_pain = num;
+			break;
+		case 3:
+			this.pre_move_fear = num;
+			break;
+		}
+	}
+	#endregion
 }

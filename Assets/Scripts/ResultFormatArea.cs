@@ -51,7 +51,7 @@ public class ResultFormatArea : UtilComponent {
             Debug.Log("アクティブなユーザーが設定されていません。");
         } else {
             UserData userData = JsonConvert.DeserializeObject<UserData>(val);
-			Cache.user.userData = userData;
+			Cache.user.UserData = userData;
 
             // first data
             MeasureData firstData = userData.measure[1];
@@ -73,7 +73,7 @@ public class ResultFormatArea : UtilComponent {
     private void SettingGraph(){
 
 		// first data
-		UserData userData = Cache.user.userData;
+		UserData userData = Cache.user.UserData;
         MeasureData firstData = userData.measure[1];
 
         graph1.SetGraph1ValueList(firstData.AppraisalValues());

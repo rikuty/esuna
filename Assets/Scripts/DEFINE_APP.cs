@@ -176,8 +176,6 @@ public partial class DEFINE_APP {//ApplictionDefine
             {8, 9}
         };
 
-		public const int NRS_COUNT = 3;
-
 		/*
         public static void SetDefine()
         {

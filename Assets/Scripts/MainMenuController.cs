@@ -116,11 +116,11 @@ public class MainMenuController : UtilComponent
         if(val.Length == 1){
             Debug.Log("アクティブなユーザーが設定されていません。");
         } else {
-           	Cache.user.userData = JsonConvert.DeserializeObject<UserData>(val);
+           	Cache.user.UserData = JsonConvert.DeserializeObject<UserData>(val);
             //Debug.Log("userId : "+userData.user_id);
             //Debug.Log("name : " + userData.user_name);
-            SetLabel(this.txtID, Cache.user.userData.user_id);
-            SetLabel(this.txtName, Cache.user.userData.user_name);
+            SetLabel(this.txtID, Cache.user.UserData.user_id);
+            SetLabel(this.txtName, Cache.user.UserData.user_name);
         }
     }
 
@@ -176,13 +176,18 @@ public class MainMenuController : UtilComponent
         string url = "http://dev.rikuty.net/api/SetUserData.php";
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
-        dic.Add("user_id", "1");
-		foreach (KeyValuePair<int, float> kvp in Cache.user.bodyScaleData.goalDic) {
-			dic.Add(string.Format("max_rom_measure_{0}", kvp.Key), kvp.Value.ToString());
-		}
-        dic.Add("pre_rest_pain", Cache.user.bodyScaleData.preNrsList[0].ToString());
-        dic.Add("pre_move_pain", Cache.user.bodyScaleData.preNrsList[1].ToString());
-        dic.Add("pre_move_fear", Cache.user.bodyScaleData.preNrsList[2].ToString());
+        dic.Add("user_id", Cache.user.UserData.user_id);
+		dic.Add("max_rom_measure_1", Cache.user.MeasureData.max_rom_measure_1.ToString());
+		dic.Add("max_rom_measure_2", Cache.user.MeasureData.max_rom_measure_2.ToString());
+		dic.Add("max_rom_measure_3", Cache.user.MeasureData.max_rom_measure_3.ToString());
+		dic.Add("max_rom_measure_4", Cache.user.MeasureData.max_rom_measure_4.ToString());
+		dic.Add("max_rom_measure_5", Cache.user.MeasureData.max_rom_measure_5.ToString());
+		dic.Add("max_rom_measure_6", Cache.user.MeasureData.max_rom_measure_6.ToString());
+		dic.Add("max_rom_measure_7", Cache.user.MeasureData.max_rom_measure_7.ToString());
+		dic.Add("max_rom_measure_8", Cache.user.MeasureData.max_rom_measure_8.ToString());
+        dic.Add("pre_rest_pain", Cache.user.MeasureData.pre_rest_pain.ToString());
+        dic.Add("pre_move_pain", Cache.user.MeasureData.pre_move_pain.ToString());
+        dic.Add("pre_move_fear", Cache.user.MeasureData.pre_move_fear.ToString());
 
         StartCoroutine(HttpPost(url, dic));
     }
