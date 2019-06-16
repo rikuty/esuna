@@ -43,6 +43,8 @@ public class ResultFormatArea : UtilComponent {
 
     // Use this for initialization
     void Start () {
+        StartCoroutine(ConnectAPI("http://dev.rikuty.net/api/GetFormatData.php", GetUserData));
+
     }
 
     private void GetUserData(string val) {
@@ -152,35 +154,35 @@ public class ResultFormatArea : UtilComponent {
         Dictionary<string, string> dic = new Dictionary<string, string>();
         
         dic.Add("user_id", "1");
-        dic.Add("max_rom_exercise_1", "44");
+        dic.Add("max_rom_exercise_1", "12");
         dic.Add("max_rom_exercise_2", "44");
         dic.Add("max_rom_exercise_3", "44");
-        dic.Add("max_rom_exercise_4", "44");
+        dic.Add("max_rom_exercise_4", "33");
         dic.Add("max_rom_exercise_5", "44");
-        dic.Add("max_rom_exercise_6", "44");
+        dic.Add("max_rom_exercise_6", "34");
         dic.Add("max_rom_exercise_7", "44");
-        dic.Add("max_rom_exercise_8", "44");
+        dic.Add("max_rom_exercise_8", "24");
         dic.Add("average_max_rom", "40");
-        dic.Add("average_time_1", "10");
-        dic.Add("average_time_2", "10");
+        dic.Add("average_time_1", "15");
+        dic.Add("average_time_2", "3");
         dic.Add("average_time_3", "10");
-        dic.Add("average_time_4", "10");
+        dic.Add("average_time_4", "5");
         dic.Add("average_time_5", "10");
-        dic.Add("average_time_6", "10");
-        dic.Add("average_time_7", "10");
+        dic.Add("average_time_6", "17");
+        dic.Add("average_time_7", "3");
         dic.Add("average_time_8", "10");
-        dic.Add("appraisal_value_1", "3");
-        dic.Add("appraisal_value_2", "3");
-        dic.Add("appraisal_value_3", "3");
-        dic.Add("appraisal_value_4", "3");
-        dic.Add("appraisal_value_5", "3");
-        dic.Add("appraisal_value_6", "3");
-        dic.Add("appraisal_value_7", "3");
-        dic.Add("appraisal_value_8", "3");
+        dic.Add("appraisal_value_1", "15");
+        dic.Add("appraisal_value_2", "20");
+        dic.Add("appraisal_value_3", "36");
+        dic.Add("appraisal_value_4", "5");
+        dic.Add("appraisal_value_5", "7");
+        dic.Add("appraisal_value_6", "8");
+        dic.Add("appraisal_value_7", "11");
+        dic.Add("appraisal_value_8", "14");
         dic.Add("post_rest_pain", "5");
         dic.Add("post_move_pain", "5");
         dic.Add("post_move_fear", "5");
-        dic.Add("point", "6666");
+        dic.Add("point", "6156");
         dic.Add("rom_value", "33");
         dic.Add("point_value", "33");
 		

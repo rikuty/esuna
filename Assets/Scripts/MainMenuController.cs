@@ -200,7 +200,14 @@ public class MainMenuController : UtilComponent
     }
 
 
-    public void ShowResult()
+    public void FinishTraining()
+    {
+
+        measureController.SetAfterTraining(ShowResult);
+    }
+
+
+    private void ShowResult()
     {
         SetActive(objUI, false);
         SetActive(objResult, true);

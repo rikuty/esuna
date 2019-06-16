@@ -59,13 +59,13 @@ public partial class DEFINE_APP {//ApplictionDefine
     public static Vector3 ANSWERING_GRIP = new Vector3(-0.06f, -0.03f, 0f);
     public static Vector3 NORMAL_GRIP_R = new Vector3(-0.02f, 0f, 0f);
 
-    public static Vector3 LEFT_HAND_MEASURE_POS_7 = new Vector3(0f, 0.025f, 0.1f);
-    public static Vector3 LEFT_HAND_MEASURE_ROT_7 = new Vector3(-30f, -40f, 0f);
-    public static Vector3 RIGHT_HAND_MEASURE_POS_7 = new Vector3(0f, -0.025f, 0.1f);
-    public static Vector3 RIGHT_HAND_MEASURE_ROT_7 = new Vector3(-30f, 40f, 0f);
+    public static Vector3 LEFT_HAND_MEASURE_POS_7 = new Vector3(0f, -0.05f, 0.1f);
+    public static Vector3 LEFT_HAND_MEASURE_ROT_7 = new Vector3(0f, 0f, 90f);
+    public static Vector3 RIGHT_HAND_MEASURE_POS_7 = new Vector3(0f, -0.05f, 0.1f);
+    public static Vector3 RIGHT_HAND_MEASURE_ROT_7 = new Vector3(0f,0f, -90f);
 
     public static Vector3 LEFT_HAND_MEASURE_POS_4 = new Vector3(0f, 0.05f, 0.1f);
-    public static Vector3 LEFT_HAND_MEASURE_ROT_4 = new Vector3(-10f, 0f, -40f);
+    public static Vector3 LEFT_HAND_MEASURE_ROT_4 = new Vector3(0f, 0f, -40f);
     public static Vector3 RIGHT_HAND_MEASURE_POS_4 = new Vector3(0f, 0.05f, 0.1f);
     public static Vector3 RIGHT_HAND_MEASURE_ROT_4 = new Vector3(-10f, 0f, 40f);
 
@@ -247,8 +247,8 @@ public partial class DEFINE_APP {//ApplictionDefine
         {
 			for (int i = 1; i <= _GOAL_DIC.Count; i++)
             {
-                Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / 2f);
-                Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / 2f);
+                Vector3 backRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.BACK_ROT] * (1f / 3f));
+                Vector3 shoulderRot = DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] - (DEFINE_APP.BODY_SCALE.GOAL_DIC[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * (1f / 3f));
 
                 Vector3 backRotMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
                 Vector3 shoulderRotMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
