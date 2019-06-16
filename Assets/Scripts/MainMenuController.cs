@@ -180,9 +180,9 @@ public class MainMenuController : UtilComponent
 		foreach (KeyValuePair<int, float> kvp in Cache.user.bodyScaleData.goalDic) {
 			dic.Add(string.Format("max_rom_measure_{0}", kvp.Key), kvp.Value.ToString());
 		}
-        dic.Add("pre_rest_pain", "5");
-        dic.Add("pre_move_pain", "5");
-        dic.Add("pre_move_fear", "5");
+        dic.Add("pre_rest_pain", Cache.user.bodyScaleData.preNrsList[0].ToString());
+        dic.Add("pre_move_pain", Cache.user.bodyScaleData.preNrsList[1].ToString());
+        dic.Add("pre_move_fear", Cache.user.bodyScaleData.preNrsList[2].ToString());
 
         StartCoroutine(HttpPost(url, dic));
     }

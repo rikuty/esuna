@@ -6,9 +6,12 @@ public class BodyScaleData
 	public Dictionary<int, float> goalDic { get; private set; }
 	public Dictionary<int, Dictionary<string, float>> goalCurrentDic { get; private set; }
 
+	public List<int> preNrsList { get; private set; }
+
 
 	public BodyScaleData()
 	{
+		this.preNrsList = new List<int>(DEFINE_APP.BODY_SCALE.NRS_COUNT);
 		this.SetDefaultGoalDic();
 		this.SetDiagonal();
 	}

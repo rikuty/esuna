@@ -672,7 +672,8 @@ public class MeasureController : UtilComponent {
 
     void HitNRSComponent(NRSComponent nrsComponent)
     {
-        DEFINE_APP.NRS_PRE[currentNRSIndex] = nrsComponent.num;
+		//DEFINE_APP.NRS_PRE[currentNRSIndex] = nrsComponent.num;
+		Cache.user.bodyScaleData.preNrsList[currentNRSIndex] = nrsComponent.num;
         for (int i = 0; i < nrsComponents.Length; i++)
         {
             nrsComponents[i].ColliderEnabled(false);

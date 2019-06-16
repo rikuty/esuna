@@ -176,6 +176,8 @@ public partial class DEFINE_APP {//ApplictionDefine
             {8, 9}
         };
 
+		public const int NRS_COUNT = 3;
+
 		/*
         public static void SetDefine()
         {
@@ -306,7 +308,6 @@ public partial class DEFINE_APP {//ApplictionDefine
 			}
 		}
         */
-
 		public static string BACK_ROT = "BACK_ROT";
         public static string SHOULDER_ROT = "SHOULDER_ROT";
 
@@ -414,13 +415,14 @@ public partial class DEFINE_APP {//ApplictionDefine
     /// </summary>
     public static float DIAGNOSIS_WAIT_TIME = 3f;
 
-
+	/*
     public static Dictionary<int, int> NRS_PRE = new Dictionary<int, int>()
     {
         {1, -1 },
         {2, -1 },
         {3, -1 }
     };
+    */
 
 
     public static Dictionary<int, int> NRS_POST = new Dictionary<int, int>()
