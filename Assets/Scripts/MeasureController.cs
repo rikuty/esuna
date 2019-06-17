@@ -76,6 +76,9 @@ public class MeasureController : UtilComponent {
     [SerializeField] private List<AudioClip> dialogVoiceList;
     [SerializeField] private AudioClip backVoice;
 
+    Coroutine runningCoroutine;
+
+
     enum DIAGNOSIS_STATUS_ENUM
     {
         START = -2, //初期状態
@@ -170,7 +173,6 @@ public class MeasureController : UtilComponent {
        { 3, "体を動かそうとしたとき、どれくらいその動作が怖いと思うかを０～１０で表してください。\n該当するボールに触れてください。" },
    };
 
-
     Dictionary<int, string> dialogDetail = new Dictionary<int, string>
    {
        { 0, "測定を開始します。\n前方に出ているウィンドウの決定ボタンを押してください。"},
@@ -178,7 +180,6 @@ public class MeasureController : UtilComponent {
        { 2, "可動域を取り込みました。\n先に進みますか？" },
        { 3, "アンケートに回答しました。。\n先に進みますか？" },
    };
-
 
     Action callbackFinish;
 
@@ -217,14 +218,12 @@ public class MeasureController : UtilComponent {
         this.callbackFinish = callbackFinish;
         currentStatus = DIAGNOSIS_STATUS_ENUM.START;
         isWaitingStartDiagnosis = true;
-
-        //SetActive(backTr, false);
-
-
+        
+		//SetActive(backTr, false);
     }
 
 
-    public void StartDiagnosis()
+	public void StartDiagnosis()
     {
         ShowUI(false);
         isWaitingStartDiagnosis = true;
@@ -328,18 +327,18 @@ public class MeasureController : UtilComponent {
             isWaitingStartDiagnosis = true;
             currentStatus = DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM;
 
-            DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
-            playerBaseTr.position = DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
-            DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
-            playerBaseTr.rotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.PLAYER_BASE_ROT);
-            DEFINE_APP.BODY_SCALE.HEAD_POS = centerEyeTr.position - DEFINE_APP.BODY_SCALE.PLAYER_BASE_POS;
+            Cache.user.BodyScaleData.playerBasePos = new Vector3(centerEyeTr.position.x, playerBaseTr.position.y, centerEyeTr.position.z);
+            playerBaseTr.position = Cache.user.BodyScaleData.playerBasePos;
+			Cache.user.BodyScaleData.playerBaseRot = new Vector3(playerBaseTr.rotation.eulerAngles.x, centerEyeTr.rotation.eulerAngles.y, playerBaseTr.rotation.eulerAngles.z);
+            playerBaseTr.rotation = Quaternion.Euler(Cache.user.BodyScaleData.playerBaseRot);
+			Cache.user.UserData.HeadPos = centerEyeTr.position - Cache.user.BodyScaleData.playerBasePos;
             //backTr.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
 
             ShowUI(false);
 
             audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
             audioSourceVoice.Play();
-            StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
+            runningCoroutine = StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
 
             //System.Drawing.Printing.PrintDocument pd =
             //    new System.Drawing.Printing.PrintDocument();
@@ -363,8 +362,14 @@ public class MeasureController : UtilComponent {
             audioSourceVoice.clip = backVoice;
             audioSourceVoice.Play();
 
-            yield return new WaitForSeconds(audioSourceVoice.clip.length);
+            Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
+            //DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            //EFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+            Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
 
+            yield return new WaitForSeconds(audioSourceVoice.clip.length);
+            runningCoroutine = null;
             NextShoulderArm();
         }
     }
@@ -385,6 +390,16 @@ public class MeasureController : UtilComponent {
     {
         if (CheckThumbstickDown())
         {
+            Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
+            //DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            //EFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+            Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+            Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+            if (runningCoroutine != null)
+            {
+                StopCoroutine(runningCoroutine);
+                runningCoroutine = null;
+            }
             NextShoulderArm();
         }
     }
@@ -402,15 +417,17 @@ public class MeasureController : UtilComponent {
         }
     }
 
-
     void CallbackShoulderArmOK()
     {
         isWaitingStartDiagnosis = true;
 
+        /*
         Vector3 averagePos = new Vector3(((rightHandTr.position.x + leftHandTr.position.x) / 2f), ((rightHandTr.position.y + leftHandTr.position.y) / 2f), ((rightHandTr.position.z + leftHandTr.position.z) / 2f));
-        DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
-        DEFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
-
+        //DEFINE_APP.BODY_SCALE.HAND_POS_R = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+        //EFINE_APP.BODY_SCALE.HAND_POS_L = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+        Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
+        Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
+        */
         //shoulderTr.localPosition = DEFINE_APP.BODY_SCALE.SHOULDER_POS_C;
         //handTr.position = DEFINE_APP.BODY_SCALE.ARM_POS;
 
@@ -487,6 +504,7 @@ public class MeasureController : UtilComponent {
         hitDeltaTime = 0f;
         directionStatus = DirectionEnum.MEASURING;
 
+		/*
         Vector3 backRot = measureComponent.trBackRoot.localRotation.eulerAngles;
         Vector3 shoulderRot = measureComponent.trSholderRoot.localRotation.eulerAngles;
 
@@ -502,11 +520,11 @@ public class MeasureController : UtilComponent {
 
         float resultZShoulder = (shoulderRot.z >= 180f) ? shoulderRot.z-360f : shoulderRot.z;
 
-        DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
+		DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] = new Vector3(resultXBack, resultYBack, resultZBack);
         DEFINE_APP.BODY_SCALE.GOAL_DIC[currentIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = new Vector3(resultXShoulder, resultYShoulder, resultZShoulder);
+		*/
 
-
-        OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
+		OVRInput.Controller result = DEFINE_APP.HAND_TARGET[currentIndex - 1];
 
         if (result == OVRInput.Controller.RTouch)
         {
@@ -522,7 +540,17 @@ public class MeasureController : UtilComponent {
             handController.PlayHaptics(OVRInput.Controller.Touch);
         }
 
-    }
+		float angleSum = 0f;
+		float angle;
+        Vector3 axis;
+
+        measureComponent.trBackRoot.localRotation.ToAngleAxis(out angle, out axis);
+		angleSum += angle;
+		measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
+		angleSum += angle;
+
+		Cache.user.BodyScaleData.goalDic[this.currentIndex] = angle;
+	}
 
 
     void HitStartMeasure(MeasureStartComponent measureComponent)
@@ -570,7 +598,7 @@ public class MeasureController : UtilComponent {
     /// <param name="isActive"></param>
     void SetActiveBullets(bool isActive)
     {
-        for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
+        for (int i = 0; i < measureComponents.Length; i++)
         {
             measureComponents[i].SetActiveBullet(isActive);
         }
@@ -591,17 +619,19 @@ public class MeasureController : UtilComponent {
         {
             hitDeltaTime = 0f;
             // 全部の方向が終わった時
-            if (currentDiagnosisDirectsIndex == DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
+            if (currentDiagnosisDirectsIndex >= DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length-1)
             {
                 //isWaiting = true;
-                currentDiagnosisDirectsIndex = 0;
                 currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_PRE;
 
                 audioSourceVoice.clip = dialogVoiceList[2];
                 audioSourceVoice.Play();
-                dialog.Init(CallbackDirectionOK, PreparingDirection);
+                dialog.Init(CallbackDirectionOK, ()=>
+                {
+                    currentDiagnosisDirectsIndex = 0;
+                    PreparingDirection();
+                });
                 dialog.ShowDialog(dialogDetail[2]);
-
 
                 return;
             }
@@ -674,7 +704,8 @@ public class MeasureController : UtilComponent {
         }
 
         //斜め方向を決定
-        DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
+        Cache.user.BodyScaleData.SetDiagonal();
+        //DEFINE_APP.BODY_SCALE.SetDefineDiagonal();
     }
 
 
@@ -698,7 +729,8 @@ public class MeasureController : UtilComponent {
 
     void HitNRSComponent(NRSComponent nrsComponent)
     {
-        DEFINE_APP.NRS_PRE[currentNRSIndex] = nrsComponent.num;
+		//DEFINE_APP.NRS_PRE[currentNRSIndex] = nrsComponent.num;
+		Cache.user.MeasureData.SetPreNrs(currentNRSIndex, nrsComponent.num);
         for (int i = 0; i < nrsComponents.Length; i++)
         {
             nrsComponents[i].ColliderEnabled(false);
@@ -767,6 +799,7 @@ public class MeasureController : UtilComponent {
 
     void UpdateFinish()
     {
+		Cache.user.MeasureData.SetMaxRomMeasure(Cache.user.BodyScaleData.goalDic);
         this.currentStatus = DIAGNOSIS_STATUS_ENUM.TRAINING;
         StartCoroutine(CoroutineWaitNextStep());
         callbackFinish();

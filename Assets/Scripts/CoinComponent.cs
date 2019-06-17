@@ -37,14 +37,16 @@ public class CoinComponent : UtilComponent {
         this.callbackCollision = callbackCollision;
         this.controller = DEFINE_APP.HAND_TARGET[directIndex-1];
 
-        trBackRoot.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
-        //Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate).ToString());
-        trBackRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT]*measureRate);
-        trSholderRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[controller];
-        trSholderRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]*measureRate);
-        //Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate).ToString());        //Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate).ToString());
-        trArmLength.localRotation = Quaternion.Euler(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);
-        trArmLength.localPosition = DEFINE_APP.HAND_POS_DIC[controller];
+        trBackRoot.localPosition = Cache.user.BodyScaleData.backPos;
+		//Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate).ToString());
+		trBackRoot.localRotation = Quaternion.AngleAxis(Cache.user.BodyScaleData.goalCurrentDic[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate, DEFINE_APP.BODY_SCALE.ROT_AXIS[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT]);
+		//trBackRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT]*measureRate);
+		trSholderRoot.localPosition = Cache.user.BodyScaleData.ShoulderPosDic[controller];
+		trSholderRoot.localRotation = Quaternion.AngleAxis(Cache.user.BodyScaleData.goalCurrentDic[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate, DEFINE_APP.BODY_SCALE.ROT_AXIS[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]);
+		//trSholderRoot.localRotation = Quaternion.Euler(DEFINE_APP.BODY_SCALE.GOAL_CURRENT_DIC[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT]*measureRate);
+		//Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate).ToString());        //Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] * measureRate).ToString());
+		trArmLength.localRotation = Quaternion.Euler(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);
+        trArmLength.localPosition = Cache.user.BodyScaleData.HandPosDic[controller];
         bullet.Init(CallbackFromBullet, collisionStatus, stayTime);
 
         Reset();

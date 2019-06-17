@@ -69,6 +69,7 @@ public class MainMenuController : UtilComponent
 
     public void Init()
     {
+         Cache.Initialize();
 
         // ユーザーデーター取得　※消しちゃダメ
         //StartCoroutine(ConnectAPI("http://18.179.32.33/sample/GetUserData.php", GetUserData));
@@ -115,11 +116,11 @@ public class MainMenuController : UtilComponent
         if(val.Length == 1){
             Debug.Log("アクティブなユーザーが設定されていません。");
         } else {
-            UserData userData = JsonConvert.DeserializeObject<UserData>(val);
+           	Cache.user.UserData = JsonConvert.DeserializeObject<UserData>(val);
             //Debug.Log("userId : "+userData.user_id);
             //Debug.Log("name : " + userData.user_name);
-            SetLabel(this.txtID, userData.user_id);
-            SetLabel(this.txtName, userData.user_name);
+            SetLabel(this.txtID, Cache.user.UserData.user_id);
+            SetLabel(this.txtName, Cache.user.UserData.user_name);
         }
     }
 
@@ -175,18 +176,25 @@ public class MainMenuController : UtilComponent
         string url = "http://dev.rikuty.net/api/SetUserData.php";
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
-        dic.Add("user_id", "1");
-        dic.Add("max_rom_measure_1", "44");
-        dic.Add("max_rom_measure_2", "44");
-        dic.Add("max_rom_measure_3", "44");
-        dic.Add("max_rom_measure_4", "44");
-        dic.Add("max_rom_measure_5", "44");
-        dic.Add("max_rom_measure_6", "44");
-        dic.Add("max_rom_measure_7", "44");
-        dic.Add("max_rom_measure_8", "44");
-        dic.Add("pre_rest_pain", "5");
-        dic.Add("pre_move_pain", "5");
-        dic.Add("pre_move_fear", "5");
+        dic.Add("user_id", Cache.user.UserData.user_id);
+		dic.Add("sitting_height", Cache.user.UserData.HeadPos.y.ToString());
+		dic.Add("left_hand_x", Cache.user.UserData.left_hand_x.ToString());
+		dic.Add("left_hand_y", Cache.user.UserData.left_hand_y.ToString());
+		dic.Add("left_hand_z", Cache.user.UserData.left_hand_z.ToString());
+		dic.Add("right_hand_x", Cache.user.UserData.right_hand_x.ToString());
+		dic.Add("right_hand_y", Cache.user.UserData.right_hand_y.ToString());
+		dic.Add("right_hand_z", Cache.user.UserData.right_hand_z.ToString());
+		dic.Add("max_rom_measure_1", Cache.user.MeasureData.max_rom_measure_1.ToString());
+		dic.Add("max_rom_measure_2", Cache.user.MeasureData.max_rom_measure_2.ToString());
+		dic.Add("max_rom_measure_3", Cache.user.MeasureData.max_rom_measure_3.ToString());
+		dic.Add("max_rom_measure_4", Cache.user.MeasureData.max_rom_measure_4.ToString());
+		dic.Add("max_rom_measure_5", Cache.user.MeasureData.max_rom_measure_5.ToString());
+		dic.Add("max_rom_measure_6", Cache.user.MeasureData.max_rom_measure_6.ToString());
+		dic.Add("max_rom_measure_7", Cache.user.MeasureData.max_rom_measure_7.ToString());
+		dic.Add("max_rom_measure_8", Cache.user.MeasureData.max_rom_measure_8.ToString());
+        dic.Add("pre_rest_pain", Cache.user.MeasureData.pre_rest_pain.ToString());
+        dic.Add("pre_move_pain", Cache.user.MeasureData.pre_move_pain.ToString());
+        dic.Add("pre_move_fear", Cache.user.MeasureData.pre_move_fear.ToString());
 
         StartCoroutine(HttpPost(url, dic));
     }

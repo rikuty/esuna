@@ -39,10 +39,10 @@ public class MeasureStartComponent : UtilComponent {
         this.controller = controller;
 
 
-        trBackRoot.localPosition = DEFINE_APP.BODY_SCALE.BACK_POS;
-        trSholderRoot.localPosition = DEFINE_APP.SHOULDER_POS_DIC[DEFINE_APP.HAND_TARGET[directIndex-1]];
+        trBackRoot.localPosition = Cache.user.BodyScaleData.backPos;
+        trSholderRoot.localPosition = Cache.user.BodyScaleData.ShoulderPosDic[DEFINE_APP.HAND_TARGET[directIndex-1]];
         trSholderRoot.localRotation = Quaternion.Euler(0f, 0f, DEFINE_APP.BODY_SCALE.SHOULDER_ROT_Z[directIndex]);
-        trArmLength.localPosition = DEFINE_APP.HAND_POS_DIC[controller];
+        trArmLength.localPosition = Cache.user.BodyScaleData.HandPosDic[controller];
 
         switch (directIndex)
         {
