@@ -103,30 +103,27 @@ public class TestPrint : UtilComponent {
 
         WWWForm form = new WWWForm();
 
-        
-        byte[] imageData = File.ReadAllBytes(Application.dataPath + "/Resources/ResultSheet.png");
+        //byte[] imageData = File.ReadAllBytes(Application.dataPath + "/Resources/ResultSheet.png");
         //byte[] txtData = File.ReadAllBytes(Application.dataPath + "/Resources/test.txt");
-
         //byte[] imageData = tImage.EncodeToPNG();
-
         //byte[] pdfData = File.ReadAllBytes(Application.dataPath + "/Resources/ResultSheet.pdf");
 
         form.AddField("printerid", printerId);
         form.AddField("title", "Sample05");
-        form.AddField("contentType", "image/png");
-        //form.AddField("contentType", "application/pdf");
+        form.AddField("contentType", "url");
+        form.AddField("content", "https://dev.rikuty.net/image.php");
+        //form.AddField("contentType", "image/png");
         //form.AddField("content", System.Text.Encoding.Unicode.GetString(imageData));
         //form.AddBinaryData("content", pdfData, "ResultSheet.png", "application/pdf");
-        form.AddBinaryData("content", imageData);
         //form.AddBinaryData("content", txtData, "test.txt", "text/plain");
+        //form.AddBinaryData("content", imageData);
         form.AddField("ticket", "{'version':'1.0','print':{'vendor_ticket_item':[],'color':{'type':'STANDARD_COLOR'},'copies':{'copies':1}}}");
 
 		Dictionary<string, string> headers = new Dictionary<string, string>();
 		headers.Add("Authorization", "OAuth " + refreshTokenData.access_token);
-		headers.Add("Content-Type", "image/png");
+		//headers.Add("Content-Type", "image/png");
 
         StartCoroutine(PrintProcessHttpPost(url, form.data, headers));
-
     }
 
 	IEnumerator GetAccessTokenHttpPost(string url, WWWForm form)
