@@ -78,6 +78,8 @@ public class MeasureController : UtilComponent {
 
     [SerializeField] private Animator animator;
 
+    [SerializeField] private GameObject objTutorialAvatar;
+
     Coroutine runningCoroutine;
 
 
@@ -105,7 +107,7 @@ public class MeasureController : UtilComponent {
         }
         set
         {
-            Debug.LogError(_currentStatus);
+            //Debug.LogError(_currentStatus);
             _currentStatus = value;
         }
     }
@@ -307,6 +309,7 @@ public class MeasureController : UtilComponent {
     {
 
         currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
+        SetActive(objTutorialAvatar, true);
         ShowUI(true);
         audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
         audioSourceVoice.Play();
