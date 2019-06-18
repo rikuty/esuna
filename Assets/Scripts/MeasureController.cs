@@ -76,6 +76,8 @@ public class MeasureController : UtilComponent {
     [SerializeField] private List<AudioClip> dialogVoiceList;
     [SerializeField] private AudioClip backVoice;
 
+    [SerializeField] private Animator animator;
+
     Coroutine runningCoroutine;
 
 
@@ -93,7 +95,21 @@ public class MeasureController : UtilComponent {
         RESULT = 4 //NRS後
     }
 
-    DIAGNOSIS_STATUS_ENUM currentStatus = DIAGNOSIS_STATUS_ENUM.START;
+    DIAGNOSIS_STATUS_ENUM _currentStatus = DIAGNOSIS_STATUS_ENUM.START;
+
+    DIAGNOSIS_STATUS_ENUM currentStatus
+    {
+        get
+        {
+            return _currentStatus;
+        }
+        set
+        {
+            Debug.LogError(_currentStatus);
+            _currentStatus = value;
+        }
+    }
+
 
     /// <summary>
     /// 回旋・屈曲・伸展の現在測定している方向 DEFINEのDIAGNOSIS_DIRECTのIndex
@@ -340,6 +356,9 @@ public class MeasureController : UtilComponent {
             audioSourceVoice.Play();
             runningCoroutine = StartCoroutine(FinishVoiceBase(audioSourceVoice.clip.length));
 
+            animator.SetInteger("status", 1);
+
+
             //System.Drawing.Printing.PrintDocument pd =
             //    new System.Drawing.Printing.PrintDocument();
 
@@ -368,9 +387,12 @@ public class MeasureController : UtilComponent {
             Cache.user.UserData.HandPosR = playerBaseTr.InverseTransformPoint(rightHandTr.position);
             Cache.user.UserData.HandPosL = playerBaseTr.InverseTransformPoint(leftHandTr.position);
 
+
+
             yield return new WaitForSeconds(audioSourceVoice.clip.length);
             runningCoroutine = null;
             NextShoulderArm();
+
         }
     }
 
@@ -409,6 +431,8 @@ public class MeasureController : UtilComponent {
     {
         if (currentStatus == DIAGNOSIS_STATUS_ENUM.SHOULDER_ARM)
         {
+            animator.SetInteger("status", 2);
+
             currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
             audioSourceVoice.clip = dialogVoiceList[1];
             audioSourceVoice.Play();
@@ -470,6 +494,12 @@ public class MeasureController : UtilComponent {
         audioSourceVoice.Play();
 
         StartCoroutine(CoroutineInstantiateBullets(PreparedDirection));
+
+        if (currentDiagnosisDirectsIndex < DEFINE_APP.BODY_SCALE.DIAGNOSIS_DIRECTS.Length)
+        {
+            animator.SetInteger("status", currentDiagnosisDirectsIndex + 3);
+        }
+
 
     }
 
