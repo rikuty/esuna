@@ -22,6 +22,7 @@ namespace OKCANCELDIALOG
         {
             this.callbackNG = callbackNG;
             this.callbackOK = callbackOK;
+            SetActive(this, true);
             hitNG.Init();
             hitOK.Init();
             SetActive(objNG, callbackNG != null);
@@ -38,7 +39,7 @@ namespace OKCANCELDIALOG
         {
             callbackOK();
             transform.DOScale(Vector3.zero, ShowDuration);
-
+            SetActive(this, false);
         }
 
 
@@ -46,6 +47,8 @@ namespace OKCANCELDIALOG
         {
             callbackNG();
             transform.DOScale(Vector3.zero, ShowDuration);
+            SetActive(this, false);
+
 
         }
     }
