@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class Bullet : UtilComponent {
 
 
     Action<Collider> callbackCollision;
     Collider colliderBullet;
+
+    [SerializeField] Animator anim;
+    [SerializeField] String strStateName;
 
     public enum CollisionEnum
     {
@@ -30,6 +34,10 @@ public class Bullet : UtilComponent {
         this.stayTime = stayTime;
         this.stayDeltaTime = 0f;
         colliderBullet = this.GetComponent<Collider>();
+        if (anim != null)
+        {
+            anim.Play(strStateName, 0, 0f);
+        }
     }
 
     public void Reset()
