@@ -244,7 +244,7 @@ public class MeasureController : UtilComponent {
 	public void StartDiagnosis()
     {
         ShowUI(false);
-        isWaitingStartDiagnosis = true;
+        isWaitingStartDiagnosis = false;
         currentStatus = DIAGNOSIS_STATUS_ENUM.PREPARING;
 
         audioSourceVoice.clip = dialogVoiceList[0];
@@ -312,7 +312,7 @@ public class MeasureController : UtilComponent {
         ShowUI(true);
         audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
         audioSourceVoice.Play();
-        StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
+        runningCoroutine = StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
 
         SetActive(objTutorialAvatar, true);
 
@@ -324,7 +324,7 @@ public class MeasureController : UtilComponent {
         if (currentStatus == DIAGNOSIS_STATUS_ENUM.BASE)
         {
             yield return new WaitForSeconds(clipLength);
-
+            runningCoroutine = null;
             NextBase();
         }
     }
@@ -332,8 +332,13 @@ public class MeasureController : UtilComponent {
 
     void UpdateBase()
     {
-        if (CheckThumbstickDown())
+        if (CheckThumbstickDown() && currentStatus == DIAGNOSIS_STATUS_ENUM.BASE)
         {
+            if (runningCoroutine != null)
+            {
+                StopCoroutine(runningCoroutine);
+                runningCoroutine = null;
+            }
             NextBase();
         }
     }
