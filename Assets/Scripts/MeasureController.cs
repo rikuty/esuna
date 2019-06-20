@@ -228,6 +228,8 @@ public class MeasureController : UtilComponent {
 
     Action callbackShowResult;
 
+    Action callbackRestart;
+
 
     public void Init(Action callbackFinish)
     {
@@ -871,6 +873,7 @@ public class MeasureController : UtilComponent {
         audioSourceVoice.Play();
         callbackShowResult();
     }
+
 
 
 

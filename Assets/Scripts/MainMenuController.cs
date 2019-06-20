@@ -9,6 +9,7 @@ using Gamestrap;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using OKCANCELDIALOG;
 
 public class MainMenuController : UtilComponent
 {
@@ -20,7 +21,8 @@ public class MainMenuController : UtilComponent
         PREPARE,
         WAIT,
         DIAGNOSIS,
-        GAME
+        GAME,
+        RESULT
     }
 
     private MENU_STATUS_ENUM currentStatus = MENU_STATUS_ENUM.PREPARE;
@@ -55,6 +57,8 @@ public class MainMenuController : UtilComponent
 	private AsyncOperation async;
 
     public ResultFormatArea resultFormatArea;
+
+    public OkCancelDialog dialog;
 
 
     private void Start()
@@ -128,6 +132,9 @@ public class MainMenuController : UtilComponent
     {
         //if (Input.GetKeyDown(KeyCode.Space)) { birdTransfer.PlayStart(); }
         if (Input.GetKeyDown(KeyCode.Space)) { SetActive(objWarpEffect, true); }
+
+        if(currentStatus == MENU_STATUS_ENUM.RESULT) { UpdateResult(); }
+
     }
 
     private void FinishPushButton()
@@ -209,21 +216,40 @@ public class MainMenuController : UtilComponent
 
     private void ShowResult()
     {
+        currentStatus = MENU_STATUS_ENUM.RESULT;
         SetActive(objUI, false);
         SetActive(objResult, true);
 
         resultFormatArea.Init();
     }
 
- //   IEnumerator LoadData() {
-	//	// シーンの読み込みをする
-	//	async = SceneManager.LoadSceneAsync("Game");
- 
-	//	//　読み込みが終わるまで進捗状況をスライダーの値に反映させる
-	//	while(!async.isDone) {
-	//		var progressVal = Mathf.Clamp01(async.progress / 0.9f);
-	//		slider.value = progressVal;
-	//		yield return null;
-	//	}
-	//}
+
+    private void UpdateResult()
+    {
+        if (CheckThumbstickDown())
+        {
+            dialog.Init(()=>
+            {
+                LoadMain();
+            }, 
+            ()=>
+            {
+                SceneManager.LoadScene(0);
+            }
+            );
+            dialog.ShowDialog("再度ゲームのみをリプレイしますか？");
+        }
+    }
+
+    //   IEnumerator LoadData() {
+    //	// シーンの読み込みをする
+    //	async = SceneManager.LoadSceneAsync("Game");
+
+    //	//　読み込みが終わるまで進捗状況をスライダーの値に反映させる
+    //	while(!async.isDone) {
+    //		var progressVal = Mathf.Clamp01(async.progress / 0.9f);
+    //		slider.value = progressVal;
+    //		yield return null;
+    //	}
+    //}
 }
