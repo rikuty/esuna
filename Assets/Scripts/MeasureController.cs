@@ -314,6 +314,7 @@ public class MeasureController : UtilComponent {
         audioSourceVoice.Play();
         StartCoroutine(FinishVoicePreparing(audioSourceVoice.clip.length));
 
+        SetActive(objTutorialAvatar, true);
 
     }
 
@@ -459,7 +460,6 @@ public class MeasureController : UtilComponent {
 
 
         ShowUI(false);
-        SetActive(objTutorialAvatar, true);
 
         StartCoroutine(CoroutineWaitNextStep(InitDirection));
     }
