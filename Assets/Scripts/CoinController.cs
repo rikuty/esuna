@@ -259,6 +259,7 @@ public class CoinController : UtilComponent {
     {
 
         hitDeltaTime = 0f;
+        context.answeringDeltaTime = 0f;
         directionStatus = DirectionEnum.MEASURING;
         context.AddGamePoint();
         callbackHitCoin();

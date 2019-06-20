@@ -67,6 +67,8 @@ public class AnswerController : UtilComponent
 
     void CallbackFromEggAnswer(Egg egg)
     {
+        if (context.isAnswering = false) return;
+
         // 失敗したときに近づける
         if (egg.touchNest == null) {
             bodyScale.SetCloseTarget(targetNumber);
@@ -218,6 +220,7 @@ public class AnswerController : UtilComponent
 
 
         context.isAnswering = false;
+        context.answeringDeltaTime = 0f;
     }
 
 

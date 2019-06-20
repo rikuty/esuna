@@ -35,6 +35,8 @@ public class HandController: UtilComponent {
 
     OVRInput.Controller controller = OVRInput.Controller.RTouch;
 
+    
+
 
     public void SetCanTouchController(OVRInput.Controller controller)
     {
@@ -71,7 +73,10 @@ public class HandController: UtilComponent {
 
     private void Update()
     {
-
+        if (context.isAnswering)
+        {
+            context.answeringDeltaTime += Time.deltaTime;
+        }
 
 
         if (wasAnswering && !context.isAnswering)
@@ -154,8 +159,10 @@ public class HandController: UtilComponent {
         wasAnswering = context.isAnswering;
 
 
-        if (canGrabbable && CheckThumbstickDown() && !unableGrab)
+        if (canGrabbable && context.answeringDeltaTime >= DEFINE_APP.ANSWERING_LIMIT_TIME && !unableGrab)
         {
+            context.answeringDeltaTime = 0f;
+
             callbackRelease();
             unableGrab = true;
             StartCoroutine(CorouineUnableGrab());

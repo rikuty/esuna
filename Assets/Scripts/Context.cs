@@ -40,6 +40,8 @@ public class Context
 
     public DEFINE_APP.STATUS_ENUM currentStatus;
 
+    public float answeringDeltaTime;
+
 
     public void AddPlayTime(float deltaTime)
     {

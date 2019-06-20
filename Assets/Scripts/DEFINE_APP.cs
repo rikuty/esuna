@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public partial class DEFINE_APP {//ApplictionDefine
 
+    public static float ANSWERING_LIMIT_TIME = 3f;
+
     public enum STATUS_ENUM : int
     {
         PREPARE,
