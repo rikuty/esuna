@@ -233,11 +233,11 @@ public class BodyScale : UtilComponent {
 		float backAngleMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.BACK_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
 		float shoulderAngleMin = DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] / (float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[i];
 
-		backAngle = backAngle + (backAngle / 15f);
+		backAngle = backAngle + (backAngle / 5f);
 		backAngle = Mathf.Abs(backAngle) <= Mathf.Abs(backAngleMin) ? backAngleMin : backAngle;
 		Cache.user.BodyScaleData.goalCurrentDic[i][DEFINE_APP.BODY_SCALE.BACK_ROT] = backAngle;
 
-		shoulderAngle = shoulderAngle + (shoulderAngle / 15f);
+		shoulderAngle = shoulderAngle + (shoulderAngle / 5f);
 		shoulderAngle = Mathf.Abs(shoulderAngle) <= Mathf.Abs(shoulderAngleMin) ? shoulderAngleMin : shoulderAngle;
 		Cache.user.BodyScaleData.goalCurrentDic[i][DEFINE_APP.BODY_SCALE.SHOULDER_ROT] = shoulderAngle;
 

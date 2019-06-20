@@ -309,7 +309,6 @@ public class MeasureController : UtilComponent {
     {
 
         currentStatus = DIAGNOSIS_STATUS_ENUM.BASE;
-        SetActive(objTutorialAvatar, true);
         ShowUI(true);
         audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
         audioSourceVoice.Play();
@@ -460,6 +459,7 @@ public class MeasureController : UtilComponent {
 
 
         ShowUI(false);
+        SetActive(objTutorialAvatar, true);
 
         StartCoroutine(CoroutineWaitNextStep(InitDirection));
     }
@@ -582,7 +582,7 @@ public class MeasureController : UtilComponent {
 		measureComponent.trSholderRoot.localRotation.ToAngleAxis(out angle, out axis);
 		angleSum += angle;
 
-		Cache.user.BodyScaleData.goalDic[this.currentIndex] = angle;
+		Cache.user.BodyScaleData.goalDic[this.currentIndex] = angleSum;
 	}
 
 
@@ -730,6 +730,8 @@ public class MeasureController : UtilComponent {
         ShowUI(false);
         currentNRSIndex = 0;
         InitNRSComponents();
+        SetActive(objTutorialAvatar, false);
+
 
         for (int i = 0; i < directRotateTrs.Length; i++)
         {

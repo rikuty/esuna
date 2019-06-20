@@ -54,7 +54,7 @@ public partial class DEFINE_APP {//ApplictionDefine
 
 
     public static Vector3 ANSWERING_COLLIDER_SIZE = new Vector3(0.20f, 0.20f, 0.20f);
-    public static Vector3 NORMAL_COLLIDER_SIZE = new Vector3(0.05f, 0.10f, 0.18f);
+    public static Vector3 NORMAL_COLLIDER_SIZE = new Vector3(0.07f, 0.10f, 0.18f);
 
     public static Vector3 ANSWERING_GRIP = new Vector3(-0.06f, -0.03f, 0f);
     public static Vector3 NORMAL_GRIP_R = new Vector3(-0.02f, 0f, 0f);
