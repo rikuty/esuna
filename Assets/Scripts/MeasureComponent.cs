@@ -23,19 +23,22 @@ public class MeasureComponent : UtilComponent {
     private bool isRightTouch = false;
     private bool isLeftTouch = false;
 
+    public int bulletIndex;
+
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="callbackCollision">手がヒットした時のコールバック</param>
+    /// <param name="bulletIndex">何番目のバレットか。０～</param>
     /// <param name="directIndex">８方向のどの方向かのIndex</param>
     /// <param name="measureIndex">測定方向のうち、Maxのどれくらいの可動域率かの数値</param>
     /// <param name="collisionStatus"></param>
     /// <param name="stayTime"></param>
-    public void Init(int directIndex, float measureRate, Action<MeasureComponent> callbackCollision, Bullet.CollisionEnum collisionStatus = Bullet.CollisionEnum.ENTER, float stayTime = 0.3f)
+    public void Init(int directIndex,int bulletIndex, float measureRate, Action<MeasureComponent> callbackCollision, Bullet.CollisionEnum collisionStatus = Bullet.CollisionEnum.ENTER, float stayTime = 0.3f)
     {
         this.callbackCollision = callbackCollision;
         this.controller = DEFINE_APP.HAND_TARGET[directIndex-1];
+        this.bulletIndex = bulletIndex;
 
         trBackRoot.localPosition = Cache.user.BodyScaleData.backPos;
 		//Debug.Log((DEFINE_APP.BODY_SCALE.DIAGNOSIS_ROT_MAX[directIndex][DEFINE_APP.BODY_SCALE.BACK_ROT] * measureRate).ToString());

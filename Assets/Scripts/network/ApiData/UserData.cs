@@ -32,6 +32,7 @@ public class UserData
 		}
 		set {
 			this.sitting_height = value.y;
+            //Debug.LogError("sitting_height: " + sitting_height.ToString());
 		}
 	}
 
@@ -43,6 +44,7 @@ public class UserData
 			this.left_hand_x = value.x;
 			this.left_hand_y = value.y;
 			this.left_hand_z = value.z;
+            //Debug.LogError("LeftHand: " + "(" + left_hand_x.ToString() + left_hand_y.ToString() + left_hand_z.ToString() + ")");
 		}
 	}
 	public Vector3 HandPosR {
@@ -53,8 +55,10 @@ public class UserData
 			this.right_hand_x = value.x;
 			this.right_hand_y = value.y;
 			this.right_hand_z = value.z;
-		}
-	}
+            //Debug.LogError("RightHand: " + "(" + right_hand_x.ToString() + right_hand_y.ToString() + right_hand_z.ToString() + ")");
+
+        }
+    }
 
 
 	public UserData()

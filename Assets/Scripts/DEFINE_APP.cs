@@ -174,8 +174,8 @@ public partial class DEFINE_APP {//ApplictionDefine
 
         public static Dictionary<int, int> DIAGNOSIS_COUNT_DIC = new Dictionary<int, int>()
         {
-            {1, 9},
-            {2, 9},
+            {1, 14},
+            {2, 14},
             {3, 12},
             {4, 12},
             {5, 12},
@@ -338,11 +338,11 @@ public partial class DEFINE_APP {//ApplictionDefine
 		/// </summary>
 		public static readonly Dictionary<int, Dictionary<string, float>> DIAGNOSIS_ROT_MAX = new Dictionary<int, Dictionary<string, float>> {
 
-			{ 1, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 55f } } },
-			{ 2, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 55f } } },
-			{ 3, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 67f } } },
-			{ 4, new Dictionary<string, float> { { BACK_ROT, 20f }, { SHOULDER_ROT, 80f } } },
-			{ 5, new Dictionary<string, float> { { BACK_ROT, 55f }, { SHOULDER_ROT, 67f } } },
+			{ 1, new Dictionary<string, float> { { BACK_ROT, 85f }, { SHOULDER_ROT, 55f } } },
+			{ 2, new Dictionary<string, float> { { BACK_ROT, 85f }, { SHOULDER_ROT, 55f } } },
+			{ 3, new Dictionary<string, float> { { BACK_ROT, 85f }, { SHOULDER_ROT, 67f } } },
+			{ 4, new Dictionary<string, float> { { BACK_ROT, 20f }, { SHOULDER_ROT, 100f } } },
+			{ 5, new Dictionary<string, float> { { BACK_ROT, 85f }, { SHOULDER_ROT, 67f } } },
 			{ 6, new Dictionary<string, float> { { BACK_ROT, 94f }, { SHOULDER_ROT, 30f } } },
 			{ 7, new Dictionary<string, float> { { BACK_ROT, 80f }, { SHOULDER_ROT, 30f } } },
 			{ 8, new Dictionary<string, float> { { BACK_ROT, 94f }, { SHOULDER_ROT, 30f } } }

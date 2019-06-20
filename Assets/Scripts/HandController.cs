@@ -73,7 +73,7 @@ public class HandController: UtilComponent {
 
     private void Update()
     {
-        if (context.isAnswering)
+        if (context != null && context.isAnswering)
         {
             context.answeringDeltaTime += Time.deltaTime;
         }

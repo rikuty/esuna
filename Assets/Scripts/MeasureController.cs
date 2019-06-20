@@ -429,8 +429,8 @@ public class MeasureController : UtilComponent {
             {
                 StopCoroutine(runningCoroutine);
                 runningCoroutine = null;
+                NextShoulderArm();
             }
-            NextShoulderArm();
         }
     }
 
@@ -516,7 +516,7 @@ public class MeasureController : UtilComponent {
     {
         for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
         {
-            measureComponents[i].Init(currentIndex, (float)(i+1)/(float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
+            measureComponents[i].Init(currentIndex, i, (float)(i+1)/(float)DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex], Hit);
             measureComponents[i].SetActiveBullet(true);
             measureComponents[i].ColliderEnabled(false);
 
@@ -588,7 +588,9 @@ public class MeasureController : UtilComponent {
 		angleSum += angle;
 
 		Cache.user.BodyScaleData.goalDic[this.currentIndex] = angleSum;
-	}
+
+        measureComponents[measureComponent.bulletIndex+1].ColliderEnabled(true);
+    }
 
 
     void HitStartMeasure(MeasureStartComponent measureComponent)
@@ -623,10 +625,7 @@ public class MeasureController : UtilComponent {
 
         if(directionStatus == DirectionEnum.PREPARED)
         {
-            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
-            {
-                measureComponents[i].ColliderEnabled(true);
-            }
+            measureComponents[0].ColliderEnabled(true);
         }
     }
 
@@ -667,6 +666,7 @@ public class MeasureController : UtilComponent {
                 dialog.Init(CallbackDirectionOK, ()=>
                 {
                     currentDiagnosisDirectsIndex = 0;
+                    currentStatus = DIAGNOSIS_STATUS_ENUM.DIRECT;
                     PreparingDirection();
                 });
                 dialog.ShowDialog(dialogDetail[2]);
@@ -689,11 +689,8 @@ public class MeasureController : UtilComponent {
         if (directionStatus == DirectionEnum.PREPARED)
         {
             directionStatus = DirectionEnum.WAITING;
-            // 測定器具のコライダーセット
-            for (int i = 0; i < DEFINE_APP.BODY_SCALE.DIAGNOSIS_COUNT_DIC[currentIndex]; i++)
-            {
-                measureComponents[i].ColliderEnabled(true);
-            }
+            // 測定器具のコライダーセット.一つ目が当たると次のコライダーがセットされる。
+            measureComponents[0].ColliderEnabled(true);
 
         }
 
