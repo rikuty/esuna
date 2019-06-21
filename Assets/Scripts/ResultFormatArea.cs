@@ -42,10 +42,10 @@ public class ResultFormatArea : UtilComponent {
     }
 
     // Use this for initialization
-    void Start () {
-        StartCoroutine(ConnectAPI("http://dev.rikuty.net/api/GetFormatData.php", GetUserData));
+    //void Start () {
+    //    StartCoroutine(ConnectAPI("http://dev.rikuty.net/api/GetFormatData.php", GetUserData));
 
-    }
+    //}
 
     private void GetUserData(string val) {
         //Debug.Log(val);
@@ -69,6 +69,8 @@ public class ResultFormatArea : UtilComponent {
             SetLabel(this.txtRank, userData.rank);
 
             SettingGraph();
+
+            ApiSetPrint();
         }
     }
 
@@ -132,8 +134,6 @@ public class ResultFormatArea : UtilComponent {
         //Write to a file in the project folder
         //Debug.Log(Application.dataPath);
         File.WriteAllBytes(Application.dataPath + "/Resources/ResultSheet.png", bytes);
-
-        //StartCoroutine(ResultFileCheck());
     }
 
     IEnumerator ResultFileCheck()
@@ -190,5 +190,65 @@ public class ResultFormatArea : UtilComponent {
         string fileName = "ResultSheet.png";
         
         yield return StartCoroutine(HttpPost(url, dic, filePath, fileName));
+    }
+
+
+    private void ApiSetResultData()
+    {
+        // サーバへPOSTするデータを設定 
+        string url = "http://dev.rikuty.net/api/SetResultData.php";
+
+        Dictionary<string, string> dic = new Dictionary<string, string>();
+
+        dic.Add("user_id", Cache.user.UserData.user_id);
+        dic.Add("max_rom_exercise_1", Cache.user.MeasureData.max_rom_exercise_1.ToString());
+        dic.Add("max_rom_exercise_2", Cache.user.MeasureData.max_rom_exercise_2.ToString());
+        dic.Add("max_rom_exercise_3", Cache.user.MeasureData.max_rom_exercise_3.ToString());
+        dic.Add("max_rom_exercise_4", Cache.user.MeasureData.max_rom_exercise_4.ToString());
+        dic.Add("max_rom_exercise_5", Cache.user.MeasureData.max_rom_exercise_5.ToString());
+        dic.Add("max_rom_exercise_6", Cache.user.MeasureData.max_rom_exercise_6.ToString());
+        dic.Add("max_rom_exercise_7", Cache.user.MeasureData.max_rom_exercise_7.ToString());
+        dic.Add("max_rom_exercise_8", Cache.user.MeasureData.max_rom_exercise_8.ToString());
+        dic.Add("average_max_rom", Cache.user.MeasureData.average_max_rom.ToString());
+        dic.Add("average_time_1", Cache.user.MeasureData.average_time_1.ToString());
+        dic.Add("average_time_2", Cache.user.MeasureData.average_time_2.ToString());
+        dic.Add("average_time_3", Cache.user.MeasureData.average_time_3.ToString());
+        dic.Add("average_time_4", Cache.user.MeasureData.average_time_4.ToString());
+        dic.Add("average_time_5", Cache.user.MeasureData.average_time_5.ToString());
+        dic.Add("average_time_6", Cache.user.MeasureData.average_time_6.ToString());
+        dic.Add("average_time_7", Cache.user.MeasureData.average_time_7.ToString());
+        dic.Add("average_time_8", Cache.user.MeasureData.average_time_8.ToString());
+        dic.Add("appraisal_value_1", Cache.user.MeasureData.appraisal_value_1.ToString());
+        dic.Add("appraisal_value_2", Cache.user.MeasureData.appraisal_value_2.ToString());
+        dic.Add("appraisal_value_3", Cache.user.MeasureData.appraisal_value_3.ToString());
+        dic.Add("appraisal_value_4", Cache.user.MeasureData.appraisal_value_4.ToString());
+        dic.Add("appraisal_value_5", Cache.user.MeasureData.appraisal_value_5.ToString());
+        dic.Add("appraisal_value_6", Cache.user.MeasureData.appraisal_value_6.ToString());
+        dic.Add("appraisal_value_7", Cache.user.MeasureData.appraisal_value_7.ToString());
+        dic.Add("appraisal_value_8", Cache.user.MeasureData.appraisal_value_8.ToString());
+        dic.Add("post_rest_pain", Cache.user.MeasureData.post_rest_pain.ToString());
+        dic.Add("post_move_pain", Cache.user.MeasureData.post_move_pain.ToString());
+        dic.Add("post_move_fear", Cache.user.MeasureData.post_move_fear.ToString());
+        dic.Add("point", Cache.user.MeasureData.point.ToString());
+        dic.Add("rom_value", Cache.user.MeasureData.rom_value.ToString());
+        dic.Add("point_value", Cache.user.MeasureData.point_value.ToString());
+
+        StartCoroutine(HttpPost(url, dic));
+    }
+
+
+    private void ApiSetPrint()
+    {
+        // サーバへPOSTするデータを設定 
+        string url = "https://dev.rikuty.net/SetPrint.php?facility_id=1&user_id=1";
+
+
+        StartCoroutine(ConnectAPI(url, CallbackSetPrint));
+    }
+
+
+    private void CallbackSetPrint(String str)
+    {
+        Debug.Log("SuccessPrint");
     }
 }
