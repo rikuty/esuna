@@ -46,7 +46,8 @@ public class Bullet : UtilComponent {
     }
 
     public void ColliderEnabled(bool isEnabled)
-    {
+    { 
+        if(colliderBullet == null) return;
         colliderBullet.enabled = isEnabled;
     }
 
