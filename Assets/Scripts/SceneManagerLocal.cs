@@ -12,7 +12,86 @@ using Newtonsoft.Json.Serialization;
 
 public class SceneManagerLocal : UtilComponent
 {
-    bool isInit = false;
+	private static SceneManagerLocal instance = null;
+
+	public static SceneManagerLocal Instance {
+		get {
+			if (instance == null) {
+				GameObject sceneManagerObj = GameObject.Find("SceneManage");
+				Debug.Assert(sceneManagerObj != null, "SceneManageオブジェクトが見つかりません。");
+				instance = sceneManagerObj.GetComponent<SceneManagerLocal>();
+				DontDestroyOnLoad(sceneManagerObj);
+			}
+			return instance;
+		}
+	}
+
+
+	private bool isTransition = false;
+
+
+	private void Awake()
+	{
+		this.SetAsyncLoad("Title");
+		this.Transition();
+	}
+
+	private IEnumerator AsyncLoad(string sceneName, string[] args = null)
+	{
+		Scene scene = SceneManager.GetSceneByName(sceneName);
+
+		AsyncOperation asyncOperation = null;
+		if (!scene.isLoaded) {
+			asyncOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+			asyncOperation.allowSceneActivation = false;
+		}
+
+		while (!this.isTransition) {
+			yield return null;
+		}
+
+		// TODO: ローダーを表示させたい場合はここでアクティブ化
+
+		if (asyncOperation != null) {
+			while (!asyncOperation.isDone) {
+				Debug.LogError("[SceneManagerLocal] ロード中〜");
+				yield return null;
+			}
+			asyncOperation.allowSceneActivation = true;
+		}
+
+		this.isTransition = false;
+
+		scene = SceneManager.GetSceneByName(sceneName);
+		GameObject[] sceneObjects = scene.GetRootGameObjects();
+
+		foreach (GameObject obj in sceneObjects) {
+			SceneBase sceneBase = obj.GetComponent<SceneBase>();
+			if (sceneBase != null) {
+				sceneBase.Init(args ?? new string[0]);
+				break;
+			}
+		}
+	}
+
+
+	public void SetAsyncLoad(string sceneName, string[] args = null)
+	{
+		StartCoroutine(this.AsyncLoad(sceneName, args));
+	}
+
+	public void Transition()
+	{
+		this.isTransition = true;
+	}
+
+
+
+
+
+
+	/*
+	bool isInit = false;
 
     GameObject[] objsGameScene;
     GameObject[] objsTitleScene;
@@ -92,4 +171,5 @@ public class SceneManagerLocal : UtilComponent
             mainMenuController.FinishTraining();
         }
     }
+    */
 }

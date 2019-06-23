@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using OKCANCELDIALOG;
 
-public class MainMenuController : UtilComponent
+public class MainMenuController : SceneBase
 {
 
     public GameObject objDirectionalLight;
@@ -71,7 +71,21 @@ public class MainMenuController : UtilComponent
     }
 
 
-    public void Init()
+	#region SceneBase
+
+	public override void Init(string[] args)
+	{
+		if (args.Length >= 1 && args[0].Equals("result")) {
+			this.measureController.SetAfterTraining(this.ShowResult);
+			return;
+		}
+
+		this.Init();
+	}
+	#endregion
+
+
+	private void Init()
     {
          Cache.Initialize();
 
@@ -162,15 +176,15 @@ public class MainMenuController : UtilComponent
         yield return new WaitForSeconds(8.0f);
 
         SetActive(objWarpEffect, false);
-        GetSceneManagerLocal().MoveToGameScene();
 
+		SceneManagerLocal.Instance.SetAsyncLoad("Game");
+		SceneManagerLocal.Instance.Transition();
 
-
-        //　ロード画面UIをアクティブにする
-        //this.slider.gameObject.SetActive(true);
-        //　コルーチンを開始
-        //StartCoroutine("LoadData");
-    }
+		//　ロード画面UIをアクティブにする
+		//this.slider.gameObject.SetActive(true);
+		//　コルーチンを開始
+		//StartCoroutine("LoadData");
+	}
 
     private void FinishDiagnosis()
     {
@@ -204,13 +218,6 @@ public class MainMenuController : UtilComponent
         dic.Add("pre_move_fear", Cache.user.MeasureData.pre_move_fear.ToString());
 
         StartCoroutine(HttpPost(url, dic));
-    }
-
-
-    public void FinishTraining()
-    {
-
-        measureController.SetAfterTraining(ShowResult);
     }
 
 

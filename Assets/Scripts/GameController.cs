@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Events;
 
-public class GameController : UtilComponent {
+public class GameController : SceneBase {
 
     public GameObject objDirectionalLight;
 
@@ -68,7 +68,16 @@ public class GameController : UtilComponent {
     [SerializeField] private AudioSource audioSourceVoice;
     [SerializeField] private List<AudioClip> tutorialVoiceList;
 
-    private void Awake()
+
+	#region SceneBase
+	public override void Init(string[] args)
+	{
+		this.Init();
+	}
+	#endregion
+
+
+	private void Awake()
     {
         Cache.Initialize();
     }
@@ -82,8 +91,7 @@ public class GameController : UtilComponent {
         }
     }
 
-
-    public void Init()
+    private void Init()
     {
         context.currentStatus = DEFINE_APP.STATUS_ENUM.PREPARE;
 
@@ -137,9 +145,9 @@ public class GameController : UtilComponent {
                 this.context.AddGamePoint();
                 break;
             case DEFINE_APP.ANSWER_TYPE_ENUM.RESULT:
-                BackToTitle();
-                break;
-
+				SceneManagerLocal.Instance.SetAsyncLoad("Title");
+				SceneManagerLocal.Instance.Transition();
+				break;
         }
     }
 
@@ -252,9 +260,10 @@ public class GameController : UtilComponent {
         this.finishComponent.Init(this.ShowFinishCallback);
         SetActive(this.finishComponent.gameObject, true);
 
-        GetSceneManagerLocal().MoveToTitleSceneResult();
+		SceneManagerLocal.Instance.SetAsyncLoad("Title", new string[] { "result" });
+		SceneManagerLocal.Instance.Transition();
 
-    }
+	}
 
     private void ShowFinishCallback() {
         SetActive(this.finishComponent.gameObject, false);
@@ -288,15 +297,9 @@ public class GameController : UtilComponent {
     {
         yield return new WaitForSeconds(3.0f);
 
-        BackToTitle();
+		SceneManagerLocal.Instance.SetAsyncLoad("Title");
+		SceneManagerLocal.Instance.Transition();
     }
-
-
-    public void BackToTitle()
-    {
-        GetSceneManagerLocal().MoveToTitleScene();
-    }
-
 
 
     // TODO 実データで繋ぎなおし
