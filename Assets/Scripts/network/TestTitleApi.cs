@@ -10,6 +10,13 @@ public class TestTitleApi : UtilComponent {
 
         Dictionary<string, string> dic = new Dictionary<string, string>();
         dic.Add("user_id", "1");
+		dic.Add("sitting_height", "50.5");
+		dic.Add("left_hand_x", "33.33");
+		dic.Add("left_hand_y", "33.33");
+		dic.Add("left_hand_z", "33.33");
+		dic.Add("right_hand_x", "33.33");
+		dic.Add("right_hand_y", "33.33");
+		dic.Add("right_hand_z", "33.33");
         dic.Add("max_rom_measure_1", "44");
         dic.Add("max_rom_measure_2", "44");
         dic.Add("max_rom_measure_3", "44");
