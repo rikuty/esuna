@@ -26,7 +26,7 @@ public class HitEffect2 : MonoBehaviour {
     // Use this for initialization
     void Start () {
         trBird.LookAt(lookTarget);
-        currentYValues = trBird.localEulerAngles.y - 180;
+        currentYValues = trBird.localEulerAngles.y;
     }
 	
 	// Update is called once per frame
@@ -44,11 +44,11 @@ public class HitEffect2 : MonoBehaviour {
         if(moveUpFlg){
             double targetAngles = 0;
 
-            if(0 <= currentYValues && currentYValues < 90){
+            if(180 <= currentYValues && currentYValues < 270){
                 targetAngles = currentYValues * (Math.PI / 180);
             } else if (90 <= currentYValues && currentYValues < 180) {
                 targetAngles = (180 - currentYValues) * (Math.PI / 180);
-            } else if (180 <= currentYValues && currentYValues < 270) {
+            } else if (0 <= currentYValues && currentYValues < 90) {
                 targetAngles = (currentYValues - 180) * (Math.PI / 180);
             } else if (270 <= currentYValues && currentYValues < 360) {
                 targetAngles = (360 - currentYValues) * (Math.PI / 180);
