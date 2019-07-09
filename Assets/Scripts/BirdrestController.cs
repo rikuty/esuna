@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BirdrestController : MonoBehaviour {
-
 	[SerializeField] private List<LittleBirdAnimationController> birdList;
 	// Use this for initialization
 
