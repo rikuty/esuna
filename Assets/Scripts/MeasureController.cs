@@ -849,11 +849,17 @@ public class MeasureController : UtilComponent {
 
     public void SetAfterTraining(Action callbackShowResult)
     {
+        // トレーニング後のアンケートをやる場合
+        //this.callbackShowResult = callbackShowResult;
+        //this.currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_POST;
+        //audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
+        //audioSourceVoice.Play();
+        //StartCoroutine(FinishVoiceAfterTraining(audioSourceVoice.clip.length));
+
+        // トレーニング後のアンケートをやらない場合
         this.callbackShowResult = callbackShowResult;
-        this.currentStatus = DIAGNOSIS_STATUS_ENUM.NRS_POST;
-        audioSourceVoice.clip = diagnosisVoiceList[(int)currentStatus];
-        audioSourceVoice.Play();
-        StartCoroutine(FinishVoiceAfterTraining(audioSourceVoice.clip.length));
+        StartCoroutine(CoroutineFinishNRSPost());
+
     }
 
 
